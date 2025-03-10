@@ -2,6 +2,10 @@ spring:
   application:
     name: motung-i-backend
 
+  output:
+    ansi:
+      enabled: ALWAYS
+
   jpa:
     properties:
       hibernate:
