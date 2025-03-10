@@ -6,6 +6,11 @@ spring:
     ansi:
       enabled: ALWAYS
 
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd'T'HH:mm:ss
+
   jpa:
     properties:
       hibernate:
