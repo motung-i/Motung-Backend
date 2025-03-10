@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -24,7 +25,9 @@ jobs:
         uses: gradle/actions/setup-gradle@ec92e829475ac0c2315ea8f9eced72db85bb337a
 
       - name: Build with Gradle
-        run: ./gradlew build -x test
+        run: |
+          chmod +x ./gradlew
+          ./gradlew build -x test
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
