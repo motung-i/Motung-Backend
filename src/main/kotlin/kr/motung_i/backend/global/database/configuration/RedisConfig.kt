@@ -1,4 +1,4 @@
-package kr.motung_i.backend.global.config
+package kr.motung_i.backend.global.database.configuration
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

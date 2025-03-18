@@ -1,4 +1,4 @@
-package kr.motung_i.backend.global.config
+package kr.motung_i.backend.global.jackson.configuration
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer
