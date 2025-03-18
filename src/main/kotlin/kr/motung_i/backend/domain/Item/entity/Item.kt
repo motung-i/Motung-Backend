@@ -6,6 +6,8 @@ import jakarta.persistence.FetchType
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToOne
 import kr.motung_i.backend.domain.user.entity.User
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import org.hibernate.annotations.UuidGenerator
 import java.util.UUID
 
@@ -16,6 +18,7 @@ class Item (
     val id: UUID? = null,
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     val user: User,
 
     @Column(nullable = false)
