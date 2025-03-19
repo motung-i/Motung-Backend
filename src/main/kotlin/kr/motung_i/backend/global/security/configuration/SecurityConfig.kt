@@ -3,6 +3,7 @@ package kr.motung_i.backend.global.security.configuration
 import com.fasterxml.jackson.databind.ObjectMapper
 import kr.motung_i.backend.global.security.exception.CustomAccessDeniedHandler
 import kr.motung_i.backend.global.security.exception.CustomAuthenticationEntryPoint
+import kr.motung_i.backend.global.service.CustomOauth2Service
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -16,8 +17,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 class SecurityConfig {
     @Bean
-    fun securityFilterChain(http: HttpSecurity, objectMapper: ObjectMapper): SecurityFilterChain {
-        return http
+    fun securityFilterChain(
+        http: HttpSecurity,
+        objectMapper: ObjectMapper,
+        oauth2Service: CustomOauth2Service,
+    ): SecurityFilterChain =
+        http
             .authorizeHttpRequests {
                 it
                     .requestMatchers(HttpMethod.GET, "/")
@@ -38,9 +43,8 @@ class SecurityConfig {
                 it
                     .authenticationEntryPoint(CustomAuthenticationEntryPoint(objectMapper))
                     .accessDeniedHandler(CustomAccessDeniedHandler(objectMapper))
-            }
+            }.oauth2Login { oauth2 -> oauth2.userInfoEndpoint { it.userService(oauth2Service) } }
             .build()
-    }
 
     fun corsConfig(): CorsConfigurationSource {
         val corsConfigurationSource = CorsConfiguration()
