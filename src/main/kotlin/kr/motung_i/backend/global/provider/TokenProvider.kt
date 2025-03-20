@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
-<<<<<<< HEAD
 import jakarta.servlet.http.HttpServletRequest
 import kr.motung_i.backend.domain.user.type.Roles
 import org.springframework.beans.factory.annotation.Value
@@ -27,44 +26,18 @@ class TokenProvider {
         println(REFRESH_SECRET_KEY)
         val key = if (isRefresh) REFRESH_SECRET_KEY else ACCESS_SECRET_KEY
         val keyBytes: ByteArray = Decoders.BASE64.decode(key)
-=======
-import org.springframework.beans.factory.annotation.Value
-import java.util.Date
-import javax.crypto.SecretKey
-
-class TokenProvider(
-    @Value("JWT_KEY")
-    val SECRET_KEY: String,
-    val EXPIRE_TIME: Long = 1000 * 60 * 60 * 2L,
-) {
-    private fun getSecretKey(): SecretKey {
-        val keyBytes: ByteArray = Decoders.BASE64.decode(this.SECRET_KEY)
->>>>>>> origin/feature/#1-create-oauth2-login
         return Keys.hmacShaKeyFor(keyBytes)
     }
 
     fun generateToken(
-<<<<<<< HEAD
         clientId: String,
         role: Roles,
         isRefresh: Boolean,
     ): String {
-        val claims: Claims = Jwts.claims().add("role", role.toString()).build()
-=======
-        name: String,
-        email: String?,
-        role: String,
-    ): String {
-        val claims: Claims = Jwts.claims().build()
-        claims["name"] = name
-        claims["email"] = email
-        claims["role"] = role
->>>>>>> origin/feature/#1-create-oauth2-login
-
+        val claims: Claims = Jwts.claims().add("role", role).build()
         return Jwts
             .builder()
             .claims(claims)
-<<<<<<< HEAD
             .subject(clientId)
             .issuedAt(Date(System.currentTimeMillis()))
             .expiration(Date(System.currentTimeMillis() + EXPIRE_TIME))
@@ -76,24 +49,11 @@ class TokenProvider(
         token: String,
         isRefresh: Boolean,
     ): Boolean {
-=======
-            .issuedAt(Date(System.currentTimeMillis()))
-            .expiration(Date(System.currentTimeMillis() + EXPIRE_TIME))
-            .signWith(getSecretKey())
-            .compact()
-    }
-
-    fun validateToken(token: String): Boolean {
->>>>>>> origin/feature/#1-create-oauth2-login
         try {
             val parseToken =
                 Jwts
                     .parser()
-<<<<<<< HEAD
                     .verifyWith(getSecretKey(isRefresh))
-=======
-                    .verifyWith(getSecretKey())
->>>>>>> origin/feature/#1-create-oauth2-login
                     .build()
                     .parseSignedClaims(token)
                     .payload
@@ -103,7 +63,6 @@ class TokenProvider(
         }
     }
 
-<<<<<<< HEAD
     fun tokenResolveByRequest(request: HttpServletRequest): String? {
         val token = request.getHeader("Authorization")
         return if (token == null || !token.startsWith("Bearer ")) {
@@ -134,9 +93,7 @@ class TokenProvider(
             .build()
             .parseSignedClaims(token)
             .payload["roles"] as Roles
-=======
 //    fun tokenResolver(token: String?): String {
 //    }
 //    fun getEmail(token: String)
->>>>>>> origin/feature/#1-create-oauth2-login
 }

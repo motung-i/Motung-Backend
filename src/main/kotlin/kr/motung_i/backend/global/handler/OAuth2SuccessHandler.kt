@@ -2,7 +2,6 @@ package kr.motung_i.backend.global.handler
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-<<<<<<< HEAD
 import kr.motung_i.backend.domain.user.entity.RefreshToken
 import kr.motung_i.backend.domain.user.entity.User
 import kr.motung_i.backend.domain.user.repository.RefreshTokenRepository
@@ -19,18 +18,11 @@ class OAuth2SuccessHandler(
     private val tokenProvider: TokenProvider,
     private val userRepository: UserRepository,
 ) : SimpleUrlAuthenticationSuccessHandler() {
-=======
-import org.springframework.security.core.Authentication
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler
-
-class OAuth2SuccessHandler : AuthenticationSuccessHandler {
->>>>>>> origin/feature/#1-create-oauth2-login
     override fun onAuthenticationSuccess(
         request: HttpServletRequest?,
         response: HttpServletResponse?,
         authentication: Authentication?,
     ) {
-<<<<<<< HEAD
         val clientId: String = (authentication?.principal as OAuth2User).attributes["sub"].toString()
         val user: User = userRepository.findByOauthId(clientId).orElseThrow()
         val accessToken: String =
@@ -54,7 +46,5 @@ class OAuth2SuccessHandler : AuthenticationSuccessHandler {
         )
         println(accessToken)
         super.onAuthenticationSuccess(request, response, authentication)
-=======
->>>>>>> origin/feature/#1-create-oauth2-login
     }
 }
