@@ -6,5 +6,9 @@ import java.util.Optional
 import java.util.UUID
 
 interface UserRepository : JpaRepository<User, UUID> {
+<<<<<<< HEAD
+    fun findByOauthId(oauthId: String): Optional<User>
+=======
     fun findByEmail(email: String): Optional<User>
+>>>>>>> origin/feature/#1-create-oauth2-login
 }

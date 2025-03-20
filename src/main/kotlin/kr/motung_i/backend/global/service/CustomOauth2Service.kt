@@ -22,9 +22,16 @@ class CustomOauth2Service(
                 attribute = userAttribute,
                 providers = Providers.valueOf(provider.uppercase()),
             )
+<<<<<<< HEAD
+        if (!userRepository.findByOauthId(getEntity.oauthId).isPresent) {
+            userRepository.save(getEntity)
+        }
+
+=======
         if (!userRepository.findByEmail(getEntity.email).isPresent) {
             userRepository.save(getEntity)
         }
+>>>>>>> origin/feature/#1-create-oauth2-login
         return super.loadUser(userRequest)
     }
 }

@@ -1,4 +1,9 @@
+<<<<<<< HEAD
+ACCESS_JWT_KEY: ${ACCESS_JWT_KEY}
+REFRESH_JWT_KEY: ${REFRESH_JWT_KEY}
+=======
 JWT_KEY: ${JWT_KEY}
+>>>>>>> origin/feature/#1-create-oauth2-login
 
 spring:
   application:
