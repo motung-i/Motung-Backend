@@ -1,3 +1,5 @@
+JWT_KEY: ${JWT_KEY}
+
 spring:
   application:
     name: motung-i-backend
