@@ -14,7 +14,7 @@ class OAuth2UserInfo {
                 User(
                     name =
                         attribute["name"] as? String ?: "모툴",
-                    roles = Roles.USER,
+                    roles = Roles.ROLE_USER,
                     email = attribute["email"].toString(),
                     oauthId = attribute["sub"].toString(),
                     provider = Providers.APPLE,
@@ -22,7 +22,7 @@ class OAuth2UserInfo {
             Providers.GOOGLE ->
                 User(
                     name = attribute["name"].toString(),
-                    roles = Roles.USER,
+                    roles = Roles.ROLE_USER,
                     email = attribute["email"].toString(),
                     oauthId = attribute["sub"].toString(),
                     provider = Providers.GOOGLE,
