@@ -1,5 +1,6 @@
 package kr.motung_i.backend.global.handler
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import kr.motung_i.backend.domain.user.entity.RefreshToken
@@ -17,6 +18,7 @@ class OAuth2SuccessHandler(
     private val refreshTokenRepository: RefreshTokenRepository,
     private val tokenProvider: TokenProvider,
     private val userRepository: UserRepository,
+    val objectMapper: ObjectMapper,
 ) : SimpleUrlAuthenticationSuccessHandler() {
     override fun onAuthenticationSuccess(
         request: HttpServletRequest?,
@@ -44,7 +46,16 @@ class OAuth2SuccessHandler(
                 timeToLive = System.currentTimeMillis() + 1000 * 60 * 60 * 2L,
             ),
         )
-        println(accessToken)
-        super.onAuthenticationSuccess(request, response, authentication)
+
+        response?.contentType = "application/json"
+        response?.characterEncoding = "UTF-8"
+
+        val tokenResponse =
+            mapOf(
+                "accessToken" to accessToken,
+                "refreshToken" to refreshToken,
+            )
+
+        response?.writer?.write(objectMapper.writeValueAsString(tokenResponse))
     }
 }
