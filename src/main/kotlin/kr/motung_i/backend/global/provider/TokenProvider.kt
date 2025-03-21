@@ -20,7 +20,8 @@ class TokenProvider {
     lateinit var REFRESH_SECRET_KEY: String
 
     @Suppress("ktlint:standard:property-naming")
-    val EXPIRE_TIME: Long = 1000 * 60 * 60 * 2L
+    @Value("\${EXPIRE_TIME}")
+    lateinit var EXPIRE_TIME: String
 
     private fun getSecretKey(isRefresh: Boolean): SecretKey {
         println(REFRESH_SECRET_KEY)
@@ -40,7 +41,7 @@ class TokenProvider {
             .claims(claims)
             .subject(clientId)
             .issuedAt(Date(System.currentTimeMillis()))
-            .expiration(Date(System.currentTimeMillis() + EXPIRE_TIME))
+            .expiration(Date(System.currentTimeMillis() + EXPIRE_TIME.toLong()))
             .signWith(getSecretKey(isRefresh))
             .compact()
     }

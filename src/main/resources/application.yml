@@ -1,6 +1,6 @@
 ACCESS_JWT_KEY: ${ACCESS_JWT_KEY}
 REFRESH_JWT_KEY: ${REFRESH_JWT_KEY}
-
+EXPIRE_TIME: ${EXPIRE_TIME}
 spring:
   application:
     name: motung-i-backend
