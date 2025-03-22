@@ -13,18 +13,23 @@ import javax.crypto.SecretKey
 
 @Component
 class TokenProvider {
+    @Suppress("ktlint:standard:property-naming")
     @Value("\${ACCESS_JWT_KEY}")
     lateinit var ACCESS_SECRET_KEY: String
 
+    @Suppress("ktlint:standard:property-naming")
     @Value("\${REFRESH_JWT_KEY}")
     lateinit var REFRESH_SECRET_KEY: String
 
     @Suppress("ktlint:standard:property-naming")
-    @Value("\${EXPIRE_TIME}")
-    lateinit var EXPIRE_TIME: String
+    @Value("\${ACCESS_EXPIRE_TIME}")
+    lateinit var ACCESS_EXPIRE_TIME: String
+
+    @Suppress("ktlint:standard:property-naming")
+    @Value("\${REFRESH_EXPIRE_TIME}")
+    lateinit var REFRESH_EXPIRE_TIME: String
 
     private fun getSecretKey(isRefresh: Boolean): SecretKey {
-        println(REFRESH_SECRET_KEY)
         val key = if (isRefresh) REFRESH_SECRET_KEY else ACCESS_SECRET_KEY
         val keyBytes: ByteArray = Decoders.BASE64.decode(key)
         return Keys.hmacShaKeyFor(keyBytes)
@@ -35,13 +40,18 @@ class TokenProvider {
         role: Roles,
         isRefresh: Boolean,
     ): String {
+        val now = System.currentTimeMillis()
+        val expirationTime = if (isRefresh) REFRESH_EXPIRE_TIME.toLong() else ACCESS_EXPIRE_TIME.toLong()
+        val expirationDate = Date(now + expirationTime)
+
         val claims: Claims = Jwts.claims().add("role", role).build()
+
         return Jwts
             .builder()
             .claims(claims)
             .subject(clientId)
-            .issuedAt(Date(System.currentTimeMillis()))
-            .expiration(Date(System.currentTimeMillis() + EXPIRE_TIME.toLong()))
+            .issuedAt(Date(now))
+            .expiration(expirationDate)
             .signWith(getSecretKey(isRefresh))
             .compact()
     }
@@ -94,7 +104,4 @@ class TokenProvider {
             .build()
             .parseSignedClaims(token)
             .payload["roles"] as Roles
-//    fun tokenResolver(token: String?): String {
-//    }
-//    fun getEmail(token: String)
 }
