@@ -12,25 +12,18 @@ import java.util.Date
 import javax.crypto.SecretKey
 
 @Component
-class TokenProvider {
-    @Suppress("ktlint:standard:property-naming")
+class TokenProvider(
     @Value("\${ACCESS_JWT_KEY}")
-    lateinit var ACCESS_SECRET_KEY: String
-
-    @Suppress("ktlint:standard:property-naming")
+    private val accessJwtKey: String,
     @Value("\${REFRESH_JWT_KEY}")
-    lateinit var REFRESH_SECRET_KEY: String
-
-    @Suppress("ktlint:standard:property-naming")
+    private val refreshJwtKey: String,
     @Value("\${ACCESS_EXPIRE_TIME}")
-    lateinit var ACCESS_EXPIRE_TIME: String
-
-    @Suppress("ktlint:standard:property-naming")
+    private val accessExpireTime: Long,
     @Value("\${REFRESH_EXPIRE_TIME}")
-    lateinit var REFRESH_EXPIRE_TIME: String
-
+    private val refreshExpireTime: Long,
+) {
     private fun getSecretKey(isRefresh: Boolean): SecretKey {
-        val key = if (isRefresh) REFRESH_SECRET_KEY else ACCESS_SECRET_KEY
+        val key = if (isRefresh) refreshJwtKey else accessJwtKey
         val keyBytes: ByteArray = Decoders.BASE64.decode(key)
         return Keys.hmacShaKeyFor(keyBytes)
     }
@@ -41,7 +34,7 @@ class TokenProvider {
         isRefresh: Boolean,
     ): String {
         val now = System.currentTimeMillis()
-        val expirationTime = if (isRefresh) REFRESH_EXPIRE_TIME.toLong() else ACCESS_EXPIRE_TIME.toLong()
+        val expirationTime = if (isRefresh) refreshExpireTime else accessExpireTime
         val expirationDate = Date(now + expirationTime)
 
         val claims: Claims = Jwts.claims().add("role", role).build()
