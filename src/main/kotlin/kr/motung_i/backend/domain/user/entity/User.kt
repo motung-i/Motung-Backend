@@ -1,23 +1,37 @@
 package kr.motung_i.backend.domain.user.entity
 
-import jakarta.persistence.CollectionTable
 import jakarta.persistence.Column
-import jakarta.persistence.ElementCollection
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
+import kr.motung_i.backend.domain.user.type.Providers
+import kr.motung_i.backend.domain.user.type.Roles
 import org.hibernate.annotations.UuidGenerator
+import org.springframework.data.annotation.CreatedBy
+import java.time.LocalDateTime
 import java.util.UUID
 
-@Entity
-class User (
+@Entity(name = "users")
+data class User(
     @Id
     @UuidGenerator
+    @GeneratedValue
     val id: UUID? = null,
-
-    @Column(nullable = false)
+    @Column
     val name: String,
-
-    @ElementCollection
-    @CollectionTable(name = "roles")
-    val role: List<Role>,
+    @Column
+    @Enumerated(EnumType.STRING)
+    val roles: Roles,
+    @Column
+    val email: String,
+    @Column(name = "oauth_id")
+    val oauthId: String,
+    @Column
+    @Enumerated(EnumType.STRING)
+    val provider: Providers,
+    @Column
+    @CreatedBy
+    val createdBy: LocalDateTime = LocalDateTime.now(),
 )
