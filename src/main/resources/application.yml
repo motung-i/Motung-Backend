@@ -1,7 +1,5 @@
 ACCESS_JWT_KEY: ${ACCESS_JWT_KEY}
 REFRESH_JWT_KEY: ${REFRESH_JWT_KEY}
-ACCESS_EXPIRE_TIME: ${ACCESS_EXPIRE_TIME}
-REFRESH_EXPIRE_TIME: ${REFRESH_EXPIRE_TIME}
 
 spring:
   application:
@@ -62,6 +60,9 @@ spring:
       ddl-auto: update
     show-sql: true
 
+ACCESS_EXPIRE_TIME: 26297460000 #10달
+REFRESH_EXPIRE_TIME: 315569520000 #10년
+
 ---
 spring:
   config:
@@ -70,3 +71,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+
+ACCESS_EXPIRE_TIME: 1800000 # 30분
+REFRESH_EXPIRE_TIME: 8640000000 # 100일
