@@ -11,12 +11,12 @@ import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
 
 class CustomAuthenticationEntryPoint(
-    val objectMapper: ObjectMapper,
+    private val objectMapper: ObjectMapper,
 ) : AuthenticationEntryPoint {
     override fun commence(
         request: HttpServletRequest?,
         response: HttpServletResponse?,
-        authException: AuthenticationException?
+        authException: AuthenticationException?,
     ) {
         response?.status = HttpStatus.UNAUTHORIZED.value()
         response?.characterEncoding = Charsets.UTF_8.name()
