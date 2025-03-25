@@ -91,10 +91,12 @@ class TokenProvider(
         token: String,
         isRefresh: Boolean,
     ): Roles =
-        Jwts
-            .parser()
-            .verifyWith(getSecretKey(isRefresh))
-            .build()
-            .parseSignedClaims(token)
-            .payload["roles"] as Roles
+        Roles.valueOf(
+            Jwts
+                .parser()
+                .verifyWith(getSecretKey(isRefresh))
+                .build()
+                .parseSignedClaims(token)
+                .payload["role"] as String
+        )
 }
