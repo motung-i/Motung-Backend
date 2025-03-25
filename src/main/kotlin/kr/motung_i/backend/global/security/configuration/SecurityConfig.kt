@@ -1,6 +1,7 @@
 package kr.motung_i.backend.global.security.configuration
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import kr.motung_i.backend.domain.user.type.Roles
 import kr.motung_i.backend.global.filter.JwtAuthFilter
 import kr.motung_i.backend.global.handler.OAuth2SuccessHandler
 import kr.motung_i.backend.global.security.exception.CustomAccessDeniedHandler
@@ -12,8 +13,6 @@ import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.access.AccessDeniedHandlerImpl
-import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
@@ -35,9 +34,9 @@ class SecurityConfig {
             .authorizeHttpRequests {
                 it
                     .requestMatchers(HttpMethod.GET, "/")
-                    .permitAll()
-                    .requestMatchers(HttpMethod.GET, "/error")
-                    .permitAll()
+                    .authenticated()
+                    .requestMatchers(HttpMethod.GET, "/actuator/prometheus")
+                    .hasAuthority(Roles.ROLE_ADMIN.name)
             }.csrf {
                 it.disable()
             }.formLogin {

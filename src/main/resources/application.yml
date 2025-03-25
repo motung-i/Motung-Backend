@@ -50,6 +50,12 @@ spring:
 #              - name
 #              - email
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "prometheus"
+
 ---
 spring:
   config:
