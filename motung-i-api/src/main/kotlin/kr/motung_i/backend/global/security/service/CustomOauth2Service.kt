@@ -1,6 +1,5 @@
-package kr.motung_i.backend.global.service
+package kr.motung_i.backend.global.security.service
 
-import kr.motung_i.backend.persistence.user.repository.UserRepository
 import kr.motung_i.backend.persistence.auth.user.type.OAuth2UserInfoUtil
 import kr.motung_i.backend.persistence.user.entity.User
 import kr.motung_i.backend.persistence.user.entity.enums.Providers

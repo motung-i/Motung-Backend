@@ -1,4 +1,4 @@
-package kr.motung_i.backend.global.provider
+package kr.motung_i.backend.global.security.provider
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
@@ -12,7 +12,7 @@ import java.util.Date
 import javax.crypto.SecretKey
 
 @Component
-class TokenProvider(
+class JwtTokenProvider(
     @Value("\${ACCESS_JWT_KEY}")
     private val accessJwtKey: String,
     @Value("\${REFRESH_JWT_KEY}")

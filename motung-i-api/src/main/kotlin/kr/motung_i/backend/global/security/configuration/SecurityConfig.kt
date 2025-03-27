@@ -1,11 +1,11 @@
 package kr.motung_i.backend.global.security.configuration
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import kr.motung_i.backend.global.filter.JwtAuthFilter
-import kr.motung_i.backend.global.handler.OAuth2SuccessHandler
+import kr.motung_i.backend.global.security.filter.JwtAuthFilter
+import kr.motung_i.backend.global.security.success.OAuth2SuccessHandler
 import kr.motung_i.backend.global.security.exception.CustomAccessDeniedHandler
 import kr.motung_i.backend.global.security.exception.CustomAuthenticationEntryPoint
-import kr.motung_i.backend.global.service.CustomOauth2Service
+import kr.motung_i.backend.global.security.service.CustomOauth2Service
 import kr.motung_i.backend.persistence.user.entity.enums.Roles
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

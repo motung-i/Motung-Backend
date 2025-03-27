@@ -5,7 +5,7 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import kr.motung_i.backend.global.exception.CustomException
-import kr.motung_i.backend.global.exception.dto.CustomExceptionResponse
+import kr.motung_i.backend.global.exception.dto.response.CustomExceptionResponse
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import org.springframework.http.MediaType
 import org.springframework.web.filter.OncePerRequestFilter

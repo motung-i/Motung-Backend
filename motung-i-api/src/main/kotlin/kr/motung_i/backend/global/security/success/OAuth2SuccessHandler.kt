@@ -1,10 +1,10 @@
-package kr.motung_i.backend.global.handler
+package kr.motung_i.backend.global.security.success
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import kr.motung_i.backend.persistence.auth.entity.RefreshToken
-import kr.motung_i.backend.global.provider.TokenProvider
+import kr.motung_i.backend.global.security.provider.JwtTokenProvider
 import kr.motung_i.backend.persistence.auth.repository.RefreshTokenCustomRepository
 import kr.motung_i.backend.persistence.user.entity.User
 import kr.motung_i.backend.persistence.user.repository.UserCustomRepository
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component
 @Component
 class OAuth2SuccessHandler(
     private val refreshTokenRepository: RefreshTokenCustomRepository,
-    private val tokenProvider: TokenProvider,
+    private val jwtTokenProvider: JwtTokenProvider,
     private val userRepository: UserCustomRepository,
     val objectMapper: ObjectMapper,
 ) : SimpleUrlAuthenticationSuccessHandler() {
@@ -28,13 +28,13 @@ class OAuth2SuccessHandler(
         val clientId: String = (authentication?.principal as OAuth2User).attributes["sub"].toString()
         val user: User = userRepository.findByOauthId(clientId).orElseThrow()
         val accessToken: String =
-            tokenProvider.generateToken(
+            jwtTokenProvider.generateToken(
                 clientId = clientId,
                 role = user.roles,
                 isRefresh = false,
             )
         val refreshToken: String =
-            tokenProvider.generateToken(
+            jwtTokenProvider.generateToken(
                 clientId = clientId,
                 role = user.roles,
                 isRefresh = true,

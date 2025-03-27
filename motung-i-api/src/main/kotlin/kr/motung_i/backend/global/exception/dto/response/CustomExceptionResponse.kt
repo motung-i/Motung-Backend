@@ -1,4 +1,4 @@
-package kr.motung_i.backend.global.exception.dto
+package kr.motung_i.backend.global.exception.dto.response
 
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 
