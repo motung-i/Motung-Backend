@@ -4,7 +4,7 @@ import kr.motung_i.backend.persistence.user.entity.User
 import kr.motung_i.backend.persistence.user.entity.enums.Provider
 import kr.motung_i.backend.persistence.user.entity.enums.Role
 
-class UserInfoUtil {
+abstract class UserInfoUtil {
     companion object {
         fun getInfoByProvider(
             provider: Provider,
