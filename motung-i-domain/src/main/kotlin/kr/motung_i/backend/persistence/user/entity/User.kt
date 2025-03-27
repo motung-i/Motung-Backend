@@ -6,11 +6,10 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
+import kr.motung_i.backend.persistence.BaseEntity
 import kr.motung_i.backend.persistence.user.entity.enums.Provider
 import kr.motung_i.backend.persistence.user.entity.enums.Role
 import org.hibernate.annotations.UuidGenerator
-import org.springframework.data.annotation.CreatedBy
-import java.time.LocalDateTime
 import java.util.UUID
 
 @Entity
@@ -31,7 +30,4 @@ data class User(
     @Column
     @Enumerated(EnumType.STRING)
     val provider: Provider,
-    @Column
-    @CreatedBy
-    val createdBy: LocalDateTime = LocalDateTime.now(),
-)
+) : BaseEntity()

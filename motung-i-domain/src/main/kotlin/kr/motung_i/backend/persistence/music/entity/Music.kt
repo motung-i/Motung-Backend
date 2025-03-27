@@ -5,6 +5,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToOne
+import kr.motung_i.backend.persistence.BaseEntity
 import kr.motung_i.backend.persistence.user.entity.User
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
@@ -29,4 +30,4 @@ class Music(
 
     @Column(nullable = false)
     val description: String,
-)
+) : BaseEntity()
