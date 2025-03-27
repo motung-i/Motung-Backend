@@ -30,13 +30,13 @@ class OAuth2SuccessHandler(
         val accessToken: String =
             jwtTokenProvider.generateToken(
                 clientId = clientId,
-                role = user.roles,
+                role = user.role,
                 isRefresh = false,
             )
         val refreshToken: String =
             jwtTokenProvider.generateToken(
                 clientId = clientId,
-                role = user.roles,
+                role = user.role,
                 isRefresh = true,
             )
         refreshTokenRepository.save(

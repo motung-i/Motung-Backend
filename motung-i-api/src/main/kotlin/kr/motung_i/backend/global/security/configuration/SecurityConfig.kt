@@ -6,7 +6,7 @@ import kr.motung_i.backend.global.security.success.OAuth2SuccessHandler
 import kr.motung_i.backend.global.security.exception.CustomAccessDeniedHandler
 import kr.motung_i.backend.global.security.exception.CustomAuthenticationEntryPoint
 import kr.motung_i.backend.global.security.service.CustomOauth2Service
-import kr.motung_i.backend.persistence.user.entity.enums.Roles
+import kr.motung_i.backend.persistence.user.entity.enums.Role
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -36,7 +36,7 @@ class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/")
                     .authenticated()
                     .requestMatchers(HttpMethod.GET, "/actuator/prometheus")
-                    .hasAuthority(Roles.ROLE_ADMIN.name)
+                    .hasAuthority(Role.ROLE_ADMIN.name)
             }.csrf {
                 it.disable()
             }.formLogin {

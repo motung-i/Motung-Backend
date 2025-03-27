@@ -5,7 +5,7 @@ import jakarta.servlet.ServletRequest
 import jakarta.servlet.ServletResponse
 import jakarta.servlet.http.HttpServletRequest
 import kr.motung_i.backend.global.security.provider.JwtTokenProvider
-import kr.motung_i.backend.persistence.user.entity.enums.Roles
+import kr.motung_i.backend.persistence.user.entity.enums.Role
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -25,9 +25,9 @@ class JwtAuthFilter(
         val token = jwtTokenProvider.tokenResolveByRequest(p0 as HttpServletRequest)
         if (token != null && jwtTokenProvider.validateToken(token = token, isRefresh = false)) {
             val clientId: String = jwtTokenProvider.getClientId(token = token, isRefresh = false)
-            val roles: Roles = jwtTokenProvider.getUserRoles(token = token, isRefresh = false)
+            val role: Role = jwtTokenProvider.getUserRoles(token = token, isRefresh = false)
             val auth: Authentication =
-                UsernamePasswordAuthenticationToken(clientId, "", mutableListOf(SimpleGrantedAuthority(roles.toString())))
+                UsernamePasswordAuthenticationToken(clientId, "", mutableListOf(SimpleGrantedAuthority(role.toString())))
             SecurityContextHolder.getContext().authentication = auth
         }
         p2?.doFilter(p0, p1)

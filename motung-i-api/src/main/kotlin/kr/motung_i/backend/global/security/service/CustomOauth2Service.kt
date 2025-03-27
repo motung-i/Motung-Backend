@@ -2,7 +2,7 @@ package kr.motung_i.backend.global.security.service
 
 import kr.motung_i.backend.persistence.auth.user.type.OAuth2UserInfoUtil
 import kr.motung_i.backend.persistence.user.entity.User
-import kr.motung_i.backend.persistence.user.entity.enums.Providers
+import kr.motung_i.backend.persistence.user.entity.enums.Provider
 import kr.motung_i.backend.persistence.user.repository.UserCustomRepository
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest
@@ -20,7 +20,7 @@ class CustomOauth2Service(
         val getEntity: User =
             oAuth2UserInfo.getInfoByProvider(
                 attribute = userAttribute,
-                providers = Providers.valueOf(provider.uppercase()),
+                provider = Provider.valueOf(provider.uppercase()),
             )
         if (!userRepository.findByOauthId(getEntity.oauthId).isPresent) {
             userRepository.save(getEntity)

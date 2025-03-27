@@ -6,14 +6,14 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
-import kr.motung_i.backend.persistence.user.entity.enums.Providers
-import kr.motung_i.backend.persistence.user.entity.enums.Roles
+import kr.motung_i.backend.persistence.user.entity.enums.Provider
+import kr.motung_i.backend.persistence.user.entity.enums.Role
 import org.hibernate.annotations.UuidGenerator
 import org.springframework.data.annotation.CreatedBy
 import java.time.LocalDateTime
 import java.util.UUID
 
-@Entity(name = "users")
+@Entity
 data class User(
     @Id
     @UuidGenerator
@@ -23,14 +23,14 @@ data class User(
     val name: String,
     @Column
     @Enumerated(EnumType.STRING)
-    val roles: Roles,
+    val role: Role,
     @Column
     val email: String,
     @Column(name = "oauth_id")
     val oauthId: String,
     @Column
     @Enumerated(EnumType.STRING)
-    val provider: Providers,
+    val provider: Provider,
     @Column
     @CreatedBy
     val createdBy: LocalDateTime = LocalDateTime.now(),

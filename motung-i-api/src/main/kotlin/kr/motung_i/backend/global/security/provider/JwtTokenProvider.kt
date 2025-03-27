@@ -5,7 +5,7 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import jakarta.servlet.http.HttpServletRequest
-import kr.motung_i.backend.persistence.user.entity.enums.Roles
+import kr.motung_i.backend.persistence.user.entity.enums.Role
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.util.Date
@@ -30,7 +30,7 @@ class JwtTokenProvider(
 
     fun generateToken(
         clientId: String,
-        role: Roles,
+        role: Role,
         isRefresh: Boolean,
     ): String {
         val now = System.currentTimeMillis()
@@ -90,8 +90,8 @@ class JwtTokenProvider(
     fun getUserRoles(
         token: String,
         isRefresh: Boolean,
-    ): Roles =
-        Roles.valueOf(
+    ): Role =
+        Role.valueOf(
             Jwts
                 .parser()
                 .verifyWith(getSecretKey(isRefresh))
