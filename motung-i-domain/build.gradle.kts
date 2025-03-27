@@ -16,6 +16,6 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
 }
 
-tasks.getByName("jar") {
-    enabled = true
+tasks.getByName("bootJar") {
+    enabled = false
 }
