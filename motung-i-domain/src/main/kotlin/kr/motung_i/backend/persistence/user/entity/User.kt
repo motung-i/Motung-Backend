@@ -18,16 +18,21 @@ data class User(
     @UuidGenerator
     @GeneratedValue
     val id: UUID? = null,
-    @Column
+
+    @Column(nullable = false)
     val name: String,
-    @Column
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     val role: Role,
-    @Column
+
+    @Column(nullable = false)
     val email: String,
-    @Column(name = "oauth_id")
+
+    @Column(nullable = false, name = "oauth_id")
     val oauthId: String,
-    @Column
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     val provider: Provider,
 ) : BaseEntity()

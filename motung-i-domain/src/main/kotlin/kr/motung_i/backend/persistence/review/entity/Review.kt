@@ -14,7 +14,6 @@ import java.util.UUID
 
 @Entity
 class Review (
-
     @Id
     @UuidGenerator
     val id: UUID? = null,
