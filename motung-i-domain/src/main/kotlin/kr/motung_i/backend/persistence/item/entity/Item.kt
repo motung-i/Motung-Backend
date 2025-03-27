@@ -1,10 +1,6 @@
 package kr.motung_i.backend.persistence.item.entity
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.Id
-import jakarta.persistence.ManyToOne
+import jakarta.persistence.*
 import kr.motung_i.backend.persistence.BaseEntity
 import kr.motung_i.backend.persistence.user.entity.User
 import org.hibernate.annotations.OnDelete
@@ -16,9 +12,11 @@ import java.util.UUID
 class Item (
     @Id
     @UuidGenerator
+    @Column(name = "ITEM_ID")
     val id: UUID? = null,
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "USER_ID")
     @OnDelete(action = OnDeleteAction.CASCADE)
     val user: User,
 
