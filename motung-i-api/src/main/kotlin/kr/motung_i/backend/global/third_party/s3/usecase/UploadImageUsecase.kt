@@ -2,6 +2,7 @@ package kr.motung_i.backend.global.third_party.s3.usecase
 
 import kr.motung_i.backend.global.third_party.s3.properties.S3Properties
 import kr.motung_i.backend.global.util.ImageUtil.Companion.getImageExtension
+import kr.motung_i.backend.global.util.ImageUtil.Companion.getImageContentType
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import software.amazon.awssdk.core.sync.RequestBody
@@ -10,7 +11,6 @@ import software.amazon.awssdk.services.s3.model.GetUrlRequest
 import software.amazon.awssdk.services.s3.model.ObjectCannedACL
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import java.time.LocalDateTime
-import java.util.Optional
 import java.util.UUID.randomUUID
 
 @Service
@@ -28,6 +28,7 @@ class UploadImageUsecase(
                 PutObjectRequest.builder()
                     .bucket(s3Properties.bucketName)
                     .key(fileName)
+                    .contentType(getImageContentType(originalFilename))
                     .acl(ObjectCannedACL.PUBLIC_READ)
                     .build()
             val requestBody = RequestBody.fromInputStream(it.inputStream, it.size)
