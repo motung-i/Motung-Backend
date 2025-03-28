@@ -16,7 +16,7 @@ import java.util.UUID
 data class User(
     @Id
     @UuidGenerator
-    @GeneratedValue
+    @Column(name = "USER_ID")
     val id: UUID? = null,
 
     @Column(nullable = false)
@@ -29,7 +29,7 @@ data class User(
     @Column(nullable = false)
     val email: String,
 
-    @Column(nullable = false, name = "oauth_id")
+    @Column(nullable = false, name = "OAUTH_ID")
     val oauthId: String,
 
     @Column(nullable = false)

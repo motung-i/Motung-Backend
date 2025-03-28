@@ -11,6 +11,7 @@ import java.util.*
 class TravelInfo (
     @Id
     @UuidGenerator
+    @Column(name = "TRAVEL_INFO_ID")
     val id: UUID? = null,
 
     @Column(nullable = false)
