@@ -1,6 +1,7 @@
 package kr.motung_i.backend.persistence.music.entity
 
 import jakarta.persistence.*
+import jakarta.validation.constraints.Size
 import kr.motung_i.backend.persistence.BaseEntity
 import kr.motung_i.backend.persistence.music.entity.enums.MusicStatus
 import kr.motung_i.backend.persistence.user.entity.User
@@ -33,12 +34,17 @@ class Music(
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     var musicStatus: MusicStatus = MusicStatus.PENDING,
+
+    @Size(max = 1, min = 5)
+    var rankNumber: Int? = null,
 ) : BaseEntity() {
-    fun approveMusic() {
+    fun approveMusic(rankNumber: Int) {
         musicStatus = MusicStatus.APPROVED
+        this.rankNumber = rankNumber
     }
 
-    fun cancelMusic() {
+    fun cancelMusic(rankNumber: Int) {
         musicStatus = MusicStatus.PENDING
+        this.rankNumber = null
     }
 }
