@@ -3,6 +3,8 @@ package kr.motung_i.backend.global.security.success
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import kr.motung_i.backend.global.exception.CustomException
+import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.persistence.auth.entity.RefreshToken
 import kr.motung_i.backend.global.security.provider.JwtTokenProvider
 import kr.motung_i.backend.persistence.auth.repository.RefreshTokenCustomRepository
@@ -26,7 +28,7 @@ class OAuth2SuccessHandler(
         authentication: Authentication?,
     ) {
         val clientId: String = (authentication?.principal as OAuth2User).attributes["sub"].toString()
-        val user: User = userRepository.findByOauthId(clientId).orElseThrow()
+        val user: User = userRepository.findByOauthId(clientId) ?: throw CustomException(CustomErrorCode.NOT_FOUND_USER)
         val accessToken: String =
             jwtTokenProvider.generateToken(
                 clientId = clientId,
