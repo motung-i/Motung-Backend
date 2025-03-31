@@ -2,6 +2,7 @@ package kr.motung_i.backend.persistence.music.entity
 
 import jakarta.persistence.*
 import kr.motung_i.backend.persistence.BaseEntity
+import kr.motung_i.backend.persistence.music.entity.enums.MusicStatus
 import kr.motung_i.backend.persistence.user.entity.User
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
@@ -28,4 +29,16 @@ class Music(
 
     @Column(nullable = false)
     val description: String,
-) : BaseEntity()
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    var musicStatus: MusicStatus = MusicStatus.PENDING,
+) : BaseEntity() {
+    fun approveMusic() {
+        musicStatus = MusicStatus.APPROVED
+    }
+
+    fun cancelMusic() {
+        musicStatus = MusicStatus.PENDING
+    }
+}
