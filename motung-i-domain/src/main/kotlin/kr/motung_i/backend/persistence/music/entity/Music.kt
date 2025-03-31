@@ -38,6 +38,17 @@ class Music(
     @Size(max = 1, min = 5)
     var rankNumber: Int? = null,
 ) : BaseEntity() {
+    fun update(title: String?, singer: String?, description: String?): Music =
+        Music(
+            id = this.id,
+            user = this.user,
+            title = title?.takeIf { it.isNotBlank() } ?: this.title,
+            singer = singer?.takeIf { it.isNotBlank() } ?: this.singer,
+            description = description?. takeIf { it.isNotBlank() } ?: this.description,
+            musicStatus = this.musicStatus,
+            rankNumber = rankNumber,
+        )
+
     fun approveMusic(rankNumber: Int) {
         musicStatus = MusicStatus.APPROVED
         this.rankNumber = rankNumber

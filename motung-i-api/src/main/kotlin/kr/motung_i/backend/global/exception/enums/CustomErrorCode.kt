@@ -16,5 +16,7 @@ enum class CustomErrorCode(
 
     NOT_ALLOWED_IMAGE_EXTENSION(HttpStatus.BAD_REQUEST, "허용되지 않은 이미지 확장자 입니다."),
 
-    NOT_FOUND_USER(HttpStatus.NOT_FOUND, "존재하지 않는 유저입니다.")
+    NOT_FOUND_USER(HttpStatus.NOT_FOUND, "존재하지 않는 유저입니다."),
+
+    NOT_FOUND_MUSIC(HttpStatus.NOT_FOUND, "존재하지 않는 음악입니다."),
 }
