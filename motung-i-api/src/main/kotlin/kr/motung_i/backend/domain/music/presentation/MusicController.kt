@@ -1,5 +1,6 @@
 package kr.motung_i.backend.domain.music.presentation
 
+import jakarta.validation.Valid
 import kr.motung_i.backend.domain.music.presentation.dto.request.CreateMusicRequest
 import kr.motung_i.backend.domain.music.presentation.dto.response.MusicListResponse
 import kr.motung_i.backend.domain.music.usecase.CreateMusicUsecase
@@ -19,7 +20,7 @@ class MusicController(
 ) {
 
     @PostMapping
-    fun createMusic(@RequestBody createMusicRequest: CreateMusicRequest): ResponseEntity<Void> =
+    fun createMusic(@Valid @RequestBody createMusicRequest: CreateMusicRequest): ResponseEntity<Void> =
         createMusicUsecase.execute(createMusicRequest).run {
             ResponseEntity.noContent().build()
         }

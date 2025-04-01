@@ -3,12 +3,12 @@ package kr.motung_i.backend.domain.music.presentation.dto.request
 import jakarta.validation.constraints.NotBlank
 
 data class CreateMusicRequest(
-    @NotBlank
+    @field:NotBlank
     val title: String,
 
-    @NotBlank
+    @field:NotBlank
     val singer: String,
 
-    @NotBlank
+    @field:NotBlank
     val description: String
 )

@@ -1,16 +1,17 @@
 package kr.motung_i.backend.persistence.music.entity
 
 import jakarta.persistence.*
-import jakarta.validation.constraints.Size
 import kr.motung_i.backend.persistence.BaseEntity
 import kr.motung_i.backend.persistence.music.entity.enums.MusicStatus
 import kr.motung_i.backend.persistence.user.entity.User
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
 import org.hibernate.annotations.UuidGenerator
+import org.springframework.validation.annotation.Validated
 import java.util.UUID
 
 @Entity
+@Validated
 class Music(
     @Id
     @UuidGenerator
@@ -35,7 +36,6 @@ class Music(
     @Enumerated(EnumType.STRING)
     var musicStatus: MusicStatus = MusicStatus.PENDING,
 
-    @Size(max = 1, min = 5)
     @Column(unique = true)
     var rankNumber: Int? = null,
 ) : BaseEntity() {
