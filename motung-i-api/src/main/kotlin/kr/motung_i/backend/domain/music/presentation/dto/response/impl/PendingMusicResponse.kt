@@ -1,4 +1,4 @@
-package kr.motung_i.backend.domain.admin.persentation.dto.response
+package kr.motung_i.backend.domain.music.presentation.dto.response.impl
 
 import kr.motung_i.backend.domain.music.presentation.dto.response.MusicResponse
 import kr.motung_i.backend.persistence.music.entity.Music

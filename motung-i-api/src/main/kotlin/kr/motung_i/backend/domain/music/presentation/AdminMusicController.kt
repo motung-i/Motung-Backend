@@ -1,11 +1,11 @@
-package kr.motung_i.backend.domain.admin.persentation
+package kr.motung_i.backend.domain.music.presentation
 
 import jakarta.validation.Valid
-import kr.motung_i.backend.domain.admin.persentation.dto.request.ApproveMusicRequest
-import kr.motung_i.backend.domain.admin.persentation.dto.request.UpdateMusicRequest
-import kr.motung_i.backend.domain.admin.usecase.ApproveMusicUsecase
-import kr.motung_i.backend.domain.admin.usecase.FetchPendingMusicUsecase
-import kr.motung_i.backend.domain.admin.usecase.UpdateMusicUsecase
+import kr.motung_i.backend.domain.music.presentation.dto.request.ApproveMusicRequest
+import kr.motung_i.backend.domain.music.presentation.dto.request.UpdateMusicRequest
+import kr.motung_i.backend.domain.music.usecase.ApproveMusicUsecase
+import kr.motung_i.backend.domain.music.usecase.FetchPendingMusicUsecase
+import kr.motung_i.backend.domain.music.usecase.UpdateMusicUsecase
 import kr.motung_i.backend.domain.music.presentation.dto.response.MusicListResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,20 +18,20 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 @RestController
-@RequestMapping("admin")
-class AdminController(
+@RequestMapping("admin/music")
+class AdminMusicController(
     val fetchPendingMusicUsecase: FetchPendingMusicUsecase,
     val updateMusicUsecase: UpdateMusicUsecase,
     val approveMusicUsecase: ApproveMusicUsecase,
 ) {
     /* music */
-    @GetMapping("music")
+    @GetMapping
     fun fetchPendingMusic(): ResponseEntity<MusicListResponse> =
         fetchPendingMusicUsecase.execute().run {
             ResponseEntity.ok(this)
         }
 
-    @PatchMapping("music/{musicId}")
+    @PatchMapping("{musicId}")
     fun updateMusic(
         @PathVariable musicId: UUID,
         @RequestBody updateMusicRequest: UpdateMusicRequest,
@@ -40,7 +40,7 @@ class AdminController(
             ResponseEntity.noContent().build()
         }
 
-    @PostMapping("music/{musicId}")
+    @PostMapping("{musicId}")
     fun approveMusic(
         @PathVariable musicId: UUID,
         @Valid @RequestBody approveMusicRequest: ApproveMusicRequest,

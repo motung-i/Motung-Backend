@@ -1,4 +1,4 @@
-package kr.motung_i.backend.domain.admin.persentation.dto.request
+package kr.motung_i.backend.domain.music.presentation.dto.request
 
 data class UpdateMusicRequest(
     val title: String?,

@@ -1,6 +1,6 @@
-package kr.motung_i.backend.domain.admin.usecase
+package kr.motung_i.backend.domain.music.usecase
 
-import kr.motung_i.backend.domain.admin.persentation.dto.request.ApproveMusicRequest
+import kr.motung_i.backend.domain.music.presentation.dto.request.ApproveMusicRequest
 import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.persistence.music.repository.MusicCustomRepository

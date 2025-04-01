@@ -1,4 +1,4 @@
-package kr.motung_i.backend.domain.admin.usecase
+package kr.motung_i.backend.domain.music.usecase
 
 import kr.motung_i.backend.domain.music.presentation.dto.response.MusicListResponse
 import kr.motung_i.backend.persistence.music.entity.enums.MusicStatus.*

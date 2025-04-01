@@ -1,6 +1,7 @@
 package kr.motung_i.backend.domain.music.presentation.dto.response
 
-import kr.motung_i.backend.domain.admin.persentation.dto.response.PendingMusicResponse
+import kr.motung_i.backend.domain.music.presentation.dto.response.impl.ApprovedMusicResponse
+import kr.motung_i.backend.domain.music.presentation.dto.response.impl.PendingMusicResponse
 import kr.motung_i.backend.persistence.music.entity.Music
 import kr.motung_i.backend.persistence.music.entity.enums.MusicStatus
 
