@@ -36,6 +36,7 @@ class Music(
     var musicStatus: MusicStatus = MusicStatus.PENDING,
 
     @Size(max = 1, min = 5)
+    @Column(unique = true)
     var rankNumber: Int? = null,
 ) : BaseEntity() {
     fun update(title: String?, singer: String?, description: String?): Music =
@@ -54,7 +55,7 @@ class Music(
         this.rankNumber = rankNumber
     }
 
-    fun cancelMusic(rankNumber: Int) {
+    fun cancelMusic() {
         musicStatus = MusicStatus.PENDING
         this.rankNumber = null
     }

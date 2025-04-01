@@ -8,4 +8,5 @@ interface MusicCustomRepository {
     fun save(music: Music)
     fun findById(id: UUID): Music?
     fun findByMusicStatusOrderByRankNumber(musicStatus: MusicStatus): List<Music>
+    fun findByRankNumber(rankNumber: Int): Music?
 }

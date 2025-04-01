@@ -4,6 +4,7 @@ import kr.motung_i.backend.persistence.music.entity.Music
 import kr.motung_i.backend.persistence.music.entity.enums.MusicStatus
 import org.springframework.stereotype.Repository
 import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 @Repository
 class JpaMusicCustomRepository(
@@ -14,8 +15,11 @@ class JpaMusicCustomRepository(
     }
 
     override fun findById(id: UUID): Music? =
-        musicRepository.findById(id).get()
+        musicRepository.findById(id).getOrNull()
 
     override fun findByMusicStatusOrderByRankNumber(musicStatus: MusicStatus): List<Music> =
         musicRepository.findByMusicStatusOrderByRankNumber(musicStatus)
+
+    override fun findByRankNumber(rankNumber: Int): Music? =
+        musicRepository.findByRankNumber(rankNumber)
 }

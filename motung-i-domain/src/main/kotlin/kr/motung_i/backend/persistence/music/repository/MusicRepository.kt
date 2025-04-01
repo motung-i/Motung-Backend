@@ -7,4 +7,5 @@ import java.util.UUID
 
 interface MusicRepository : JpaRepository<Music, UUID> {
     fun findByMusicStatusOrderByRankNumber(musicStatus: MusicStatus): List<Music>
+    fun findByRankNumber(rankNumber: Int): Music?
 }
