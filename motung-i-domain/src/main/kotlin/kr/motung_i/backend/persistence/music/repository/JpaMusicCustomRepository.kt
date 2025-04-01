@@ -17,6 +17,10 @@ class JpaMusicCustomRepository(
     override fun findById(id: UUID): Music? =
         musicRepository.findById(id).getOrNull()
 
+    override fun delete(music: Music) {
+        musicRepository.delete(music)
+    }
+
     override fun findByMusicStatusOrderByRankNumber(musicStatus: MusicStatus): List<Music> =
         musicRepository.findByMusicStatusOrderByRankNumber(musicStatus)
 
