@@ -1,23 +1,19 @@
 package kr.motung_i.backend.domain.music.presentation.dto.response
 
+import kr.motung_i.backend.domain.admin.persentation.dto.response.PendingMusicResponse
 import kr.motung_i.backend.persistence.music.entity.Music
-import java.util.UUID
+import kr.motung_i.backend.persistence.music.entity.enums.MusicStatus
 
-class MusicResponse(
-    val musicId: UUID?,
+interface MusicResponse {
+    val title: String
+    val singer: String
+    val description: String
 
-    val title: String,
-
-    val singer: String,
-
-    val description: String,
-) {
     companion object {
-        fun from(music: Music): MusicResponse = MusicResponse(
-            music.id,
-            music.title,
-            music.singer,
-            music.description,
-        )
+        fun from(music: Music): MusicResponse =
+            when (music.musicStatus) {
+                MusicStatus.PENDING -> PendingMusicResponse.from(music)
+                MusicStatus.APPROVED -> ApprovedMusicResponse.from(music)
+            }
     }
 }
