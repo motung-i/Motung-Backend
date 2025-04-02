@@ -21,9 +21,7 @@ class CustomOauth2Service(
                 attribute = userAttribute,
                 provider = Provider.valueOf(provider.uppercase()),
             )
-        if (!userRepository.findByOauthId(getEntity.oauthId).isPresent) {
-            userRepository.save(getEntity)
-        }
+        userRepository.findByOauthId(getEntity.oauthId) ?: userRepository.save(getEntity)
         return super.loadUser(userRequest)
     }
 }

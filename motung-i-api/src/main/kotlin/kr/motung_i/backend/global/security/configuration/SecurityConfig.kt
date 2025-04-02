@@ -37,6 +37,12 @@ class SecurityConfig {
                     .authenticated()
                     .requestMatchers(HttpMethod.GET, "/actuator/prometheus")
                     .hasAuthority(Role.ROLE_ADMIN.name)
+                    .requestMatchers("/admin/**")
+                    .hasAuthority(Role.ROLE_ADMIN.name)
+                    .requestMatchers(HttpMethod.POST, "/music")
+                    .hasAuthority(Role.ROLE_USER.name)
+                    .requestMatchers(HttpMethod.GET, "/music")
+                    .hasAuthority(Role.ROLE_USER.name)
             }.csrf {
                 it.disable()
             }.formLogin {

@@ -13,6 +13,14 @@ enum class CustomErrorCode(
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에 문제가 발생했습니다."),
 
     UNKNOWN_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "의도하지 않은 오류가 발생했습니다."),
+    MISSING_REQUEST_BODY(HttpStatus.BAD_REQUEST, "본문 요청이 비어있거나 잘못된 형식입니다."),
+    VALIDATION_ERROR(HttpStatus.BAD_REQUEST, "유효하지 않는 구성의 바디 요청 값 입니다."),
+    PARAMETER_ERROR(HttpStatus.BAD_REQUEST, "유효하지 않는 구성의 파라미터 요청 값 입니다."),
 
     NOT_ALLOWED_IMAGE_EXTENSION(HttpStatus.BAD_REQUEST, "허용되지 않은 이미지 확장자 입니다."),
+
+    NOT_FOUND_USER(HttpStatus.NOT_FOUND, "존재하지 않는 유저입니다."),
+
+    NOT_FOUND_MUSIC(HttpStatus.NOT_FOUND, "존재하지 않는 음악입니다."),
+    CANNOT_MODIFY_APPROVED_MUSIC(HttpStatus.BAD_REQUEST, "승인된 음악은 삭제할 수 없습니다.")
 }

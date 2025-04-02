@@ -2,13 +2,16 @@ package kr.motung_i.backend.persistence.music.entity
 
 import jakarta.persistence.*
 import kr.motung_i.backend.persistence.BaseEntity
+import kr.motung_i.backend.persistence.music.entity.enums.MusicStatus
 import kr.motung_i.backend.persistence.user.entity.User
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
 import org.hibernate.annotations.UuidGenerator
+import org.springframework.validation.annotation.Validated
 import java.util.UUID
 
 @Entity
+@Validated
 class Music(
     @Id
     @UuidGenerator
@@ -28,4 +31,32 @@ class Music(
 
     @Column(nullable = false)
     val description: String,
-) : BaseEntity()
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    var musicStatus: MusicStatus = MusicStatus.PENDING,
+
+    @Column(unique = true)
+    var rankNumber: Int? = null,
+) : BaseEntity() {
+    fun update(title: String?, singer: String?, description: String?): Music =
+        Music(
+            id = this.id,
+            user = this.user,
+            title = title?.takeIf { it.isNotBlank() } ?: this.title,
+            singer = singer?.takeIf { it.isNotBlank() } ?: this.singer,
+            description = description?. takeIf { it.isNotBlank() } ?: this.description,
+            musicStatus = this.musicStatus,
+            rankNumber = rankNumber,
+        )
+
+    fun approveMusic(rankNumber: Int) {
+        musicStatus = MusicStatus.APPROVED
+        this.rankNumber = rankNumber
+    }
+
+    fun cancelMusic() {
+        musicStatus = MusicStatus.PENDING
+        this.rankNumber = null
+    }
+}
