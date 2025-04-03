@@ -5,7 +5,7 @@ import kr.motung_i.backend.persistence.music.entity.Music
 import java.util.UUID
 
 class PendingMusicResponse(
-    val musicId: UUID?,
+    val id: UUID?,
 
     override val title: String,
 
