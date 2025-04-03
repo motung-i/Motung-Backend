@@ -7,4 +7,5 @@ import java.util.UUID
 
 interface ItemRepository : JpaRepository<Item, UUID> {
     fun findByItemStatusOrderByRankNumber(itemStatus: ItemStatus): List<Item>
+    fun findByRankNumber(rank: Int): Item?
 }

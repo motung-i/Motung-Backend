@@ -19,4 +19,7 @@ class ItemCustomJpaRepository(
 
     override fun findByItemStatusOrderByRankNumber(itemStatus: ItemStatus): List<Item> =
         itemRepository.findByItemStatusOrderByRankNumber(itemStatus)
+
+    override fun findByRankNumber(rankNumber: Int): Item? =
+        itemRepository.findByRankNumber(rankNumber)
 }

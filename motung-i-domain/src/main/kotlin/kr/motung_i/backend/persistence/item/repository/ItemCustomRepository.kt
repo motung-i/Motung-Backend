@@ -8,4 +8,5 @@ interface ItemCustomRepository {
     fun findById(id: UUID): Item?
     fun save(item : Item)
     fun findByItemStatusOrderByRankNumber(itemStatus: ItemStatus): List<Item>
+    fun findByRankNumber(rankNumber: Int): Item?
 }
