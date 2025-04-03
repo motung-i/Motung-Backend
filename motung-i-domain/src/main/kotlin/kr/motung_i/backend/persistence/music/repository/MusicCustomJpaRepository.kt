@@ -7,7 +7,7 @@ import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 @Repository
-class JpaMusicCustomRepository(
+class MusicCustomJpaRepository(
     private val musicRepository: MusicRepository,
 ) : MusicCustomRepository {
     override fun save(music: Music) {
