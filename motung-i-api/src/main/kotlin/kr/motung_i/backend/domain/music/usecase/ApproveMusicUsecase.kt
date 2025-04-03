@@ -18,6 +18,10 @@ class ApproveMusicUsecase(
         val requestMusic = musicCustomRepository.findById(musicId)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_MUSIC)
 
+        if (rankMusic == requestMusic) {
+            throw CustomException(CustomErrorCode.MUSIC_ALREADY_APPROVED)
+        }
+
         rankMusic?.cancelMusic()
         requestMusic.approveMusic(approveMusicRequest.rankNumber)
     }
