@@ -28,7 +28,7 @@ class AdminMusicController(
     val removeMusicUsecase: RemoveMusicUsecase,
 ) {
     @GetMapping
-    fun fetchPendingMusic(): ResponseEntity<MusicListResponse> =
+    fun fetchPendingMusicList(): ResponseEntity<MusicListResponse> =
         fetchPendingMusicUsecase.execute().run {
             ResponseEntity.ok(this)
         }
