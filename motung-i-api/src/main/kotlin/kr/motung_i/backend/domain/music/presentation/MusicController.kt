@@ -26,7 +26,7 @@ class MusicController(
         }
 
     @GetMapping
-    fun fetchApprovedMusic(): ResponseEntity<MusicListResponse> =
+    fun fetchApprovedMusicList(): ResponseEntity<MusicListResponse> =
         fetchApprovedMusicUsecase.execute().run {
             ResponseEntity.ok(this)
         }
