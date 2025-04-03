@@ -5,7 +5,7 @@ import kr.motung_i.backend.persistence.item.entity.enums.ItemStatus
 import org.springframework.stereotype.Repository
 
 @Repository
-class JpaItemCustomRepository(
+class ItemCustomJpaRepository(
     val itemRepository: ItemRepository,
 ) : ItemCustomRepository {
     override fun save(item: Item) {
