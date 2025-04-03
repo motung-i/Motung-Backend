@@ -1,5 +1,6 @@
 package kr.motung_i.backend.domain.item.presentation
 
+import jakarta.validation.Valid
 import kr.motung_i.backend.domain.item.presentation.dto.request.CreateItemRequest
 import kr.motung_i.backend.domain.item.presentation.dto.response.ItemsResponse
 import kr.motung_i.backend.domain.item.usecase.CreateItemUsecase
@@ -18,7 +19,7 @@ class ItemController(
     private val fetchApprovedItemUsecase: FetchApprovedItemUsecase,
 ) {
     @PostMapping
-    fun createItem(@RequestBody createItemRequest: CreateItemRequest): ResponseEntity<Unit> =
+    fun createItem(@Valid @RequestBody createItemRequest: CreateItemRequest): ResponseEntity<Unit> =
         createItemUsecase.execute(createItemRequest).run {
             ResponseEntity.noContent().build()
         }
