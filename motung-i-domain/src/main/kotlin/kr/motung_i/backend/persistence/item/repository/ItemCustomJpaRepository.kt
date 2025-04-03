@@ -17,6 +17,10 @@ class ItemCustomJpaRepository(
         itemRepository.save(item)
     }
 
+    override fun delete(item: Item) {
+        itemRepository.delete(item)
+    }
+
     override fun findByItemStatusOrderByRankNumber(itemStatus: ItemStatus): List<Item> =
         itemRepository.findByItemStatusOrderByRankNumber(itemStatus)
 

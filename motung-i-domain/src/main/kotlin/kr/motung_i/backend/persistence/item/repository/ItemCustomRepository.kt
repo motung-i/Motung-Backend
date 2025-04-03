@@ -7,6 +7,7 @@ import java.util.UUID
 interface ItemCustomRepository {
     fun findById(id: UUID): Item?
     fun save(item : Item)
+    fun delete(item: Item)
     fun findByItemStatusOrderByRankNumber(itemStatus: ItemStatus): List<Item>
     fun findByRankNumber(rankNumber: Int): Item?
 }

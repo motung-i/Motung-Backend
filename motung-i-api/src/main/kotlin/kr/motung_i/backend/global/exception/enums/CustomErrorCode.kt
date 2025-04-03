@@ -26,5 +26,6 @@ enum class CustomErrorCode(
     MUSIC_ALREADY_APPROVED(HttpStatus.BAD_REQUEST, "이미 승인된 음악입니다."),
 
     NOT_FOUND_ITEM(HttpStatus.NOT_FOUND, "존재하지 않는 꿀템입니다."),
+    CANNOT_MODIFY_APPROVED_ITEM(HttpStatus.BAD_REQUEST, "승인된 꿀템은 삭제할 수 없습니다."),
     ITEM_ALREADY_APPROVED(HttpStatus.BAD_REQUEST, "이미 승인된 꿀템입니다."),
 }

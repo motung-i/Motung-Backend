@@ -6,6 +6,7 @@ import kr.motung_i.backend.domain.item.presentation.dto.request.UpdateItemReques
 import kr.motung_i.backend.domain.item.presentation.dto.response.ItemsResponse
 import kr.motung_i.backend.domain.item.usecase.ApproveItemUsecase
 import kr.motung_i.backend.domain.item.usecase.FetchPendingItemUsecase
+import kr.motung_i.backend.domain.item.usecase.RemoveItemUsecase
 import kr.motung_i.backend.domain.item.usecase.UpdateItemUsecase
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -17,6 +18,7 @@ class AdminItemController(
     private val fetchPendingItemUsecase: FetchPendingItemUsecase,
     private val updateItemUsecase: UpdateItemUsecase,
     private val approveItemUsecase: ApproveItemUsecase,
+    private val removeItemUsecase: RemoveItemUsecase,
 ) {
     @GetMapping
     fun fetchPendingItems(): ResponseEntity<ItemsResponse> =
@@ -39,6 +41,12 @@ class AdminItemController(
         @Valid @RequestBody approveItemRequest: ApproveItemRequest,
     ): ResponseEntity<Unit> =
         approveItemUsecase.execute(itemId, approveItemRequest).run {
+            ResponseEntity.noContent().build()
+        }
+
+    @DeleteMapping("{itemId}")
+    fun removeItem(@PathVariable itemId: UUID): ResponseEntity<Unit> =
+        removeItemUsecase.execute(itemId).run {
             ResponseEntity.noContent().build()
         }
 }
