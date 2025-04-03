@@ -4,7 +4,7 @@ import kr.motung_i.backend.persistence.user.entity.User
 import org.springframework.stereotype.Repository
 
 @Repository
-class JpaUserCustomRepositoryImpl(
+class JpaUserCustomRepository(
     private val userRepository: UserRepository,
 ) : UserCustomRepository {
     override fun findByOauthId(oauthId: String): User? {
