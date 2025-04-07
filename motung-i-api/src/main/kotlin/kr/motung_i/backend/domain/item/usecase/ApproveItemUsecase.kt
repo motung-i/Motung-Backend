@@ -3,7 +3,7 @@ package kr.motung_i.backend.domain.item.usecase
 import kr.motung_i.backend.domain.item.presentation.dto.request.ApproveItemRequest
 import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
-import kr.motung_i.backend.persistence.item.repository.ItemCustomRepository
+import kr.motung_i.backend.persistence.item.repository.ItemRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -11,11 +11,11 @@ import java.util.*
 @Service
 @Transactional
 class ApproveItemUsecase(
-    private val itemCustomRepository: ItemCustomRepository,
+    private val itemRepository: ItemRepository,
 ) {
     fun execute(itemId: UUID, approveItemRequest: ApproveItemRequest) {
-        val rankItem = itemCustomRepository.findByRankNumber(approveItemRequest.rankNumber)
-        val requestItem = itemCustomRepository.findById(itemId)
+        val rankItem = itemRepository.findByRankNumber(approveItemRequest.rankNumber)
+        val requestItem = itemRepository.findById(itemId)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_ITEM)
 
         if (rankItem == requestItem) {

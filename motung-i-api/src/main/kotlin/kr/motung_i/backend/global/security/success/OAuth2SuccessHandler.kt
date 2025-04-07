@@ -7,9 +7,9 @@ import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.persistence.auth.entity.RefreshToken
 import kr.motung_i.backend.global.security.provider.JwtTokenProvider
-import kr.motung_i.backend.persistence.auth.repository.RefreshTokenCustomRepository
+import kr.motung_i.backend.persistence.auth.repository.RefreshTokenRepository
 import kr.motung_i.backend.persistence.user.entity.User
-import kr.motung_i.backend.persistence.user.repository.UserCustomRepository
+import kr.motung_i.backend.persistence.user.repository.UserRepository
 import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
@@ -17,9 +17,9 @@ import org.springframework.stereotype.Component
 
 @Component
 class OAuth2SuccessHandler(
-    private val refreshTokenRepository: RefreshTokenCustomRepository,
+    private val refreshTokenRepository: RefreshTokenRepository,
     private val jwtTokenProvider: JwtTokenProvider,
-    private val userRepository: UserCustomRepository,
+    private val userRepository: UserRepository,
     val objectMapper: ObjectMapper,
 ) : SimpleUrlAuthenticationSuccessHandler() {
     override fun onAuthenticationSuccess(

@@ -1,13 +1,11 @@
-package kr.motung_i.backend.persistence.item.repository
+package kr.motung_i.backend.persistence.item.repository.impl
 
 import kr.motung_i.backend.persistence.item.entity.Item
 import kr.motung_i.backend.persistence.item.entity.enums.ItemStatus
+import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 
-interface ItemCustomRepository {
-    fun findById(id: UUID): Item?
-    fun save(item : Item)
-    fun delete(item: Item)
+interface ItemJpaRepository : JpaRepository<Item, UUID> {
     fun findByItemStatusOrderByRankNumber(itemStatus: ItemStatus): List<Item>
-    fun findByRankNumber(rankNumber: Int): Item?
+    fun findByRankNumber(rank: Int): Item?
 }

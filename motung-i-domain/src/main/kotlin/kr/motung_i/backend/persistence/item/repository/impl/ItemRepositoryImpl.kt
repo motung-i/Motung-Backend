@@ -1,29 +1,30 @@
-package kr.motung_i.backend.persistence.item.repository
+package kr.motung_i.backend.persistence.item.repository.impl
 
 import kr.motung_i.backend.persistence.item.entity.Item
 import kr.motung_i.backend.persistence.item.entity.enums.ItemStatus
+import kr.motung_i.backend.persistence.item.repository.ItemRepository
 import org.springframework.stereotype.Repository
 import java.util.UUID
 import kotlin.jvm.optionals.getOrNull
 
 @Repository
-class ItemCustomJpaRepository(
-    val itemRepository: ItemRepository,
-) : ItemCustomRepository {
+class ItemRepositoryImpl(
+    val itemJpaRepository: ItemJpaRepository,
+) : ItemRepository {
     override fun findById(id: UUID): Item? =
-        itemRepository.findById(id).getOrNull()
+        itemJpaRepository.findById(id).getOrNull()
 
     override fun save(item: Item) {
-        itemRepository.save(item)
+        itemJpaRepository.save(item)
     }
 
     override fun delete(item: Item) {
-        itemRepository.delete(item)
+        itemJpaRepository.delete(item)
     }
 
     override fun findByItemStatusOrderByRankNumber(itemStatus: ItemStatus): List<Item> =
-        itemRepository.findByItemStatusOrderByRankNumber(itemStatus)
+        itemJpaRepository.findByItemStatusOrderByRankNumber(itemStatus)
 
     override fun findByRankNumber(rankNumber: Int): Item? =
-        itemRepository.findByRankNumber(rankNumber)
+        itemJpaRepository.findByRankNumber(rankNumber)
 }
