@@ -1,11 +1,11 @@
 package kr.motung_i.backend.global.security.configuration
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import kr.motung_i.backend.global.security.filter.JwtAuthFilter
-import kr.motung_i.backend.global.security.success.OAuth2SuccessHandler
 import kr.motung_i.backend.global.security.exception.CustomAccessDeniedHandler
 import kr.motung_i.backend.global.security.exception.CustomAuthenticationEntryPoint
+import kr.motung_i.backend.global.security.filter.JwtAuthFilter
 import kr.motung_i.backend.global.security.service.CustomOauth2Service
+import kr.motung_i.backend.global.security.success.OAuth2SuccessHandler
 import kr.motung_i.backend.persistence.user.entity.enums.Role
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -34,6 +34,8 @@ class SecurityConfig {
             .authorizeHttpRequests {
                 it
                     .requestMatchers(HttpMethod.GET, "/")
+                    .authenticated()
+                    .requestMatchers(HttpMethod.POST, "/auth/refresh")
                     .authenticated()
                     .requestMatchers(HttpMethod.GET, "/actuator/prometheus")
                     .hasAuthority(Role.ROLE_ADMIN.name)
