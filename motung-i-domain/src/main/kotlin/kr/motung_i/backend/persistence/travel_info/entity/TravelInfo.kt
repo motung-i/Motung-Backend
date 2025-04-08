@@ -22,4 +22,12 @@ class TravelInfo (
 
     @Column(nullable = false)
     val description: String,
-) : BaseEntity()
+) : BaseEntity() {
+    fun update(imageUrl: String?, title: String?, description: String?): TravelInfo =
+        TravelInfo(
+            id = id,
+            imageUrl = imageUrl?.takeIf { it.isNotBlank() } ?: this.imageUrl,
+            title = title?.takeIf { it.isNotBlank() } ?: this.title,
+            description = description?.takeIf { it.isNotBlank() } ?: this.description,
+        )
+}
