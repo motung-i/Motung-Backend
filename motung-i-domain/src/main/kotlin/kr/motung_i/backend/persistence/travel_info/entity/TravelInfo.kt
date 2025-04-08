@@ -18,5 +18,8 @@ class TravelInfo (
     val imageUrl: String,
 
     @Column(nullable = false)
+    val title: String,
+
+    @Column(nullable = false)
     val description: String,
 ) : BaseEntity()

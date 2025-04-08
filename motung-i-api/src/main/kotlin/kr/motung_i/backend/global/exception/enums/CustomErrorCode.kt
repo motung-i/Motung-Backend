@@ -18,6 +18,7 @@ enum class CustomErrorCode(
     PARAMETER_ERROR(HttpStatus.BAD_REQUEST, "유효하지 않는 구성의 파라미터 요청 값 입니다."),
 
     NOT_ALLOWED_IMAGE_EXTENSION(HttpStatus.BAD_REQUEST, "허용되지 않은 이미지 확장자 입니다."),
+    NOT_FOUND_IMAGE(HttpStatus.BAD_REQUEST, "이미지가 존재하지 않습니다."),
 
     NOT_FOUND_USER(HttpStatus.NOT_FOUND, "존재하지 않는 유저입니다."),
 
