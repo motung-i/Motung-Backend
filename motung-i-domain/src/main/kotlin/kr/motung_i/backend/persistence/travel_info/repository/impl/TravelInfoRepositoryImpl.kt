@@ -12,4 +12,6 @@ class TravelInfoRepositoryImpl(
         travelInfoJpaRepository.save(travelInfo)
     }
 
+    override fun findAll(): List<TravelInfo> =
+        travelInfoJpaRepository.findAll()
 }
