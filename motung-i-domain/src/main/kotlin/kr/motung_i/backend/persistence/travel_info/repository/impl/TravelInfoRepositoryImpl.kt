@@ -8,10 +8,6 @@ import org.springframework.stereotype.Repository
 class TravelInfoRepositoryImpl(
     private val travelInfoJpaRepository: TravelInfoJpaRepository,
 ): TravelInfoRepository {
-    override fun save(travelInfo: TravelInfo) {
-        travelInfoJpaRepository.save(travelInfo)
-    }
-
     override fun findAll(): List<TravelInfo> =
         travelInfoJpaRepository.findAll()
 }
