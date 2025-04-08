@@ -18,6 +18,8 @@ enum class CustomErrorCode(
     PARAMETER_ERROR(HttpStatus.BAD_REQUEST, "유효하지 않는 구성의 파라미터 요청 값 입니다."),
 
     NOT_ALLOWED_IMAGE_EXTENSION(HttpStatus.BAD_REQUEST, "허용되지 않은 이미지 확장자 입니다."),
+    NOT_FOUND_IMAGE(HttpStatus.BAD_REQUEST, "이미지가 존재하지 않습니다."),
+    IMAGE_DELETE_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 삭제에 실패했습니다."),
 
     NOT_FOUND_USER(HttpStatus.NOT_FOUND, "존재하지 않는 유저입니다."),
 
@@ -28,4 +30,6 @@ enum class CustomErrorCode(
     NOT_FOUND_ITEM(HttpStatus.NOT_FOUND, "존재하지 않는 꿀템입니다."),
     CANNOT_MODIFY_APPROVED_ITEM(HttpStatus.BAD_REQUEST, "승인된 꿀템은 삭제할 수 없습니다."),
     ITEM_ALREADY_APPROVED(HttpStatus.BAD_REQUEST, "이미 승인된 꿀템입니다."),
+
+    NOT_FOUND_TRAVEL_INFO(HttpStatus.NOT_FOUND, "존재하지 않는 여행 정보입니다."),
 }

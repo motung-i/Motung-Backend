@@ -2,6 +2,9 @@ package kr.motung_i.backend.global.util
 
 import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
+import java.net.URI
+import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
 
 abstract class ImageUtil {
     companion object {
@@ -21,5 +24,10 @@ abstract class ImageUtil {
 
         private fun getExtension(filename: String): String =
             filename.split(".").last()
+
+        fun getImageNameFromUrl(uri: String): String {
+            val rawPath = URI.create(uri).path
+            return URLDecoder.decode(rawPath.substring(1), StandardCharsets.UTF_8)
+        }
     }
 }
