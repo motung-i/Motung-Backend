@@ -39,6 +39,8 @@ class SecurityConfig {
                     .permitAll()
                     .requestMatchers(HttpMethod.GET, "/actuator/prometheus")
                     .hasAuthority(Role.ROLE_ADMIN.name)
+                    .requestMatchers("/admin/**")
+                    .hasAuthority(Role.ROLE_ADMIN.name)
                     .anyRequest()
                     .hasAuthority(Role.ROLE_USER.name)
             }.csrf {
