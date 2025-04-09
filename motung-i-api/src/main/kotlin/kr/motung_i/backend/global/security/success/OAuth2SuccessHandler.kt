@@ -3,8 +3,8 @@ package kr.motung_i.backend.global.security.success
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import kr.motung_i.backend.persistence.auth.entity.RefreshToken
 import kr.motung_i.backend.global.security.provider.JwtTokenProvider
+import kr.motung_i.backend.persistence.auth.entity.RefreshToken
 import kr.motung_i.backend.persistence.auth.repository.RefreshTokenCustomRepository
 import kr.motung_i.backend.persistence.user.entity.User
 import kr.motung_i.backend.persistence.user.repository.UserCustomRepository
@@ -29,19 +29,19 @@ class OAuth2SuccessHandler(
         val user: User = userRepository.findByOauthId(clientId).orElseThrow()
         val accessToken: String =
             jwtTokenProvider.generateToken(
-                clientId = clientId,
+                clientId = user.id.toString(),
                 role = user.role,
                 isRefresh = false,
             )
         val refreshToken: String =
             jwtTokenProvider.generateToken(
-                clientId = clientId,
+                clientId = user.id.toString(),
                 role = user.role,
                 isRefresh = true,
             )
         refreshTokenRepository.save(
             RefreshToken(
-                clientId = clientId,
+                clientId = user.id.toString(),
                 refreshToken = refreshToken,
                 timeToLive = System.currentTimeMillis() + 1000 * 60 * 60 * 2L,
             ),

@@ -36,19 +36,17 @@ class AuthServiceImpl(
 
     override fun register(name: String) {
         val loginUser: Authentication = SecurityContextHolder.getContext().authentication
-        val user: User = userCustomRepository.findByUserId(loginUser.principal as UUID).orElseThrow()
+        val user: User = userCustomRepository.findByUserId(UUID.fromString(loginUser.principal.toString())).orElseThrow()
         userCustomRepository.save(user.copy(name = name))
     }
 
     override fun reissueToken(resolveRefreshToken: String): TokenResponse {
-        val loginUser: Authentication = SecurityContextHolder.getContext().authentication
-        val clientId: UUID = UUID.fromString(loginUser.principal.toString())
         val result: RefreshToken =
             refreshTokenCustomRepository.find(
                 refreshToken = resolveRefreshToken,
-                clientId = clientId.toString(),
             )
-        val user: User = userCustomRepository.findByUserId(clientId = clientId).orElseThrow()
+        refreshTokenCustomRepository.delete(refreshToken = resolveRefreshToken)
+        val user: User = userCustomRepository.findByUserId(clientId = UUID.fromString(result.clientId)).orElseThrow()
         val accessToken = jwtTokenProvider.generateToken(clientId = result.clientId, role = user.role, isRefresh = false)
         val refreshToken = jwtTokenProvider.generateToken(clientId = result.clientId, role = user.role, isRefresh = false)
         return TokenResponse.from(accessToken = accessToken, refreshToken = refreshToken)
