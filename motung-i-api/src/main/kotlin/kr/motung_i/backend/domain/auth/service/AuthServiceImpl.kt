@@ -23,7 +23,7 @@ class AuthServiceImpl(
         val loginUser: Authentication = SecurityContextHolder.getContext().authentication
         val tokenClientId: String = jwtTokenProvider.getClientId(token = refreshToken, isRefresh = true)
         if (loginUser.principal != tokenClientId) {
-            throw CustomException(customErrorCode = CustomErrorCode.FORBIDDEN, detailMessage = "존재하지 않는 유저입니다.")
+            throw CustomException(customErrorCode = CustomErrorCode.NOT_FOUND_USER)
         }
         refreshTokenCustomRepository.delete(tokenClientId)
     }
