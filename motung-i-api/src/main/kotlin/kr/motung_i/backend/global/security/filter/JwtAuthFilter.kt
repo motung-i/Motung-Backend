@@ -23,7 +23,11 @@ class JwtAuthFilter(
         p2: FilterChain?,
     ) {
         val token = jwtTokenProvider.tokenResolveByRequest(p0 as HttpServletRequest)
-        if (token != null && jwtTokenProvider.validateToken(token = token, isRefresh = false)) {
+        if (token == null) {
+            p2?.doFilter(p0, p1)
+            return
+        }
+        if (jwtTokenProvider.validateToken(token = token, isRefresh = false)) {
             val clientId: String = jwtTokenProvider.getClientId(token = token, isRefresh = false)
             val role: Role = jwtTokenProvider.getUserRoles(token = token, isRefresh = false)
             val auth: Authentication =

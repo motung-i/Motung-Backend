@@ -7,8 +7,5 @@ interface RefreshTokenCustomRepository {
 
     fun delete(refreshToken: String)
 
-    fun find(
-        refreshToken: String,
-        clientId: String,
-    ): RefreshToken
+    fun find(refreshToken: String): RefreshToken
 }
