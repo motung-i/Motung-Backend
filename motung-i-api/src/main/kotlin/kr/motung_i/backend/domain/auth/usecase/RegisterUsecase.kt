@@ -1,0 +1,17 @@
+package kr.motung_i.backend.domain.auth.usecase
+
+import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.RegisterRequest
+import kr.motung_i.backend.persistence.user.entity.User
+import kr.motung_i.backend.persistence.user.repository.UserCustomRepository
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.stereotype.Service
+
+@Service
+class RegisterUsecase(
+    private val userCustomRepository: UserCustomRepository,
+) {
+    fun execute(registerRequest: RegisterRequest) {
+        val loginUser: User = SecurityContextHolder.getContext().authentication.principal as User
+        userCustomRepository.save(loginUser.copy(name = registerRequest.name))
+    }
+}

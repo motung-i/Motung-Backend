@@ -2,7 +2,10 @@ package kr.motung_i.backend.domain.auth.presentation
 
 import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.RegisterRequest
 import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.TokenRequest
-import kr.motung_i.backend.domain.auth.service.AuthService
+import kr.motung_i.backend.domain.auth.usecase.CheckIsUserRegisterUsecase
+import kr.motung_i.backend.domain.auth.usecase.LogoutUsecase
+import kr.motung_i.backend.domain.auth.usecase.RegisterUsecase
+import kr.motung_i.backend.domain.auth.usecase.ReissueTokenUsecase
 import kr.motung_i.backend.domain.item.presentation.dto.response.TokenResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,23 +17,47 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/auth")
 class AuthController(
-    val authService: AuthService,
+    private val checkIsUserRegisterUsecase: CheckIsUserRegisterUsecase,
+    private val logoutUsecase: LogoutUsecase,
+    private val registerUsecase: RegisterUsecase,
+    private val reissueTokenUsecase: ReissueTokenUsecase,
 ) {
     @PostMapping("refresh")
     fun refreshToken(
-        @RequestBody request: TokenRequest,
-    ): ResponseEntity<TokenResponse> = ResponseEntity.ok(authService.reissueToken(resolveRefreshToken = request.refreshToken))
+        @RequestBody tokenRequest: TokenRequest,
+    ): ResponseEntity<TokenResponse> =
+        reissueTokenUsecase
+            .execute(
+                tokenRequest = tokenRequest,
+            ).run {
+                ResponseEntity.ok(this)
+            }
 
     @PostMapping("logout")
     fun logOut(
         @RequestBody request: TokenRequest,
-    ): ResponseEntity<Unit> = ResponseEntity.ok(authService.logout(refreshToken = request.refreshToken))
+    ): ResponseEntity<Unit> =
+        logoutUsecase
+            .execute(
+                request,
+            ).run {
+                ResponseEntity.noContent().build()
+            }
 
     @GetMapping("check-register")
-    fun isUserRegister(): ResponseEntity<Boolean> = ResponseEntity.ok(authService.isUserRegister())
+    fun isUserRegister(): ResponseEntity<Boolean> =
+        checkIsUserRegisterUsecase.execute().run {
+            ResponseEntity.ok(this)
+        }
 
     @PostMapping("register")
     fun register(
         @RequestBody request: RegisterRequest,
-    ): ResponseEntity<Unit> = ResponseEntity.ok(authService.register(name = request.name))
+    ): ResponseEntity<Unit> =
+        registerUsecase
+            .execute(
+                registerRequest = request,
+            ).run {
+                ResponseEntity.noContent().build()
+            }
 }
