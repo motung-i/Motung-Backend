@@ -22,14 +22,14 @@ class ReissueTokenUsecase(
         val result: RefreshToken =
             refreshTokenCustomRepository
                 .find(
-                    refreshToken = tokenRequest.refreshToken,
+                    tokenRequest.refreshToken,
                 ).orElseThrow {
                     CustomException(CustomErrorCode.UNAUTHORIZED)
                 }
-        refreshTokenCustomRepository.delete(refreshToken = tokenRequest.refreshToken)
+        refreshTokenCustomRepository.delete(tokenRequest.refreshToken)
         val userId = UUID.fromString(result.userId)
         val user: User =
-            userCustomRepository.findByUserId(userId = userId).orElseThrow {
+            userCustomRepository.findByUserId(userId).orElseThrow {
                 CustomException(CustomErrorCode.NOT_FOUND_USER)
             }
         val accessToken = jwtTokenProvider.generateToken(userId = userId, role = user.role, isRefresh = false)
