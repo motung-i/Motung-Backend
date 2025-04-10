@@ -3,6 +3,8 @@ package kr.motung_i.backend.global.security.success
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import kr.motung_i.backend.global.exception.CustomException
+import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.global.security.provider.JwtTokenProvider
 import kr.motung_i.backend.persistence.auth.entity.RefreshToken
 import kr.motung_i.backend.persistence.auth.repository.RefreshTokenCustomRepository
@@ -12,10 +14,11 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
 import org.springframework.stereotype.Component
+import java.util.*
 
 @Component
 class OAuth2SuccessHandler(
-    private val refreshTokenRepository: RefreshTokenRepository,
+    private val refreshTokenRepository: RefreshTokenCustomRepository,
     private val jwtTokenProvider: JwtTokenProvider,
     private val userRepository: UserRepository,
     val objectMapper: ObjectMapper,
@@ -27,21 +30,22 @@ class OAuth2SuccessHandler(
     ) {
         val clientId: String = (authentication?.principal as OAuth2User).attributes["sub"].toString()
         val user: User = userRepository.findByOauthId(clientId) ?: throw CustomException(CustomErrorCode.NOT_FOUND_USER)
+        val userId: UUID = user.id ?: throw CustomException(CustomErrorCode.VALIDATION_ERROR)
         val accessToken: String =
             jwtTokenProvider.generateToken(
-                clientId = user.id.toString(),
+                userId = userId,
                 role = user.role,
                 isRefresh = false,
             )
         val refreshToken: String =
             jwtTokenProvider.generateToken(
-                clientId = user.id.toString(),
+                userId = userId,
                 role = user.role,
                 isRefresh = true,
             )
         refreshTokenRepository.save(
             RefreshToken(
-                clientId = user.id.toString(),
+                userId = user.id.toString(),
                 refreshToken = refreshToken,
                 timeToLive = System.currentTimeMillis() + 1000 * 60 * 60 * 2L,
             ),

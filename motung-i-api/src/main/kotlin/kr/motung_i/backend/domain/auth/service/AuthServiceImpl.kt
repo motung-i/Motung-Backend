@@ -11,7 +11,7 @@ import kr.motung_i.backend.persistence.user.repository.UserCustomRepository
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
-import java.util.UUID
+import java.util.*
 
 @Service
 class AuthServiceImpl(
@@ -21,7 +21,7 @@ class AuthServiceImpl(
 ) : AuthService {
     override fun logout(refreshToken: String) {
         val loginUser: Authentication = SecurityContextHolder.getContext().authentication
-        val tokenClientId: String = jwtTokenProvider.getClientId(token = refreshToken, isRefresh = true)
+        val tokenClientId: String = jwtTokenProvider.getUserId(token = refreshToken, isRefresh = true)
         if (loginUser.principal != tokenClientId) {
             throw CustomException(customErrorCode = CustomErrorCode.NOT_FOUND_USER)
         }
@@ -42,13 +42,15 @@ class AuthServiceImpl(
 
     override fun reissueToken(resolveRefreshToken: String): TokenResponse {
         val result: RefreshToken =
-            refreshTokenCustomRepository.find(
-                refreshToken = resolveRefreshToken,
-            )
+            refreshTokenCustomRepository
+                .find(
+                    refreshToken = resolveRefreshToken,
+                ).orElseThrow()
         refreshTokenCustomRepository.delete(refreshToken = resolveRefreshToken)
-        val user: User = userCustomRepository.findByUserId(clientId = UUID.fromString(result.clientId)).orElseThrow()
-        val accessToken = jwtTokenProvider.generateToken(clientId = result.clientId, role = user.role, isRefresh = false)
-        val refreshToken = jwtTokenProvider.generateToken(clientId = result.clientId, role = user.role, isRefresh = false)
+        val userId = UUID.fromString(result.userId)
+        val user: User = userCustomRepository.findByUserId(userId = userId).orElseThrow()
+        val accessToken = jwtTokenProvider.generateToken(userId = userId, role = user.role, isRefresh = false)
+        val refreshToken = jwtTokenProvider.generateToken(userId = userId, role = user.role, isRefresh = false)
         return TokenResponse.from(accessToken = accessToken, refreshToken = refreshToken)
     }
 }

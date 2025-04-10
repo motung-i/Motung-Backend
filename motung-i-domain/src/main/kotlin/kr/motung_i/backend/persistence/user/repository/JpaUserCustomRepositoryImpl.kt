@@ -8,9 +8,9 @@ import java.util.*
 class JpaUserCustomRepositoryImpl(
     private val userRepository: UserRepository,
 ) : UserCustomRepository {
-    override fun findByOauthId(oauthId: String): Optional<User> = userRepository.findByOauthId(oauthId)
+    override fun findByOauthId(oauthId: String): User? = userRepository.findByOauthId(oauthId)
 
-    override fun save(user: User) = userRepository.save(user)
+    override fun save(user: User): User = userRepository.save(user)
 
-    override fun findByUserId(clientId: UUID): Optional<User> = userRepository.findById(clientId)
+    override fun findByUserId(userId: UUID): Optional<User> = userRepository.findByUserId(userId = userId)
 }

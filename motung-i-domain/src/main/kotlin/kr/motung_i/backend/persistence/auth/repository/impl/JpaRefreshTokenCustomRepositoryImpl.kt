@@ -1,7 +1,10 @@
-package kr.motung_i.backend.persistence.auth.repository
+package kr.motung_i.backend.persistence.auth.repository.impl
 
 import kr.motung_i.backend.persistence.auth.entity.RefreshToken
+import kr.motung_i.backend.persistence.auth.repository.RefreshTokenCustomRepository
+import kr.motung_i.backend.persistence.auth.repository.RefreshTokenRepository
 import org.springframework.stereotype.Repository
+import java.util.*
 
 @Repository
 class JpaRefreshTokenCustomRepositoryImpl(
@@ -17,5 +20,5 @@ class JpaRefreshTokenCustomRepositoryImpl(
         )
     }
 
-    override fun find(refreshToken: String): RefreshToken = refreshTokenRepository.findByRefreshToken(refreshToken).orElseThrow()
+    override fun find(refreshToken: String): Optional<RefreshToken> = refreshTokenRepository.findByRefreshToken(refreshToken)
 }

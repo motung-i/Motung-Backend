@@ -28,7 +28,7 @@ class JwtAuthFilter(
             return
         }
         if (jwtTokenProvider.validateToken(token = token, isRefresh = false)) {
-            val clientId: String = jwtTokenProvider.getClientId(token = token, isRefresh = false)
+            val clientId: String = jwtTokenProvider.getUserId(token = token, isRefresh = false)
             val role: Role = jwtTokenProvider.getUserRoles(token = token, isRefresh = false)
             val auth: Authentication =
                 UsernamePasswordAuthenticationToken(clientId, "", mutableListOf(SimpleGrantedAuthority(role.toString())))

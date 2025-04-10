@@ -5,9 +5,9 @@ import java.util.Optional
 import java.util.UUID
 
 interface UserCustomRepository {
-    fun findByOauthId(oauthId: String): Optional<User>
+    fun findByOauthId(oauthId: String): User?
 
     fun save(user: User): User
 
-    fun findByUserId(clientId: UUID): Optional<User>
+    fun findByUserId(userId: UUID): Optional<User>
 }
