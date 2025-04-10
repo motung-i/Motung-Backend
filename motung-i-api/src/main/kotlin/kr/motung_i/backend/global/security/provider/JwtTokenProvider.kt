@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest
 import kr.motung_i.backend.persistence.user.entity.enums.Role
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-import java.util.Date
+import java.util.*
 import javax.crypto.SecretKey
 
 @Component
@@ -29,7 +29,7 @@ class JwtTokenProvider(
     }
 
     fun generateToken(
-        clientId: String,
+        userId: UUID,
         role: Role,
         isRefresh: Boolean,
     ): String {
@@ -42,7 +42,7 @@ class JwtTokenProvider(
         return Jwts
             .builder()
             .claims(claims)
-            .subject(clientId)
+            .subject(userId.toString())
             .issuedAt(Date(now))
             .expiration(expirationDate)
             .signWith(getSecretKey(isRefresh))
@@ -76,7 +76,7 @@ class JwtTokenProvider(
         }
     }
 
-    fun getClientId(
+    fun getUserId(
         token: String,
         isRefresh: Boolean,
     ): String =
@@ -97,6 +97,6 @@ class JwtTokenProvider(
                 .verifyWith(getSecretKey(isRefresh))
                 .build()
                 .parseSignedClaims(token)
-                .payload["role"] as String
+                .payload["role"] as String,
         )
 }

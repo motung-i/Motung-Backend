@@ -3,12 +3,14 @@ package kr.motung_i.backend.persistence.auth.entity
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
 import org.springframework.data.redis.core.TimeToLive
+import org.springframework.data.redis.core.index.Indexed
 
 @RedisHash("token")
 class RefreshToken(
     @Id
-    private val clientId: String,
-    private val refreshToken: String,
+    val userId: String,
+    @Indexed
+    val refreshToken: String,
     @TimeToLive
-    private val timeToLive: Long,
+    val timeToLive: Long,
 )
