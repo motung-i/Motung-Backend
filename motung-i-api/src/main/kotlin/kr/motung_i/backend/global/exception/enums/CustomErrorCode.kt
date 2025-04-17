@@ -33,4 +33,7 @@ enum class CustomErrorCode(
     ITEM_ALREADY_APPROVED(HttpStatus.BAD_REQUEST, "이미 승인된 꿀템입니다."),
 
     NOT_FOUND_TRAVEL_INFO(HttpStatus.NOT_FOUND, "존재하지 않는 여행 정보입니다."),
+
+    NOT_FOUND_COUNTRY_GEOJSON(HttpStatus.NOT_FOUND, "해당 국가의 지리 정보가 존재하지 않습니다."),
+    NOT_FOUND_COUNTRY_FORMATTER(HttpStatus.NOT_FOUND, "해당 국가의 필터 정보가 존재하지 않습니다.")
 }
