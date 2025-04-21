@@ -1,6 +1,7 @@
 package kr.motung_i.backend.global.geojson.dto
 
 import com.fasterxml.jackson.databind.JsonNode
+import kr.motung_i.backend.global.geojson.dto.local.Local
 import org.geolatte.geom.G2D
 import org.geolatte.geom.Geometries
 import org.geolatte.geom.LinearRing
@@ -10,23 +11,22 @@ import org.geolatte.geom.Positions
 import org.geolatte.geom.crs.CoordinateReferenceSystems
 
 data class GeoJsonFeature(
-    val local: String,
-    val region: String,
-    val district: String,
-    val neighborhood: String,
+    val local: Local,
     val geometry: MultiPolygon<G2D>,
 ) {
     companion object {
         fun toDto(feature: JsonNode): GeoJsonFeature =
             feature.let {
+                val local = feature["properties"]["adm_nm"].asText()
+                val region = feature["properties"]["sidonm"].asText()
+                val district = feature["properties"]["sggnm"].asText()
+                val neighborhood = feature["properties"]["adm_nm"].asText().split(" ").last()
+
                 GeoJsonFeature(
-                    local = it["properties"]["adm_nm"].asText(),
-                    region = it["properties"]["sidonm"].asText(),
-                    district = it["properties"]["sggnm"].asText(),
-                    neighborhood = it["properties"]["adm_nm"].asText().split(" ").last(),
-                    geometry = parseMultiPolygon(it["geometry"]["coordinates"])
+                    geometry = parseMultiPolygon(it["geometry"]["coordinates"]),
+                    local = Local.toDto(local, region, district, neighborhood)
                 )
-            }
+        }
 
         private fun parseMultiPolygon(coordinates: JsonNode): MultiPolygon<G2D> {
             val crs = CoordinateReferenceSystems.WGS84

@@ -9,7 +9,11 @@ import org.springframework.stereotype.Component
 class TourFormatterService(
     private val tourFormatterMap: Map<Country, TourFormatter>
 ) {
-    fun formatToTourFilterRegion(regionSet: Set<String>, country: Country): Set<String> =
-        tourFormatterMap[country]?.formatToTourFilterRegion(regionSet)
+    fun formatToTourFilterRegion(region: String, country: Country): String =
+        tourFormatterMap[country]?.formatToTourFilterRegion(region)
+            ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_FORMATTER)
+
+    fun formatToTourFilterDistrict(district: String, country: Country): Pair<Char, String> =
+        tourFormatterMap[country]?.formatToTourFilterDistricts(district)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_FORMATTER)
 }

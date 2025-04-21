@@ -19,11 +19,13 @@ class FetchTourFilterRegionUsecase(
         val countryGeoJsonFeature = geoJsonFeaturesCache.findCountryGeoJsonFeatureByCountry(country)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_GEOJSON)
 
-        return FetchTourFilterRegionResponse(
-            tourFormatterService.formatToTourFilterRegion(
-                countryGeoJsonFeature.regionSet,
-                country,
-            )
-        )
+        val regions = countryGeoJsonFeature.geoJsonFeatures
+            .map {
+                val region = it.local.region.name
+                tourFormatterService.formatToTourFilterRegion(region, country)
+            }
+            .toSet()
+
+        return FetchTourFilterRegionResponse(regions)
     }
 }

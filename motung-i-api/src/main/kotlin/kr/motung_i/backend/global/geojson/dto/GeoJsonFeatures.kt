@@ -8,8 +8,6 @@ import org.springframework.core.io.Resource
 
 data class GeoJsonFeatures(
     val country: String,
-    val regionSet: Set<String>,
-    val districtSet: Set<String>,
     val geoJsonFeatures: List<GeoJsonFeature>,
 ) {
     companion object {
@@ -30,8 +28,6 @@ data class GeoJsonFeatures(
             return GeoJsonFeatures(
                 country = resource.filename!!.substringBefore(".geojson"),
                 geoJsonFeatures = geoJsonFeatures,
-                regionSet = geoJsonFeatures.map { it.region }.toSet(),
-                districtSet = geoJsonFeatures.map { it.district }.toSet(),
             )
         }
     }

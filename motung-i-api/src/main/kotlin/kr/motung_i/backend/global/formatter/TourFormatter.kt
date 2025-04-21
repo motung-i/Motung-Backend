@@ -1,5 +1,6 @@
 package kr.motung_i.backend.global.formatter
 
 interface TourFormatter {
-    fun formatToTourFilterRegion(regionSet: Set<String>): Set<String>
+    fun formatToTourFilterRegion(region: String): String
+    fun formatToTourFilterDistricts(district: String): Pair<Char, String>
 }
