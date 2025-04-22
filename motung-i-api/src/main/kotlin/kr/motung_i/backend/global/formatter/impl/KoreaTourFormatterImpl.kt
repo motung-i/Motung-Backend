@@ -15,12 +15,29 @@ class KoreaTourFormatterImpl : TourFormatter {
         }
     }
 
-    override fun formatToTourFilterDistricts(district: String): Pair<Char, String> {
+    override fun formatToTourRegion(region: String): String {
+        return if(region.length == 4) {
+            "${region[0]}${region[2]}"
+        } else {
+            "${region[0]}${region[1]}"
+        }
+    }
+
+    override fun formatToTourFilterDistrict(district: String): Pair<Char, String> {
         var type = district.last()
         if (type == '구') {
             return '시' to district.substring(0, district.lastIndexOf('시') + 1)
         }
 
         return type to district
+    }
+
+    override fun formatToTourDistrict(district: String): String {
+        var type = district.last()
+        if (type == '구') {
+            return district.substring(0, district.lastIndexOf('시') + 1)
+        }
+
+        return district
     }
 }

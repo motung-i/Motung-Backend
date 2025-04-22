@@ -13,7 +13,15 @@ class TourFormatterService(
         tourFormatterMap[country]?.formatToTourFilterRegion(region)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_FORMATTER)
 
+    fun formatToTourRegion(region: String, country: Country): String =
+        tourFormatterMap[country]?.formatToTourRegion(region)
+            ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_FORMATTER)
+
     fun formatToTourFilterDistrict(district: String, country: Country): Pair<Char, String> =
-        tourFormatterMap[country]?.formatToTourFilterDistricts(district)
+        tourFormatterMap[country]?.formatToTourFilterDistrict(district)
+            ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_FORMATTER)
+
+    fun formatToTourDistrict(district: String, country: Country): String =
+        tourFormatterMap[country]?.formatToTourDistrict(district)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_FORMATTER)
 }
