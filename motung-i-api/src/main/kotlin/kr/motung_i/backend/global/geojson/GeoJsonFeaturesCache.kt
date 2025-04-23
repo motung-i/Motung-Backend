@@ -7,7 +7,9 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import org.springframework.stereotype.Component
 
 @Component
-class GeoJsonFeaturesCache {
+class GeoJsonFeaturesCache(
+    private val geoJsonFeaturesFactory: GeoJsonFeaturesFactory,
+) {
     private lateinit var geoJsonFeatures: List<GeoJsonFeatures>
 
     @PostConstruct
@@ -15,9 +17,9 @@ class GeoJsonFeaturesCache {
         val resolver = PathMatchingResourcePatternResolver()
         val resources = resolver.getResources("classpath:geojson/**/*.geojson")
 
-        geoJsonFeatures = resources.map { GeoJsonFeatures.toDto(it) }
+        geoJsonFeatures = resources.map { geoJsonFeaturesFactory.toDto(it) }
     }
 
     fun findCountryGeoJsonFeatureByCountry(country: Country): GeoJsonFeatures? =
-        geoJsonFeatures.firstOrNull { it.country == country.name }
+        geoJsonFeatures.firstOrNull { it.country == country }
 }

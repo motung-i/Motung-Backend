@@ -1,15 +1,16 @@
 package kr.motung_i.backend.domain.tour.usecase
 
 import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchRandomTourLocationResponse
+import kr.motung_i.backend.domain.tour.usecase.dto.Location
+import kr.motung_i.backend.domain.tour.usecase.dto.RegionPolygon
 import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
-import kr.motung_i.backend.global.formatter.TourFormatterService
+import kr.motung_i.backend.domain.tour.formatter.TourFormatterService
 import kr.motung_i.backend.global.geojson.GeoJsonFeaturesCache
-import kr.motung_i.backend.global.geojson.dto.local.Region
+import kr.motung_i.backend.global.geojson.dto.GeoJsonFeature
+import kr.motung_i.backend.global.geojson.dto.GeoJsonFeatures
 import kr.motung_i.backend.global.geojson.enums.Country
-import org.geolatte.geom.G2D
 import org.geolatte.geom.Geometries
-import org.geolatte.geom.Polygon
 import org.geolatte.geom.Positions
 import org.geolatte.geom.crs.CoordinateReferenceSystems
 import org.geolatte.geom.jts.JTS
@@ -31,65 +32,84 @@ class FetchRandomTourLocationUsecase(
         val countryGeoJsonFeature = geoJsonFeaturesCache.findCountryGeoJsonFeatureByCountry(country)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_GEOJSON)
 
-        val geoJsonFeaturesByRegions = countryGeoJsonFeature.geoJsonFeatures.filter {
-            if (regions.isEmpty() && districts.isEmpty()) return@filter true
-            val savedRegion = tourFormatterService.formatToTourRegion(it.local.region.name, country)
-            regions.contains(savedRegion)
-        }
+        val geoJsonFeaturesByRegion = filterByRegion(countryGeoJsonFeature, regions, districts)
+        val geoJsonFeaturesByDistrict = filterByDistrict(countryGeoJsonFeature, districts, geoJsonFeaturesByRegion)
+        val allGeoJsonFeatures = geoJsonFeaturesByRegion + geoJsonFeaturesByDistrict
 
-        val geoJsonFeaturesByDistrict = countryGeoJsonFeature.geoJsonFeatures.filter { geoJsonFeature ->
-            if (districts.isEmpty()) return@filter false
-            val savedDistrict =
-                tourFormatterService.formatToTourDistrict(geoJsonFeature.local.region.district.name, country)
-            val requestRegionDistrict = geoJsonFeaturesByRegions.map {
-                tourFormatterService.formatToTourDistrict(it.local.region.district.name, country)
-            }
-            (requestRegionDistrict.isEmpty() || requestRegionDistrict.any { it !in districts }) && districts.contains(savedDistrict)
-        }
-
-
-        val polygonsWithRegion = mutableListOf<Pair<Polygon<G2D>, Region>>()
-        val allGeoJsonFeatures = geoJsonFeaturesByRegions + geoJsonFeaturesByDistrict
-        allGeoJsonFeatures.forEach { geoJsonFeature ->
-            geoJsonFeature.geometry.components().forEach { polygon ->
-                polygonsWithRegion.add(polygon to geoJsonFeature.local.region)
+        val regionPolygons = allGeoJsonFeatures.flatMap { geoJsonFeature ->
+            geoJsonFeature.geometry.components().map {
+                RegionPolygon(geoJsonFeature.local.region, it)
             }
         }
+        val regionPolygonWithAreas = regionPolygons.map { it to JTS.to(it.polygon).area }
 
-        val polygons = polygonsWithRegion.map { polygon: Pair<Polygon<G2D>, Region> ->
-            val jtsPolygon = JTS.to(polygon.first)
-            val area = jtsPolygon.area
-            polygon to area
-        }
+        val randomRegionPolygon = fetchRandomRegionPolygon(regionPolygonWithAreas)
+        val randomLocation = fetchRandomLocationInPolygon(randomRegionPolygon)
 
-        val totalArea = polygons.sumOf { it.second }
+        return FetchRandomTourLocationResponse(
+            lat = randomLocation.lat,
+            lon = randomLocation.lon,
+            region = "${randomRegionPolygon.region.name}, ${randomRegionPolygon.region.district.neighborhood.name}"
+        )
+    }
 
-        val random = Math.random()
+    private fun filterByRegion(
+        countryGeoJsonFeature: GeoJsonFeatures,
+        regions: List<String>,
+        districts: List<String>
+    ) = countryGeoJsonFeature.geoJsonFeatures.filter {
+        if (regions.isEmpty() && districts.isEmpty()) return@filter true
+
+        regions.contains(it.local.region.alias)
+    }
+
+    private fun filterByDistrict(
+        countryGeoJsonFeature: GeoJsonFeatures,
+        districts: List<String>,
+        geoJsonFeaturesByRegion: List<GeoJsonFeature>
+    ) = countryGeoJsonFeature.geoJsonFeatures.filter { geoJsonFeature ->
+        if (districts.isEmpty()) return@filter false
+
+        val requestDistrictByRegion = geoJsonFeaturesByRegion.map {
+            it.local.region.district.alias
+        }.toSet()
+        val savedDistrict = geoJsonFeature.local.region.district.alias
+
+        val isEmptyRegionDistrict = requestDistrictByRegion.isEmpty()
+        val hasOutOfRegionDistrict = requestDistrictByRegion.any { it !in districts }
+        (isEmptyRegionDistrict || hasOutOfRegionDistrict) && districts.contains(savedDistrict)
+    }
+
+    private fun fetchRandomRegionPolygon(
+        regionPolygonWithAreas: List<Pair<RegionPolygon, Double>>,
+    ): RegionPolygon {
+        val totalArea = regionPolygonWithAreas.sumOf { it.second }
+
+        val random = Random().nextDouble()
         var calculative = 0.0
 
-        val randomPolygon = polygons.firstOrNull {
+        return regionPolygonWithAreas.firstOrNull {
             calculative += it.second / totalArea
             random <= calculative
         }?.first ?: throw CustomException(CustomErrorCode.NOT_FOUND_FILTER_LOCATION)
+    }
 
-        val minLon = randomPolygon.first.boundingBox.lowerLeft().lon
-        val minLat = randomPolygon.first.boundingBox.lowerLeft().lat
-        val maxLon = randomPolygon.first.boundingBox.upperRight().lon
-        val maxLat = randomPolygon.first.boundingBox.upperRight().lat
+    private fun fetchRandomLocationInPolygon(randomRegionPolygon: RegionPolygon): Location {
+        val minLon = randomRegionPolygon.polygon.boundingBox.lowerLeft().lon
+        val minLat = randomRegionPolygon.polygon.boundingBox.lowerLeft().lat
+        val maxLon = randomRegionPolygon.polygon.boundingBox.upperRight().lon
+        val maxLat = randomRegionPolygon.polygon.boundingBox.upperRight().lat
 
-        for (retry in 1 .. 100) {
+        repeat(100) {
             val randomLon = Random().nextDouble(minLon, maxLon)
             val randomLat = Random().nextDouble(minLat, maxLat)
             val point = Positions.mkPosition(CoordinateReferenceSystems.WGS84, randomLon, randomLat)
-
             val jtsPoint = JTS.to(Geometries.mkPoint(point, CoordinateReferenceSystems.WGS84))
-            val jtsPolygon = JTS.to(randomPolygon.first)
 
-            if (jtsPolygon.covers(jtsPoint)) {
-                return FetchRandomTourLocationResponse(
+            if (JTS.to(randomRegionPolygon.polygon).covers(jtsPoint)) {
+                return Location(
                     lat = randomLat,
                     lon = randomLon,
-                    region = "${randomPolygon.second.name}, ${randomPolygon.second.district.neighborhood.name }"
                 )
             }
         }
