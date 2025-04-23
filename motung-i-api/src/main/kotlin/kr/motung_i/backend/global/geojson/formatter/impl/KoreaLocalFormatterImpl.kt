@@ -12,10 +12,10 @@ class KoreaLocalFormatterImpl : LocalFormatter {
     }
 
     override fun formatToDistrictAlias(district: String): String {
-        if (district.last() == '구') {
-            return district.substring(0, district.lastIndexOf('시') + 1)
+        if (district.last() == '구' && district.contains('시')) {
+            return district.substring(0, district.lastIndexOf('시') + 1).dropLast(1)
         }
 
-        return district
+        return district.dropLast(1)
     }
 }

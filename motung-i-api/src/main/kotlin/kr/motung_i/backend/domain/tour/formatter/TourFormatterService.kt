@@ -12,10 +12,14 @@ class TourFormatterService(
     private val tourFormatterMap: Map<Country, TourFormatter>
 ) {
     fun formatToTourFilterRegion(region: Region, country: Country): String =
-        tourFormatterMap[country]?.formatToTourFilterRegion(region)
+        tourFormatterMap[country]?.formatToTourFilterRegion(region, country)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_FORMATTER)
 
-    fun formatToTourFilterDistrict(district: District, country: Country): Pair<Char, String> =
+    fun formatToTourFilterCityRegion(region: Region, country: Country): Pair<String, String> =
+        tourFormatterMap[country]?.formatToTourFilterCityRegion(region, country)
+            ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_FORMATTER)
+
+    fun formatToTourFilterDistrict(district: District, country: Country): Pair<String, String> =
         tourFormatterMap[country]?.formatToTourFilterDistrict(district)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_FORMATTER)
 }
