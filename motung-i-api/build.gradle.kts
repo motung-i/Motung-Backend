@@ -31,6 +31,9 @@ dependencies {
 
     /* s3 */
     implementation("software.amazon.awssdk:s3:2.30.21")
+
+    /* geo */
+    implementation("org.geolatte:geolatte-geojson:1.9.0")
 }
 
 tasks.getByName("jar") {

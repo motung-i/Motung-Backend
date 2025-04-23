@@ -11,6 +11,7 @@ enum class CustomErrorCode(
     FORBIDDEN(HttpStatus.FORBIDDEN, "권한이 부족합니다."),
     NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 페이지입니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에 문제가 발생했습니다."),
+    NOT_FOUND_GEOJSON(HttpStatus.INTERNAL_SERVER_ERROR, "GEOJSON 파일이 1개이상 존재해야 합니다."),
 
     UNKNOWN_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "의도하지 않은 오류가 발생했습니다."),
     MISSING_REQUEST_BODY(HttpStatus.BAD_REQUEST, "본문 요청이 비어있거나 잘못된 형식입니다."),
@@ -32,4 +33,10 @@ enum class CustomErrorCode(
     ITEM_ALREADY_APPROVED(HttpStatus.BAD_REQUEST, "이미 승인된 꿀템입니다."),
 
     NOT_FOUND_TRAVEL_INFO(HttpStatus.NOT_FOUND, "존재하지 않는 여행 정보입니다."),
+
+    NOT_FOUND_COUNTRY_GEOJSON(HttpStatus.NOT_FOUND, "해당 국가의 지리 정보가 존재하지 않습니다."),
+    NOT_FOUND_COUNTRY_FORMATTER(HttpStatus.NOT_FOUND, "해당 국가의 필터 정보가 존재하지 않습니다."),
+
+    NOT_FOUND_FILTER_LOCATION(HttpStatus.NOT_FOUND, "해당 지역에 대한 정보가 존재하지 않습니다."),
+    RANDOM_TOUR_LOCATION_PROCESSING_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "랜덤 지역을 뽑는 도중 오류가 발생했습니다.")
 }
