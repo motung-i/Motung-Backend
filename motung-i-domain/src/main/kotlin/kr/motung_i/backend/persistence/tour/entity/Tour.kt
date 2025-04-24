@@ -37,14 +37,14 @@ class Tour(
     val goalLocal: String,
 
     @Column(nullable = false)
-    val aiRestaurantComment: String,
+    val restaurantComment: String,
 
     @Column(nullable = false)
-    val aiCafeComment: String,
+    val cafeComment: String,
 
     @Column(nullable = false)
-    val aiTourComment: String,
+    val tourComment: String,
 
     @Column(nullable = false)
-    val aiCultureComment: String,
+    val cultureComment: String,
 )

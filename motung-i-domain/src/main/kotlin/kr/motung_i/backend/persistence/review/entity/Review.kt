@@ -31,7 +31,7 @@ class Review (
     val local: String,
 
     @Column(nullable = false)
-    val isSuggested: Boolean,
+    val isRecommend: Boolean,
 
     @Column(nullable = false)
     val description: String,
