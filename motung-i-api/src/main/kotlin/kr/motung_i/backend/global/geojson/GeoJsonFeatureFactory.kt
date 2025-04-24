@@ -25,11 +25,12 @@ class GeoJsonFeatureFactory(
 
             val districtAlias = localFormatterService.formatToDistrictAlias(districtName, country)
             val regionAlias = localFormatterService.formatToRegionAlias(regionName, country)
+            val localAlias = localFormatterService.formatToLocalAlias(localName, country)
 
             val neighborhood = Neighborhood(neighborhoodName)
             val district = District(districtName, districtAlias, neighborhood)
             val region = Region(regionName, regionAlias, district)
-            val local = Local(localName, region)
+            val local = Local(localName, localAlias, region)
 
             GeoJsonFeature(
                 geometry = parseMultiPolygon(it["geometry"]["coordinates"]),

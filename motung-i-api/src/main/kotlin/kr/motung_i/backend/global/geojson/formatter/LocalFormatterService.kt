@@ -16,4 +16,8 @@ class LocalFormatterService(
     fun formatToDistrictAlias(district: String, country: Country): String =
         tourFormatterMap[country]?.formatToDistrictAlias(district)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_FORMATTER)
+
+    fun formatToLocalAlias(local: String, country: Country): String =
+        tourFormatterMap[country]?.formatToLocalAlias(local)
+            ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_FORMATTER)
 }
