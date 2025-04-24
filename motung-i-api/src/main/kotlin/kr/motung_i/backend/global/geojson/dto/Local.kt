@@ -2,7 +2,7 @@ package kr.motung_i.backend.global.geojson.dto
 
 import kr.motung_i.backend.global.geojson.enums.Country
 
-data class GeoJsonFeatures(
+data class Local(
     val country: Country,
-    val geoJsonFeatures: List<GeoJsonFeature>,
+    val regions: List<Region>,
 )
