@@ -23,19 +23,18 @@ class CreateReviewUsecase(
     fun execute(images: List<MultipartFile>, createReviewRequest: CreateReviewRequest) {
         val currentUser = fetchCurrentUserUsecase.execute()
 
-        if (!tourRepository.existsByUserAndGoalLocal(currentUser, createReviewRequest.local)) {
-            throw CustomException(CustomErrorCode.INVALID_TOUR_LOCATION)
-        }
+        val tour = tourRepository.findByUser(currentUser)
+            ?: throw CustomException(CustomErrorCode.INVALID_TOUR_LOCATION)
 
         val imageUrls = images.mapNotNull {
             uploadImageUsecase.execute(it)
         }
 
-        tourRepository.deleteByUserAndGoalLocal(currentUser, createReviewRequest.local)
+        tourRepository.deleteByUser(currentUser)
         reviewRepository.save(
             Review(
                 user = currentUser,
-                local = createReviewRequest.local,
+                local = tour.goalLocal.copy(),
                 isRecommend = createReviewRequest.isRecommend,
                 description = createReviewRequest.description,
                 imageUrls = imageUrls

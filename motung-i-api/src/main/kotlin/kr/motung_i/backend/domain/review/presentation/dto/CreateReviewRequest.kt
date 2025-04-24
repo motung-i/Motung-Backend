@@ -4,9 +4,6 @@ import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 
 data class CreateReviewRequest(
-    @field:NotEmpty
-    val local: String,
-
     @field:NotNull
     val isRecommend: Boolean,
 

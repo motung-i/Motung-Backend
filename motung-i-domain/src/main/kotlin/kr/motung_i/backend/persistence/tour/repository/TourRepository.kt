@@ -1,8 +1,9 @@
 package kr.motung_i.backend.persistence.tour.repository
 
+import kr.motung_i.backend.persistence.tour.entity.Tour
 import kr.motung_i.backend.persistence.user.entity.User
 
 interface TourRepository {
-    fun existsByUserAndGoalLocal(user: User, goalLocal: String): Boolean
-    fun deleteByUserAndGoalLocal(user: User, goalLocal: String)
+    fun findByUser(user: User): Tour?
+    fun deleteByUser(user: User)
 }

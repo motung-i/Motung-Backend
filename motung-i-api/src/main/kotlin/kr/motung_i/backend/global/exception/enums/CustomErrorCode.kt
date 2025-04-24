@@ -40,5 +40,5 @@ enum class CustomErrorCode(
     NOT_FOUND_FILTER_LOCATION(HttpStatus.NOT_FOUND, "해당 지역에 대한 정보가 존재하지 않습니다."),
     RANDOM_TOUR_LOCATION_PROCESSING_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "랜덤 지역을 뽑는 도중 오류가 발생했습니다."),
 
-    INVALID_TOUR_LOCATION(HttpStatus.BAD_REQUEST, "해당 지역을 여행중이 아닙니다."),
+    INVALID_TOUR_LOCATION(HttpStatus.BAD_REQUEST, "여행중인 상태가 아닙니다."),
 }

@@ -33,8 +33,8 @@ class Tour(
     )
     val goalLocation: Location,
 
-    @Column(nullable = false)
-    val goalLocal: String,
+    @Embedded
+    val goalLocal: Local,
 
     @Column(nullable = false)
     val restaurantComment: String,
