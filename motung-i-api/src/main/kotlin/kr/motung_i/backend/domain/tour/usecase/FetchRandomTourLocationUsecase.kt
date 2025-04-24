@@ -56,7 +56,7 @@ class FetchRandomTourLocationUsecase(
         return FetchRandomTourLocationResponse(
             lat = randomLocation.lat,
             lon = randomLocation.lon,
-            region = randomRegionPolygon.localAlias
+            local = randomRegionPolygon.localAlias
         )
     }
 
