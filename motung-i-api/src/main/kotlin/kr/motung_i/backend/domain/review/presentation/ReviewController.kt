@@ -36,8 +36,9 @@ class ReviewController(
         @RequestParam(required = false) region: String,
         @RequestParam(required = false) district: String,
         @RequestParam(required = false) neighborhood: String,
+        @RequestParam onlyByImage: Boolean,
     ): ResponseEntity<FetchReviewsResponse> =
-        fetchReviewsUsecase.execute(country, region, district, neighborhood).run {
+        fetchReviewsUsecase.execute(country, region, district, neighborhood, onlyByImage).run {
             ResponseEntity.ok(this)
         }
 

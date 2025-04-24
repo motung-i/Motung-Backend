@@ -15,12 +15,14 @@ interface ReviewJpaRepository : JpaRepository<Review, UUID> {
         AND (:regionAlias = '' OR r.local.regionAlias = :regionAlias) 
         AND (:districtAlias = '' OR r.local.districtAlias = :districtAlias) 
         AND (:neighborhood = '' OR r.local.neighborhood = :neighborhood)
+        AND (:onlyByImage = false OR size(r.imageUrls) > 0)
         """
     )
-    fun findWithUserByLocalAlias(
+    fun findWithUserByLocalAliasAndOnlyByImage(
         country: String,
         regionAlias: String,
         districtAlias: String,
         neighborhood: String,
+        onlyByImage: Boolean,
     ): List<Review>
 }

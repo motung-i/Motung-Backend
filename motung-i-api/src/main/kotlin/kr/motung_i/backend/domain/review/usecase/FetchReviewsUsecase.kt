@@ -16,13 +16,15 @@ class FetchReviewsUsecase(
         region: String,
         district: String,
         neighborhood: String,
+        onlyByImage: Boolean,
     ): FetchReviewsResponse =
         FetchReviewsResponse.toDto(
-            reviewRepository.findWithUserByLocalAlias(
+            reviewRepository.findWithUserByLocalAliasAndOnlyByImage(
                 country = country?.name ?: "",
                 regionAlias = region,
                 districtAlias = district,
                 neighborhood = neighborhood,
+                onlyByImage = onlyByImage,
             )
         )
 }
