@@ -18,8 +18,12 @@ class UploadImageUsecase(
     private val s3Client: S3Client,
     private val s3Properties: S3Properties,
 ) {
-    fun execute(image: MultipartFile): String? =
-        image.let {
+    fun execute(image: MultipartFile?): String? =
+        image?.let {
+            if (image.isEmpty) {
+                return null
+            }
+
             val originalFilename = requireNotNull(it.originalFilename)
             val extension = getImageExtension(originalFilename)
             val fileName = "${LocalDateTime.now()}:${randomUUID()}.$extension"
