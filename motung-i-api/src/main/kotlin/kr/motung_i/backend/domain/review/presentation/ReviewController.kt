@@ -2,17 +2,12 @@ package kr.motung_i.backend.domain.review.presentation
 
 import jakarta.validation.Valid
 import kr.motung_i.backend.domain.review.presentation.dto.request.CreateReviewRequest
+import kr.motung_i.backend.domain.review.presentation.dto.request.FetchReviewsRequest
 import kr.motung_i.backend.domain.review.presentation.dto.response.FetchReviewsResponse
 import kr.motung_i.backend.domain.review.usecase.CreateReviewUsecase
 import kr.motung_i.backend.domain.review.usecase.FetchReviewsUsecase
-import kr.motung_i.backend.global.geojson.enums.Country
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RequestPart
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 
 @RestController
@@ -31,14 +26,8 @@ class ReviewController(
         }
 
     @GetMapping
-    fun fetchReviews(
-        @RequestParam(required = false) country: Country?,
-        @RequestParam(defaultValue = "") region: String,
-        @RequestParam(defaultValue = "") district: String,
-        @RequestParam(defaultValue = "") neighborhood: String,
-        @RequestParam(defaultValue = "false") onlyByImage: Boolean,
-    ): ResponseEntity<FetchReviewsResponse> =
-        fetchReviewsUsecase.execute(country, region, district, neighborhood, onlyByImage).run {
+    fun fetchReviews(@ModelAttribute fetchReviewsRequest: FetchReviewsRequest): ResponseEntity<FetchReviewsResponse> =
+        fetchReviewsUsecase.execute(fetchReviewsRequest).run {
             ResponseEntity.ok(this)
         }
 

@@ -1,7 +1,7 @@
 package kr.motung_i.backend.domain.review.usecase
 
+import kr.motung_i.backend.domain.review.presentation.dto.request.FetchReviewsRequest
 import kr.motung_i.backend.domain.review.presentation.dto.response.FetchReviewsResponse
-import kr.motung_i.backend.global.geojson.enums.Country
 import kr.motung_i.backend.persistence.review.repository.ReviewRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -11,20 +11,14 @@ import org.springframework.transaction.annotation.Transactional
 class FetchReviewsUsecase(
     val reviewRepository: ReviewRepository,
 ) {
-    fun execute(
-        country: Country?,
-        region: String,
-        district: String,
-        neighborhood: String,
-        onlyByImage: Boolean,
-    ): FetchReviewsResponse =
+    fun execute(request: FetchReviewsRequest): FetchReviewsResponse =
         FetchReviewsResponse.toDto(
             reviewRepository.findWithUserByLocalAliasAndOnlyByImage(
-                country = country?.name ?: "",
-                regionAlias = region,
-                districtAlias = district,
-                neighborhood = neighborhood,
-                onlyByImage = onlyByImage,
+                country = request.country?.name ?: "",
+                regionAlias = request.region ?: "",
+                districtAlias = request.district ?: "",
+                neighborhood = request.neighborhood ?: "",
+                onlyByImage = request.onlyByImage ?: false,
             )
         )
 }
