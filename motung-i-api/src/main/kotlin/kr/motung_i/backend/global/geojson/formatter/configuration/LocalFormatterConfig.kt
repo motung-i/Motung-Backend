@@ -2,8 +2,8 @@ package kr.motung_i.backend.global.geojson.formatter.configuration
 
 import kr.motung_i.backend.global.geojson.formatter.LocalFormatter
 import kr.motung_i.backend.global.geojson.formatter.impl.KoreaLocalFormatterImpl
-import kr.motung_i.backend.global.geojson.enums.Country
-import kr.motung_i.backend.global.geojson.enums.Country.*
+import kr.motung_i.backend.persistence.tour.entity.Country
+import kr.motung_i.backend.persistence.tour.entity.Country.*
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

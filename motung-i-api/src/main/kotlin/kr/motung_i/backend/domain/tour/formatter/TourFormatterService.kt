@@ -2,9 +2,9 @@ package kr.motung_i.backend.domain.tour.formatter
 
 import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
-import kr.motung_i.backend.global.geojson.dto.local.District
-import kr.motung_i.backend.global.geojson.dto.local.Region
-import kr.motung_i.backend.global.geojson.enums.Country
+import kr.motung_i.backend.global.geojson.dto.District
+import kr.motung_i.backend.global.geojson.dto.Region
+import kr.motung_i.backend.persistence.tour.entity.Country
 import org.springframework.stereotype.Component
 
 @Component

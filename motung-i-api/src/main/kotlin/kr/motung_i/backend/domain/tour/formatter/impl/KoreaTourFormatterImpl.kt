@@ -1,9 +1,9 @@
 package kr.motung_i.backend.domain.tour.formatter.impl
 
 import kr.motung_i.backend.domain.tour.formatter.TourFormatter
-import kr.motung_i.backend.global.geojson.dto.local.District
-import kr.motung_i.backend.global.geojson.dto.local.Region
-import kr.motung_i.backend.global.geojson.enums.Country
+import kr.motung_i.backend.global.geojson.dto.District
+import kr.motung_i.backend.global.geojson.dto.Region
+import kr.motung_i.backend.persistence.tour.entity.Country
 
 class KoreaTourFormatterImpl : TourFormatter {
     override fun formatToTourFilterRegion(region: Region, country: Country): String {
