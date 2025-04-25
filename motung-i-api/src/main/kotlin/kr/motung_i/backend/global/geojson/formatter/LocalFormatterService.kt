@@ -2,7 +2,7 @@ package kr.motung_i.backend.global.geojson.formatter
 
 import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
-import kr.motung_i.backend.global.geojson.enums.Country
+import kr.motung_i.backend.persistence.tour.entity.Country
 import org.springframework.stereotype.Component
 
 @Component

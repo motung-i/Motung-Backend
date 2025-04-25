@@ -2,7 +2,7 @@ package kr.motung_i.backend.global.geojson
 
 import jakarta.annotation.PostConstruct
 import kr.motung_i.backend.global.geojson.dto.Local
-import kr.motung_i.backend.global.geojson.enums.Country
+import kr.motung_i.backend.persistence.tour.entity.Country
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import org.springframework.stereotype.Component
 

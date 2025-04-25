@@ -9,6 +9,7 @@ import kr.motung_i.backend.global.geojson.LocalsCache
 import kr.motung_i.backend.global.geojson.dto.Local
 import kr.motung_i.backend.global.geojson.dto.Region
 import kr.motung_i.backend.global.geojson.formatter.LocalFormatterService
+import kr.motung_i.backend.persistence.tour.entity.Country
 import org.geolatte.geom.Geometries
 import org.geolatte.geom.Positions
 import org.geolatte.geom.crs.CoordinateReferenceSystems
@@ -24,7 +25,7 @@ class FetchRandomTourLocationUsecase(
     private val localFormatterService: LocalFormatterService,
 ) {
     fun execute(
-        country: kr.motung_i.backend.global.geojson.enums.Country,
+        country: Country,
         regions: List<String>,
         districts: List<String>
     ): FetchRandomTourLocationResponse {

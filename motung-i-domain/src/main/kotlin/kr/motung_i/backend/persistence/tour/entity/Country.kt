@@ -1,4 +1,4 @@
-package kr.motung_i.backend.global.geojson.enums
+package kr.motung_i.backend.persistence.tour.entity
 
 enum class Country(
     val alias: String,

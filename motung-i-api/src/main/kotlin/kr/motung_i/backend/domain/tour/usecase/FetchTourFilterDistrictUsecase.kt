@@ -5,7 +5,7 @@ import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourFilter
 import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.global.geojson.LocalsCache
-import kr.motung_i.backend.global.geojson.enums.Country
+import kr.motung_i.backend.persistence.tour.entity.Country
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

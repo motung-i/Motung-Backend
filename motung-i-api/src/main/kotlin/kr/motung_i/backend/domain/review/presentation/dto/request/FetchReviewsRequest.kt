@@ -1,6 +1,6 @@
 package kr.motung_i.backend.domain.review.presentation.dto.request
 
-import kr.motung_i.backend.global.geojson.enums.Country
+import kr.motung_i.backend.persistence.tour.entity.Country
 
 data class FetchReviewsRequest(
     val country: Country?,
