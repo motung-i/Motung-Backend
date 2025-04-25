@@ -17,6 +17,7 @@ class ReviewRepositoryImpl(
         regionAlias: String,
         districtAlias: String,
         neighborhood: String,
+        localAlias: String,
         onlyByImage: Boolean,
     ): List<Review> =
         reviewJpaRepository.findWithUserByLocalAliasAndOnlyByImage(
@@ -24,6 +25,8 @@ class ReviewRepositoryImpl(
             regionAlias = regionAlias,
             districtAlias = districtAlias,
             neighborhood = neighborhood,
+            localAlias = localAlias,
             onlyByImage = onlyByImage,
+
         )
 }

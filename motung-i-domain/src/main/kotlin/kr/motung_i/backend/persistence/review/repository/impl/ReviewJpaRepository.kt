@@ -15,6 +15,7 @@ interface ReviewJpaRepository : JpaRepository<Review, UUID> {
         AND (:regionAlias = '' OR r.local.regionAlias = :regionAlias) 
         AND (:districtAlias = '' OR r.local.districtAlias = :districtAlias) 
         AND (:neighborhood = '' OR r.local.neighborhood = :neighborhood)
+        AND (:localAlias = '' OR r.local.localAlias = :localAlias)
         AND (:onlyByImage = false OR size(r.imageUrls) > 0)
         """
     )
@@ -23,6 +24,7 @@ interface ReviewJpaRepository : JpaRepository<Review, UUID> {
         regionAlias: String,
         districtAlias: String,
         neighborhood: String,
+        localAlias: String,
         onlyByImage: Boolean,
     ): List<Review>
 }

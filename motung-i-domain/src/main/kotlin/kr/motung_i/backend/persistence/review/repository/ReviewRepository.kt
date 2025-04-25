@@ -10,6 +10,7 @@ interface ReviewRepository {
         regionAlias: String,
         districtAlias: String,
         neighborhood: String,
+        localAlias: String,
         onlyByImage: Boolean,
     ): List<Review>
 }

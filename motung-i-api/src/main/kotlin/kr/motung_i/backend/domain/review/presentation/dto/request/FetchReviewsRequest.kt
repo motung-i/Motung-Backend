@@ -7,5 +7,6 @@ data class FetchReviewsRequest(
     val region: String?,
     val district: String?,
     val neighborhood: String?,
+    val local: String?,
     val onlyByImage: Boolean?,
 )

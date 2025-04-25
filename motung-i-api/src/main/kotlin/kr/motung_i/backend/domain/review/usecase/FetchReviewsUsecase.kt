@@ -18,6 +18,7 @@ class FetchReviewsUsecase(
                 regionAlias = request.region ?: "",
                 districtAlias = request.district ?: "",
                 neighborhood = request.neighborhood ?: "",
+                localAlias = request.local ?: "",
                 onlyByImage = request.onlyByImage ?: false,
             )
         )
