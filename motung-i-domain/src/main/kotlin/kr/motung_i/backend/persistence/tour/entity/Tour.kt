@@ -1,6 +1,7 @@
 package kr.motung_i.backend.persistence.tour.entity
 
 import jakarta.persistence.*
+import kr.motung_i.backend.persistence.BaseEntity
 import kr.motung_i.backend.persistence.user.entity.User
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
@@ -47,4 +48,4 @@ class Tour(
 
     @Column(nullable = false)
     val cultureComment: String,
-)
+): BaseEntity()
