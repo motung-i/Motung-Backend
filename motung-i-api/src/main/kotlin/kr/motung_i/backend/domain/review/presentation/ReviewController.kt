@@ -33,10 +33,10 @@ class ReviewController(
     @GetMapping
     fun fetchReviews(
         @RequestParam(required = false) country: Country?,
-        @RequestParam(required = false) region: String,
-        @RequestParam(required = false) district: String,
-        @RequestParam(required = false) neighborhood: String,
-        @RequestParam onlyByImage: Boolean,
+        @RequestParam(defaultValue = "") region: String,
+        @RequestParam(defaultValue = "") district: String,
+        @RequestParam(defaultValue = "") neighborhood: String,
+        @RequestParam(defaultValue = "false") onlyByImage: Boolean,
     ): ResponseEntity<FetchReviewsResponse> =
         fetchReviewsUsecase.execute(country, region, district, neighborhood, onlyByImage).run {
             ResponseEntity.ok(this)
