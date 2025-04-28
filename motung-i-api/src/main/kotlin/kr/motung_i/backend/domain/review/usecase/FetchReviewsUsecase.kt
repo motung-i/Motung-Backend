@@ -14,7 +14,7 @@ class FetchReviewsUsecase(
     fun execute(request: FetchReviewsRequest): FetchReviewsResponse =
         FetchReviewsResponse.toDto(
             reviewRepository.findWithUserByLocalAliasAndOnlyByImage(
-                country = request.country?.name ?: "",
+                country = request.country,
                 regionAlias = request.region ?: "",
                 districtAlias = request.district ?: "",
                 neighborhood = request.neighborhood ?: "",

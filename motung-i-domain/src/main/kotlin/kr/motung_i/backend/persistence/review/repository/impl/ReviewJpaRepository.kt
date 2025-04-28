@@ -1,6 +1,7 @@
 package kr.motung_i.backend.persistence.review.repository.impl
 
 import kr.motung_i.backend.persistence.review.entity.Review
+import kr.motung_i.backend.persistence.tour.entity.Country
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import java.util.*
@@ -11,7 +12,7 @@ interface ReviewJpaRepository : JpaRepository<Review, UUID> {
         """
         SELECT r 
         FROM Review r JOIN FETCH r.user
-        WHERE (:country = '' OR r.local.country = :country) 
+        WHERE (:country IS NULL OR r.local.country = :country) 
         AND (:regionAlias = '' OR r.local.regionAlias = :regionAlias) 
         AND (:districtAlias = '' OR r.local.districtAlias = :districtAlias) 
         AND (:neighborhood = '' OR r.local.neighborhood = :neighborhood)
@@ -20,7 +21,7 @@ interface ReviewJpaRepository : JpaRepository<Review, UUID> {
         """
     )
     fun findWithUserByLocalAliasAndOnlyByImage(
-        country: String,
+        country: Country?,
         regionAlias: String,
         districtAlias: String,
         neighborhood: String,

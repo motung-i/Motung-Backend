@@ -2,6 +2,7 @@ package kr.motung_i.backend.persistence.review.repository.impl
 
 import kr.motung_i.backend.persistence.review.entity.Review
 import kr.motung_i.backend.persistence.review.repository.ReviewRepository
+import kr.motung_i.backend.persistence.tour.entity.Country
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -13,7 +14,7 @@ class ReviewRepositoryImpl(
     }
 
     override fun findWithUserByLocalAliasAndOnlyByImage(
-        country: String,
+        country: Country?,
         regionAlias: String,
         districtAlias: String,
         neighborhood: String,
