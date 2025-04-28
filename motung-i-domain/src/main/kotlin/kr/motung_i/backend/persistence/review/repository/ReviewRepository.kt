@@ -9,12 +9,13 @@ interface ReviewRepository {
 
     fun save(review: Review)
 
-    fun findWithUserByLocalAliasAndOnlyByImage(
+    fun findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreateAt(
         country: Country?,
         regionAlias: String,
         districtAlias: String,
         neighborhood: String,
         localAlias: String,
         onlyByImage: Boolean,
+        onlyByReported: Boolean,
     ): List<Review>
 }

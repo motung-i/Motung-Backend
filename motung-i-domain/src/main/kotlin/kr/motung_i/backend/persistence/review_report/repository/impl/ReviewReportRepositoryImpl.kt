@@ -15,6 +15,9 @@ class ReviewReportRepositoryImpl(
         reviewReportJpaRepository.save(reviewReport)
     }
 
+    override fun findAll(): List<ReviewReport> =
+        reviewReportJpaRepository.findAll()
+
     override fun findByReviewAndProposer(review: Review, proposer: User): ReviewReport? =
         reviewReportJpaRepository.findByReviewAndProposer(review, proposer)
 }

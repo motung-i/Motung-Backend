@@ -18,12 +18,12 @@ class ReviewReport protected constructor(
     @CollectionTable(name = "REVIEW_REPORT_REASON", joinColumns = [JoinColumn(name = "REVIEW_REPORT_ID")])
     @Column(name = "REASONS", nullable = false)
     @Enumerated(EnumType.STRING)
-    var _reasons: MutableSet<ReportReason> = mutableSetOf(),
+    private var _reasons: MutableSet<ReportReason> = mutableSetOf(),
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "REVIEW_ID")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    val review: Review,
+    var review: Review,
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "PROPOSER_ID")

@@ -7,5 +7,7 @@ import kr.motung_i.backend.persistence.user.entity.User
 interface ReviewReportRepository {
     fun save(reviewReport: ReviewReport)
 
+    fun findAll(): List<ReviewReport>
+
     fun findByReviewAndProposer(review: Review, proposer: User): ReviewReport?
 }
