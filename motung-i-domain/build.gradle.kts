@@ -19,6 +19,12 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
 }
 
+allOpen {
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.MappedSuperclass")
+    annotation("jakarta.persistence.Embeddable")
+}
+
 tasks.getByName("bootJar") {
     enabled = false
 }
