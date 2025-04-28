@@ -2,8 +2,11 @@ package kr.motung_i.backend.persistence.review.repository
 
 import kr.motung_i.backend.persistence.review.entity.Review
 import kr.motung_i.backend.persistence.tour.entity.Country
+import java.util.UUID
 
 interface ReviewRepository {
+    fun findById(id: UUID): Review?
+
     fun save(review: Review)
 
     fun findWithUserByLocalAliasAndOnlyByImage(
