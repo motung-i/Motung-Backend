@@ -2,6 +2,7 @@ package kr.motung_i.backend.domain.item.presentation
 
 import jakarta.validation.Valid
 import kr.motung_i.backend.domain.item.presentation.dto.request.ApproveItemRequest
+import kr.motung_i.backend.domain.item.presentation.dto.request.RemoveItemRequest
 import kr.motung_i.backend.domain.item.presentation.dto.request.UpdateItemRequest
 import kr.motung_i.backend.domain.item.presentation.dto.response.ItemsResponse
 import kr.motung_i.backend.domain.item.usecase.ApproveItemUsecase
@@ -45,8 +46,11 @@ class AdminItemController(
         }
 
     @DeleteMapping("{itemId}")
-    fun removeItem(@PathVariable itemId: UUID): ResponseEntity<Unit> =
-        removeItemUsecase.execute(itemId).run {
+    fun removeItem(
+        @PathVariable itemId: UUID,
+        @RequestBody request: RemoveItemRequest,
+    ): ResponseEntity<Unit> =
+        removeItemUsecase.execute(itemId, request).run {
             ResponseEntity.noContent().build()
         }
 }
