@@ -1,4 +1,4 @@
-package kr.motung_i.backend.persistence.review_report
+package kr.motung_i.backend.persistence.review_report.entity
 
 enum class ReportReason(
     val description: String,

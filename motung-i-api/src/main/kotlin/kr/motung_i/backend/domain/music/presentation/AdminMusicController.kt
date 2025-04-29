@@ -2,6 +2,7 @@ package kr.motung_i.backend.domain.music.presentation
 
 import jakarta.validation.Valid
 import kr.motung_i.backend.domain.music.presentation.dto.request.ApproveMusicRequest
+import kr.motung_i.backend.domain.music.presentation.dto.request.RemoveMusicRequest
 import kr.motung_i.backend.domain.music.presentation.dto.request.UpdateMusicRequest
 import kr.motung_i.backend.domain.music.usecase.ApproveMusicUsecase
 import kr.motung_i.backend.domain.music.usecase.FetchPendingMusicUsecase
@@ -53,9 +54,10 @@ class AdminMusicController(
 
     @DeleteMapping("{musicId}")
     fun removeMusic(
-        @PathVariable musicId: UUID
+        @PathVariable musicId: UUID,
+        @RequestBody request: RemoveMusicRequest,
     ): ResponseEntity<Unit> =
-        removeMusicUsecase.execute(musicId).run {
+        removeMusicUsecase.execute(musicId, request).run {
             ResponseEntity.noContent().build()
         }
 }

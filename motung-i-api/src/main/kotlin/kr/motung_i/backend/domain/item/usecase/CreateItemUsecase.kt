@@ -1,7 +1,7 @@
 package kr.motung_i.backend.domain.item.usecase
 
 import kr.motung_i.backend.domain.item.presentation.dto.request.CreateItemRequest
-import kr.motung_i.backend.domain.user.presentation.usecase.FetchCurrentUserUsecase
+import kr.motung_i.backend.domain.user.usecase.FetchCurrentUserUsecase
 import kr.motung_i.backend.persistence.item.entity.Item
 import kr.motung_i.backend.persistence.item.repository.ItemRepository
 import org.springframework.stereotype.Service

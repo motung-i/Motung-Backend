@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import kr.motung_i.backend.global.security.exception.CustomAccessDeniedHandler
 import kr.motung_i.backend.global.security.exception.CustomAuthenticationEntryPoint
 import kr.motung_i.backend.global.security.filter.JwtAuthFilter
+import kr.motung_i.backend.global.security.filter.SuspensionUserFilter
 import kr.motung_i.backend.global.security.service.CustomOauth2Service
 import kr.motung_i.backend.global.security.success.OAuth2SuccessHandler
 import kr.motung_i.backend.persistence.user.entity.enums.Role
@@ -27,10 +28,12 @@ class SecurityConfig {
         oauth2Service: CustomOauth2Service,
         oAuth2SuccessHandler: OAuth2SuccessHandler,
         jwtAuthFilter: JwtAuthFilter,
+        suspensionUserFilter: SuspensionUserFilter,
     ): SecurityFilterChain =
         http
             .oauth2Login { oauth2 -> oauth2.successHandler(oAuth2SuccessHandler).userInfoEndpoint { it.userService(oauth2Service) } }
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterAfter(suspensionUserFilter, jwtAuthFilter::class.java)
             .authorizeHttpRequests {
                 it
                     .requestMatchers(HttpMethod.GET, "/")
