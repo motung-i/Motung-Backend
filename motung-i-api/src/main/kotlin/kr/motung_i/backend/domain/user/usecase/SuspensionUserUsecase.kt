@@ -3,6 +3,7 @@ package kr.motung_i.backend.domain.user.usecase
 import kr.motung_i.backend.persistence.review_report.entity.ReportReason
 import kr.motung_i.backend.persistence.user.entity.User
 import kr.motung_i.backend.persistence.user_suspension.entity.SuspensionPeriod
+import kr.motung_i.backend.persistence.user_suspension.entity.SuspensionTarget
 import kr.motung_i.backend.persistence.user_suspension.entity.UserSuspension
 import kr.motung_i.backend.persistence.user_suspension.repository.UserSuspensionRepository
 import org.springframework.stereotype.Service
@@ -17,6 +18,7 @@ class SuspensionUserUsecase(
 ) {
     fun execute(
         user: User,
+        target: SuspensionTarget,
         reasons: Set<ReportReason>,
         suspensionPeriod: SuspensionPeriod?
     ) {
@@ -31,6 +33,7 @@ class SuspensionUserUsecase(
             userSuspensionRepository.save(
                 UserSuspension(
                     user = user,
+                    target = target,
                     reasons = reasons,
                     suspensionPeriod = suspensionPeriod,
                     resumeAt = LocalDateTime.now().plus(suspensionPeriod.period),
@@ -46,6 +49,7 @@ class SuspensionUserUsecase(
 
         userSuspensionRepository.save(
             savedUserSuspension.copy(
+                target = target,
                 reasons = reasons,
                 suspensionPeriod = suspensionPeriod,
                 resumeAt = savedUserSuspension.createdAt!!.plus(suspensionPeriod.period),

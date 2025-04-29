@@ -6,6 +6,7 @@ import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.persistence.music.entity.enums.MusicStatus
 import kr.motung_i.backend.persistence.music.repository.MusicRepository
+import kr.motung_i.backend.persistence.user_suspension.entity.SuspensionTarget
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -26,6 +27,7 @@ class RemoveMusicUsecase(
 
         suspensionUserUsecase.execute(
             user = requestMusic.user,
+            target = SuspensionTarget.MUSIC,
             reasons = setOf(),
             suspensionPeriod = request.suspensionPeriod
         )

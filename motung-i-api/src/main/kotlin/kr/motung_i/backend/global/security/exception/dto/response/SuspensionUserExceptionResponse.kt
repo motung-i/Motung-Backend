@@ -9,6 +9,7 @@ data class SuspensionUserExceptionResponse(
     val statusMessage: String,
     val suspensionPeriod: String,
     val resumeAt: LocalDateTime,
+    val target: String,
     val reasons: List<String>
 ) {
     companion object {
@@ -18,6 +19,7 @@ data class SuspensionUserExceptionResponse(
                 statusMessage = CustomErrorCode.SUSPENDED_USER.statusMessage,
                 suspensionPeriod = userSuspension.suspensionPeriod.description,
                 resumeAt = userSuspension.resumeAt,
+                target = userSuspension.target.description,
                 reasons = userSuspension.reasons.map { it.description },
             )
     }

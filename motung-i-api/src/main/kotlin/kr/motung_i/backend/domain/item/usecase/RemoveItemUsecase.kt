@@ -6,6 +6,7 @@ import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.persistence.item.entity.enums.ItemStatus
 import kr.motung_i.backend.persistence.item.repository.ItemRepository
+import kr.motung_i.backend.persistence.user_suspension.entity.SuspensionTarget
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -26,6 +27,7 @@ class RemoveItemUsecase(
 
         suspensionUserUsecase.execute(
             user = requestItem.user,
+            target = SuspensionTarget.ITEM,
             reasons = setOf(),
             suspensionPeriod = request.suspensionPeriod
         )

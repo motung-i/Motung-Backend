@@ -20,6 +20,10 @@ class UserSuspension(
     @OnDelete(action = OnDeleteAction.CASCADE)
     val user: User,
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    val target: SuspensionTarget,
+
     @ElementCollection
     @CollectionTable(name = "USER_SUSPENSION_REASON", joinColumns = [JoinColumn(name = "USER_SUSPENSION_ID")])
     @Column(name = "REASONS", nullable = false)
@@ -39,6 +43,7 @@ class UserSuspension(
     val suspendedBy: User?,
 ): BaseEntity() {
     fun copy(
+        target: SuspensionTarget,
         reasons: Set<ReportReason>,
         suspensionPeriod: SuspensionPeriod,
         resumeAt: LocalDateTime,
@@ -46,6 +51,7 @@ class UserSuspension(
     ): UserSuspension = UserSuspension(
         id = this.id,
         user = this.user,
+        target = target,
         reasons = reasons,
         suspensionPeriod = suspensionPeriod,
         resumeAt = resumeAt,
