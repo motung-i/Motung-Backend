@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface ReviewReportJpaRepository: JpaRepository<ReviewReport, Long> {
     fun findByReviewAndProposer(review: Review, proposer: User): ReviewReport?
+    fun findByReview(review: Review): List<ReviewReport>
 }

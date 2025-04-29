@@ -20,4 +20,7 @@ class ReviewReportRepositoryImpl(
 
     override fun findByReviewAndProposer(review: Review, proposer: User): ReviewReport? =
         reviewReportJpaRepository.findByReviewAndProposer(review, proposer)
+
+    override fun findByReview(review: Review): List<ReviewReport> =
+        reviewReportJpaRepository.findByReview(review)
 }

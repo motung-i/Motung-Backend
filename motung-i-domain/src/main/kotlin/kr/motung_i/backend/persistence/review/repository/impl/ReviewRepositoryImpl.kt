@@ -36,4 +36,8 @@ class ReviewRepositoryImpl(
             onlyByImage = onlyByImage,
             onlyByReported = onlyByReported,
         )
+
+    override fun delete(review: Review) {
+        reviewJpaRepository.delete(review)
+    }
 }

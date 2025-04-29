@@ -10,4 +10,6 @@ interface ReviewReportRepository {
     fun findAll(): List<ReviewReport>
 
     fun findByReviewAndProposer(review: Review, proposer: User): ReviewReport?
+
+    fun findByReview(review: Review): List<ReviewReport>
 }

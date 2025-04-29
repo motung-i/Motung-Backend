@@ -18,4 +18,6 @@ interface ReviewRepository {
         onlyByImage: Boolean,
         onlyByReported: Boolean,
     ): List<Review>
+
+    fun delete(review: Review)
 }
