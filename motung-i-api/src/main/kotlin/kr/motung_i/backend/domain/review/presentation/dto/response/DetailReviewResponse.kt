@@ -14,7 +14,7 @@ data class DetailReviewResponse(
     val imageUrls: List<String>,
     val createdDate: LocalDate?,
     val isReported: Boolean,
-    val reasons: Set<ReportReason>,
+    val reasons: Set<String>,
 ) {
     companion object {
         fun toDto(review: Review): DetailReviewResponse =
@@ -27,7 +27,9 @@ data class DetailReviewResponse(
                 imageUrls = review.imageUrls,
                 createdDate = review.createdAt?.toLocalDate(),
                 isReported = review.reports.isNotEmpty(),
-                reasons = review.reports.flatMap { it.reasons }.toSet()
+                reasons = review.reports
+                    .flatMap { it.reasons.map(ReportReason::description) }
+                    .toSet()
             )
     }
 }
