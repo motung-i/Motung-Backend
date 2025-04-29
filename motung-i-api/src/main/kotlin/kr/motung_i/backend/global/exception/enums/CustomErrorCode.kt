@@ -9,6 +9,7 @@ enum class CustomErrorCode(
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증 토큰이 존재하지 않습니다."),
     FORBIDDEN(HttpStatus.FORBIDDEN, "권한이 부족합니다."),
+    SUSPENDED_USER(HttpStatus.FORBIDDEN, "정지된 유저입니다."),
     NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 페이지입니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에 문제가 발생했습니다."),
     NOT_FOUND_GEOJSON(HttpStatus.INTERNAL_SERVER_ERROR, "GEOJSON 파일이 1개이상 존재해야 합니다."),
