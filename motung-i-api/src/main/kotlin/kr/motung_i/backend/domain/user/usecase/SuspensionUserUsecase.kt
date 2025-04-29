@@ -15,7 +15,15 @@ class SuspensionUserUsecase(
     private val userSuspensionRepository: UserSuspensionRepository,
     private val fetchCurrentUserUsecase: FetchCurrentUserUsecase
 ) {
-    fun execute(user: User, reasons: Set<ReportReason>, suspensionPeriod: SuspensionPeriod,) {
+    fun execute(
+        user: User,
+        reasons: Set<ReportReason>,
+        suspensionPeriod: SuspensionPeriod?
+    ) {
+        if (suspensionPeriod == null) {
+            return
+        }
+
         val currentUser = fetchCurrentUserUsecase.execute()
         val savedUserSuspension = userSuspensionRepository.findWithReasonsByUser(user)
 

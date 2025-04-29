@@ -20,13 +20,11 @@ class RemoveReviewUsecase(
     fun execute(reviewId: UUID, request: RemoveReviewRequest) {
         val review = reviewRepository.findById(reviewId) ?: throw CustomException(CustomErrorCode.NOT_FOUND_REVIEW)
 
-        if (request.suspensionPeriod != null) {
-            suspensionUserUsecase.execute(
-                user = review.user,
-                suspensionPeriod = request.suspensionPeriod,
-                reasons = reviewReportRepository.findByReview(review).flatMap { it.reasons }.toSet()
-            )
-        }
+        suspensionUserUsecase.execute(
+            user = review.user,
+            suspensionPeriod = request.suspensionPeriod,
+            reasons = reviewReportRepository.findByReview(review).flatMap { it.reasons }.toSet()
+        )
 
         reviewRepository.delete(review)
     }
