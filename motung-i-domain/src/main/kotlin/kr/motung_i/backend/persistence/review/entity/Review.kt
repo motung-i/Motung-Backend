@@ -6,7 +6,6 @@ import kr.motung_i.backend.persistence.BaseEntity
 import kr.motung_i.backend.persistence.review_report.entity.ReviewReport
 import kr.motung_i.backend.persistence.tour.entity.Local
 import kr.motung_i.backend.persistence.user.entity.User
-import org.hibernate.annotations.BatchSize
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
 import org.hibernate.annotations.UuidGenerator
@@ -38,7 +37,6 @@ class Review (
     @Column(name = "IMAGE_URL")
     val imageUrls: List<String>,
 
-    @BatchSize(size = 100)
     @OneToMany(mappedBy = "review", cascade = [CascadeType.ALL], orphanRemoval = true)
     @JsonIgnore
     val reports: MutableList<ReviewReport> = mutableListOf()
