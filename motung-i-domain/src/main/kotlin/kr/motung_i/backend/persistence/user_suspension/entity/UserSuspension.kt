@@ -1,6 +1,7 @@
 package kr.motung_i.backend.persistence.user_suspension.entity
 
 import jakarta.persistence.*
+import kr.motung_i.backend.persistence.BaseEntity
 import kr.motung_i.backend.persistence.review_report.entity.ReportReason
 import kr.motung_i.backend.persistence.user.entity.User
 import org.hibernate.annotations.OnDelete
@@ -36,4 +37,18 @@ class UserSuspension(
     @JoinColumn(name = "SUSPENDED_BY_ID")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     val suspendedBy: User?,
-)
+): BaseEntity() {
+    fun copy(
+        reasons: Set<ReportReason>,
+        suspensionPeriod: SuspensionPeriod,
+        resumeAt: LocalDateTime,
+        suspendedBy: User
+    ): UserSuspension = UserSuspension(
+        id = this.id,
+        user = this.user,
+        reasons = reasons,
+        suspensionPeriod = suspensionPeriod,
+        resumeAt = resumeAt,
+        suspendedBy = suspendedBy,
+    )
+}
