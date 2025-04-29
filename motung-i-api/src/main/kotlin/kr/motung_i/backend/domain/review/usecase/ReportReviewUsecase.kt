@@ -18,7 +18,7 @@ class ReportReviewUsecase(
     private val reviewReportRepository: ReviewReportRepository,
     private val reviewRepository: ReviewRepository,
 ) {
-    fun execute(reviewId: UUID, reportReviewRequest: ReportReviewRequest) {
+    fun execute(reviewId: UUID, request: ReportReviewRequest) {
         val review = reviewRepository.findById(reviewId) ?: throw CustomException(CustomErrorCode.NOT_FOUND_REVIEW)
         val currentUser = fetchCurrentUserUsecase.execute()
         val reviewReportByCurrentUser = reviewReportRepository.findByReviewAndProposer(review, currentUser)
@@ -26,13 +26,13 @@ class ReportReviewUsecase(
         if(reviewReportByCurrentUser == null) {
             reviewReportRepository.save(
                 ReviewReport.of(
-                    reasons = reportReviewRequest.reasons.toMutableSet(),
+                    reasons = request.reasons.toMutableSet(),
                     review = review,
                     proposer = currentUser,
                 )
             )
         } else {
-            reviewReportByCurrentUser.addReasons(reportReviewRequest.reasons)
+            reviewReportByCurrentUser.addReasons(request.reasons)
         }
     }
 

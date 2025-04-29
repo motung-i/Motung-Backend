@@ -20,9 +20,9 @@ class TravelInfoAdminController(
     fun updateTravelInfo(
         @PathVariable travelInfoId: UUID,
         @RequestPart("image") image: MultipartFile,
-        @RequestPart("request") updateTravelInfoRequest: UpdateTravelInfoRequest,
+        @RequestPart("request") request: UpdateTravelInfoRequest,
     ): ResponseEntity<Unit> =
-        updateTravelInfoUsecase.execute(travelInfoId, image, updateTravelInfoRequest).run {
+        updateTravelInfoUsecase.execute(travelInfoId, image, request).run {
             ResponseEntity.noContent().build()
         }
 }

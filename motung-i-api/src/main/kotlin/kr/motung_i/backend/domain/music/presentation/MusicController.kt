@@ -20,8 +20,8 @@ class MusicController(
 ) {
 
     @PostMapping
-    fun createMusic(@Valid @RequestBody createMusicRequest: CreateMusicRequest): ResponseEntity<Void> =
-        createMusicUsecase.execute(createMusicRequest).run {
+    fun createMusic(@Valid @RequestBody request: CreateMusicRequest): ResponseEntity<Void> =
+        createMusicUsecase.execute(request).run {
             ResponseEntity.noContent().build()
         }
 

@@ -37,18 +37,18 @@ class AdminMusicController(
     @PatchMapping("{musicId}")
     fun updateMusic(
         @PathVariable musicId: UUID,
-        @RequestBody updateMusicRequest: UpdateMusicRequest,
+        @RequestBody request: UpdateMusicRequest,
     ): ResponseEntity<Unit> =
-        updateMusicUsecase.execute(musicId, updateMusicRequest).run {
+        updateMusicUsecase.execute(musicId, request).run {
             ResponseEntity.noContent().build()
         }
 
     @PostMapping("{musicId}")
     fun approveMusic(
         @PathVariable musicId: UUID,
-        @Valid @RequestBody approveMusicRequest: ApproveMusicRequest,
+        @Valid @RequestBody request: ApproveMusicRequest,
     ): ResponseEntity<Unit> =
-        approveMusicUsecase.execute(musicId, approveMusicRequest).run {
+        approveMusicUsecase.execute(musicId, request).run {
             ResponseEntity.noContent().build()
         }
 

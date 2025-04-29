@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service
 class RegisterUsecase(
     private val userCustomRepository: UserCustomRepository,
 ) {
-    fun execute(registerRequest: RegisterRequest) {
+    fun execute(request: RegisterRequest) {
         val loginUser: User = SecurityContextHolder.getContext().authentication.principal as User
-        userCustomRepository.save(loginUser.copy(name = registerRequest.name))
+        userCustomRepository.save(loginUser.copy(name = request.name))
     }
 }

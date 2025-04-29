@@ -20,7 +20,7 @@ class CreateReviewUsecase(
     private val fetchCurrentUserUsecase: FetchCurrentUserUsecase,
     private val uploadImageUsecase: UploadImageUsecase,
 ) {
-    fun execute(images: List<MultipartFile>, createReviewRequest: CreateReviewRequest) {
+    fun execute(images: List<MultipartFile>, request: CreateReviewRequest) {
         val currentUser = fetchCurrentUserUsecase.execute()
 
         val tour = tourRepository.findByUser(currentUser)
@@ -35,8 +35,8 @@ class CreateReviewUsecase(
             Review(
                 user = currentUser,
                 local = tour.goalLocal.copy(),
-                isRecommend = createReviewRequest.isRecommend,
-                description = createReviewRequest.description,
+                isRecommend = request.isRecommend,
+                description = request.description,
                 imageUrls = imageUrls
             )
         )

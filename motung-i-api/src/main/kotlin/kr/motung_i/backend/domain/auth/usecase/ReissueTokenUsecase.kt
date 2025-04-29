@@ -18,15 +18,15 @@ class ReissueTokenUsecase(
     val refreshTokenCustomRepository: RefreshTokenCustomRepository,
     val jwtTokenProvider: JwtTokenProvider,
 ) {
-    fun execute(tokenRequest: TokenRequest): TokenResponse {
+    fun execute(request: TokenRequest): TokenResponse {
         val result: RefreshToken =
             refreshTokenCustomRepository
                 .find(
-                    tokenRequest.refreshToken,
+                    request.refreshToken,
                 ).orElseThrow {
                     CustomException(CustomErrorCode.UNAUTHORIZED)
                 }
-        refreshTokenCustomRepository.delete(tokenRequest.refreshToken)
+        refreshTokenCustomRepository.delete(request.refreshToken)
         val userId = UUID.fromString(result.userId)
         val user: User =
             userCustomRepository.findByUserId(userId).orElseThrow {

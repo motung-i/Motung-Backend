@@ -14,12 +14,12 @@ class CreateMusicUsecase(
     private val fetchCurrentUserUsecase: FetchCurrentUserUsecase
 ) {
 
-    fun execute(createMusicRequest: CreateMusicRequest) {
+    fun execute(request: CreateMusicRequest) {
         musicRepository.save(Music(
             user = fetchCurrentUserUsecase.execute(),
-            title = createMusicRequest.title,
-            description = createMusicRequest.description,
-            singer = createMusicRequest.singer,
+            title = request.title,
+            description = request.description,
+            singer = request.singer,
         ))
     }
 }

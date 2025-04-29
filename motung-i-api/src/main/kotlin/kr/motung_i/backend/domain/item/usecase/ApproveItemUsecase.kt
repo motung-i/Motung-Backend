@@ -13,8 +13,8 @@ import java.util.*
 class ApproveItemUsecase(
     private val itemRepository: ItemRepository,
 ) {
-    fun execute(itemId: UUID, approveItemRequest: ApproveItemRequest) {
-        val rankItem = itemRepository.findByRankNumber(approveItemRequest.rankNumber)
+    fun execute(itemId: UUID, request: ApproveItemRequest) {
+        val rankItem = itemRepository.findByRankNumber(request.rankNumber)
         val requestItem = itemRepository.findById(itemId)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_ITEM)
 
@@ -23,6 +23,6 @@ class ApproveItemUsecase(
         }
 
         rankItem?.cancelItem()
-        requestItem.approveItem(approveItemRequest.rankNumber)
+        requestItem.approveItem(request.rankNumber)
     }
 }

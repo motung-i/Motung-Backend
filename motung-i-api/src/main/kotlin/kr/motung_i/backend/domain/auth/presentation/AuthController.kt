@@ -24,11 +24,11 @@ class AuthController(
 ) {
     @PostMapping("refresh")
     fun refreshToken(
-        @RequestBody tokenRequest: TokenRequest,
+        @RequestBody request: TokenRequest,
     ): ResponseEntity<TokenResponse> =
         reissueTokenUsecase
             .execute(
-                tokenRequest = tokenRequest,
+                request = request,
             ).run {
                 ResponseEntity.ok(this)
             }
@@ -56,7 +56,7 @@ class AuthController(
     ): ResponseEntity<Unit> =
         registerUsecase
             .execute(
-                registerRequest = request,
+                request = request,
             ).run {
                 ResponseEntity.noContent().build()
             }

@@ -13,8 +13,8 @@ import java.util.*
 class ApproveMusicUsecase(
     private val musicRepository: MusicRepository,
 ) {
-    fun execute(musicId: UUID, approveMusicRequest: ApproveMusicRequest) {
-        val rankMusic = musicRepository.findByRankNumber(approveMusicRequest.rankNumber)
+    fun execute(musicId: UUID, request: ApproveMusicRequest) {
+        val rankMusic = musicRepository.findByRankNumber(request.rankNumber)
         val requestMusic = musicRepository.findById(musicId)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_MUSIC)
 
@@ -23,6 +23,6 @@ class ApproveMusicUsecase(
         }
 
         rankMusic?.cancelMusic()
-        requestMusic.approveMusic(approveMusicRequest.rankNumber)
+        requestMusic.approveMusic(request.rankNumber)
     }
 }

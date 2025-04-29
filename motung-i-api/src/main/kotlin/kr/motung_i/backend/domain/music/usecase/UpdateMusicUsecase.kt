@@ -13,14 +13,14 @@ import java.util.UUID
 class UpdateMusicUsecase(
     private val musicRepository: MusicRepository,
 ) {
-    fun execute(musicId: UUID, updateMusicRequest: UpdateMusicRequest) {
+    fun execute(musicId: UUID, request: UpdateMusicRequest) {
         val savedMusic = musicRepository.findById(musicId)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_MUSIC)
         musicRepository.save(
             savedMusic.update(
-                updateMusicRequest.title,
-                updateMusicRequest.singer,
-                updateMusicRequest.description
+                request.title,
+                request.singer,
+                request.description
             )
         )
     }

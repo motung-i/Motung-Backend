@@ -23,24 +23,24 @@ class ReviewController(
     @PostMapping
     fun createReview(
         @RequestPart("images", required = false) images: List<MultipartFile>,
-        @RequestPart("request") @Valid createReviewRequest: CreateReviewRequest
+        @RequestPart("request") @Valid request: CreateReviewRequest
     ): ResponseEntity<Unit> =
-        createReviewUsecase.execute(images, createReviewRequest).run {
+        createReviewUsecase.execute(images, request).run {
             ResponseEntity.noContent().build()
         }
 
     @GetMapping
-    fun fetchReviews(@ModelAttribute fetchReviewsRequest: FetchReviewsRequest): ResponseEntity<FetchReviewsResponse> =
-        fetchReviewsUsecase.execute(fetchReviewsRequest).run {
+    fun fetchReviews(@ModelAttribute request: FetchReviewsRequest): ResponseEntity<FetchReviewsResponse> =
+        fetchReviewsUsecase.execute(request).run {
             ResponseEntity.ok(this)
         }
 
     @PostMapping("/{reviewId}/report")
     fun reportReview(
         @PathVariable reviewId: UUID,
-        @RequestBody @Valid reportReviewRequest: ReportReviewRequest,
+        @RequestBody @Valid request: ReportReviewRequest,
     ): ResponseEntity<Unit> =
-        reportReviewUsecase.execute(reviewId, reportReviewRequest).run {
+        reportReviewUsecase.execute(reviewId, request).run {
             ResponseEntity.noContent().build()
         }
 

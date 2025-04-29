@@ -16,15 +16,15 @@ class UpdateTravelInfoUsecase(
     private val travelInfoRepository: TravelInfoRepository,
     private val updateImageUsecase: UpdateImageUsecase,
 ) {
-    fun execute(travelId: UUID, image: MultipartFile?, updateTravelInfoRequest: UpdateTravelInfoRequest) {
+    fun execute(travelId: UUID, image: MultipartFile?, request: UpdateTravelInfoRequest) {
         val savedTravelInfo = travelInfoRepository.findById(travelId) ?: throw CustomException(CustomErrorCode.NOT_FOUND_TRAVEL_INFO)
         val newImageUrl = updateImageUsecase.execute(savedTravelInfo.imageUrl, image)
 
         travelInfoRepository.save(
             savedTravelInfo.update(
                 newImageUrl,
-                updateTravelInfoRequest.title,
-                updateTravelInfoRequest.description
+                request.title,
+                request.description
             )
         )
     }

@@ -13,12 +13,12 @@ class CreateItemUsecase(
     private val itemRepository: ItemRepository,
     private val fetchCurrentUserUsecase: FetchCurrentUserUsecase,
 ) {
-    fun execute(createItemRequest: CreateItemRequest) {
+    fun execute(request: CreateItemRequest) {
         itemRepository.save(
             Item(
                 user = fetchCurrentUserUsecase.execute(),
-                name = createItemRequest.itemName,
-                description = createItemRequest.description,
+                name = request.itemName,
+                description = request.description,
             )
         )
     }

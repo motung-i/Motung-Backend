@@ -13,13 +13,13 @@ import java.util.UUID
 class UpdateItemUsecase(
     private val itemRepository: ItemRepository,
 ) {
-    fun execute(itemId: UUID, updateItemRequest: UpdateItemRequest) {
+    fun execute(itemId: UUID, request: UpdateItemRequest) {
         val savedItem = itemRepository.findById(itemId)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_ITEM)
         itemRepository.save(
             savedItem.update(
-                updateItemRequest.itemName,
-                updateItemRequest.description,
+                request.itemName,
+                request.description,
             )
         )
     }

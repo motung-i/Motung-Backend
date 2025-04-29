@@ -14,9 +14,9 @@ class LogoutUsecase(
     private val jwtTokenProvider: JwtTokenProvider,
     private val refreshTokenCustomRepository: RefreshTokenCustomRepository,
 ) {
-    fun execute(tokenRequest: TokenRequest) {
+    fun execute(request: TokenRequest) {
         val loginUser: User = SecurityContextHolder.getContext().authentication.principal as User
-        val tokenUserId: String = jwtTokenProvider.getUserId(token = tokenRequest.refreshToken, isRefresh = true)
+        val tokenUserId: String = jwtTokenProvider.getUserId(token = request.refreshToken, isRefresh = true)
         if (loginUser.id.toString() != tokenUserId) {
             throw CustomException(customErrorCode = CustomErrorCode.NOT_FOUND_USER)
         }

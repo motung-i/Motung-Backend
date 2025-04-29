@@ -31,9 +31,9 @@ class ReviewAdminController(
     @DeleteMapping("{reviewId}")
     fun removeReview(
         @PathVariable reviewId: UUID,
-        @RequestBody @Valid removeReviewRequest: RemoveReviewRequest,
+        @RequestBody @Valid request: RemoveReviewRequest,
     ): ResponseEntity<Unit> =
-        removeReviewUsecase.execute(reviewId, removeReviewRequest).run {
+        removeReviewUsecase.execute(reviewId, request).run {
             ResponseEntity.noContent().build()
         }
 

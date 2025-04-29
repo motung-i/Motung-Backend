@@ -30,18 +30,18 @@ class AdminItemController(
     @PatchMapping("{itemId}")
     fun updateItem(
         @PathVariable itemId: UUID,
-        @RequestBody updateItemRequest: UpdateItemRequest,
+        @RequestBody request: UpdateItemRequest,
     ): ResponseEntity<Unit> =
-        updateItemUsecase.execute(itemId, updateItemRequest).run {
+        updateItemUsecase.execute(itemId, request).run {
             ResponseEntity.noContent().build()
         }
 
     @PostMapping("{itemId}")
     fun approveItem(
         @PathVariable itemId: UUID,
-        @Valid @RequestBody approveItemRequest: ApproveItemRequest,
+        @Valid @RequestBody request: ApproveItemRequest,
     ): ResponseEntity<Unit> =
-        approveItemUsecase.execute(itemId, approveItemRequest).run {
+        approveItemUsecase.execute(itemId, request).run {
             ResponseEntity.noContent().build()
         }
 
