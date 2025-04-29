@@ -1,7 +1,7 @@
 package kr.motung_i.backend.domain.review.usecase
 
 import kr.motung_i.backend.domain.review.presentation.dto.request.ReportReviewRequest
-import kr.motung_i.backend.domain.user.presentation.usecase.FetchCurrentUserUsecase
+import kr.motung_i.backend.domain.user.usecase.FetchCurrentUserUsecase
 import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.persistence.review.repository.ReviewRepository

@@ -3,7 +3,7 @@ package kr.motung_i.backend.global.security.filter
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import kr.motung_i.backend.domain.user.presentation.usecase.FetchCurrentUserUsecase
+import kr.motung_i.backend.domain.user.usecase.FetchCurrentUserUsecase
 import kr.motung_i.backend.global.security.exception.SuspensionUserExceptionHandler
 import kr.motung_i.backend.global.security.exception.dto.response.SuspensionUserExceptionResponse
 import kr.motung_i.backend.persistence.user_suspension.repository.UserSuspensionRepository
