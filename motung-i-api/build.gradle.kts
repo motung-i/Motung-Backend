@@ -4,6 +4,12 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 }
 
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2024.0.1")
+    }
+}
+
 dependencies {
     /* implement */
     implementation(project(":motung-i-domain"))
@@ -34,6 +40,9 @@ dependencies {
 
     /* geo */
     implementation("org.geolatte:geolatte-geojson:1.9.0")
+
+    /* openfeign */
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 }
 
 tasks.getByName("jar") {
