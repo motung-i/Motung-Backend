@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import kr.motung_i.backend.persistence.BaseEntity
 import kr.motung_i.backend.persistence.review_report.entity.ReviewReport
-import kr.motung_i.backend.persistence.tour.entity.Local
+import kr.motung_i.backend.persistence.tour_location.entity.Local
 import kr.motung_i.backend.persistence.user.entity.User
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction

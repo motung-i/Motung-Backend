@@ -4,11 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
-import kr.motung_i.backend.global.geojson.dto.District
-import kr.motung_i.backend.global.geojson.dto.Local
-import kr.motung_i.backend.global.geojson.dto.Neighborhood
-import kr.motung_i.backend.global.geojson.dto.Region
-import kr.motung_i.backend.persistence.tour.entity.Country
+import kr.motung_i.backend.global.geojson.dto.GeoDistrict
+import kr.motung_i.backend.global.geojson.dto.GeoLocal
+import kr.motung_i.backend.global.geojson.dto.GeoNeighborhood
+import kr.motung_i.backend.global.geojson.dto.GeoRegion
+import kr.motung_i.backend.persistence.tour_location.entity.Country
 import kr.motung_i.backend.global.geojson.formatter.LocalFormatterService
 import org.geolatte.geom.*
 import org.geolatte.geom.crs.CoordinateReferenceSystems
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component
 class LocalsFactory(
     private val localFormatterService: LocalFormatterService,
 ) {
-    fun toDto(resource: Resource): Local {
+    fun toDto(resource: Resource): GeoLocal {
         val objectMapper = ObjectMapper()
             .registerModules(GeolatteGeomModule())
 
@@ -35,30 +35,30 @@ class LocalsFactory(
         val features = root["features"]
         val regions = parseRegions(features, country)
 
-        return Local(
+        return GeoLocal(
             country = country,
-            regions = regions,
+            geoRegions = regions,
         )
     }
 
-    fun parseRegions(features: JsonNode, country: Country): List<Region> =
+    fun parseRegions(features: JsonNode, country: Country): List<GeoRegion> =
         features.groupBy { it["properties"]["sidonm"].asText() }.map { (regionName, regionFeatures) ->
             val regionAlias = localFormatterService.formatToRegionAlias(regionName, country)
 
-            val districts = regionFeatures.groupBy { it["properties"]["sggnm"].asText() }
+            val geoDistricts = regionFeatures.groupBy { it["properties"]["sggnm"].asText() }
                 .map { (districtName, districtFeatures) ->
                     val districtAlias = localFormatterService.formatToDistrictAlias(districtName, country)
 
-                    val neighborhoods = districtFeatures.map { features ->
+                    val geoNeighborhoods = districtFeatures.map { features ->
                         val geometry = parseMultiPolygon(features["geometry"]["coordinates"])
                         val neighborhoodName = features["properties"]["adm_nm"].asText().split(" ").last()
-                        Neighborhood(neighborhoodName, geometry)
+                        GeoNeighborhood(neighborhoodName, geometry)
                     }
 
-                    District(districtName, districtAlias, neighborhoods, regionName)
+                    GeoDistrict(districtName, districtAlias, geoNeighborhoods, regionName)
                 }
 
-            Region(regionName, regionAlias, districts)
+            GeoRegion(regionName, regionAlias, geoDistricts)
         }
 
     private fun parseMultiPolygon(coordinates: JsonNode): MultiPolygon<G2D> {

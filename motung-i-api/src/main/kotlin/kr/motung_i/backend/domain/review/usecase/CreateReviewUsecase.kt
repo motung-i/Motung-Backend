@@ -34,7 +34,7 @@ class CreateReviewUsecase(
         reviewRepository.save(
             Review(
                 user = currentUser,
-                local = tour.goalLocal.copy(),
+                local = tour.tourLocation.local.copy(),
                 isRecommend = request.isRecommend,
                 description = request.description,
                 imageUrls = imageUrls

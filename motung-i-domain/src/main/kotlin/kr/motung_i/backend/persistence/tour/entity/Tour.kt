@@ -2,6 +2,7 @@ package kr.motung_i.backend.persistence.tour.entity
 
 import jakarta.persistence.*
 import kr.motung_i.backend.persistence.BaseEntity
+import kr.motung_i.backend.persistence.tour_location.entity.TourLocation
 import kr.motung_i.backend.persistence.user.entity.User
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
@@ -20,22 +21,10 @@ class Tour(
     @OnDelete(action = OnDeleteAction.CASCADE)
     val user: User,
 
-    @Embedded
-    @AttributeOverrides(
-        AttributeOverride(name = "lat", column = Column(name = "start_lat")),
-        AttributeOverride(name = "lon", column = Column(name = "start_lon")),
-    )
-    val startLocation: Location,
-
-    @Embedded
-    @AttributeOverrides(
-        AttributeOverride(name = "lat", column = Column(name = "goal_lat")),
-        AttributeOverride(name = "lon", column = Column(name = "goal_lon")),
-    )
-    val goalLocation: Location,
-
-    @Embedded
-    val goalLocal: Local,
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "TOUR_LOCATION_ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    val tourLocation: TourLocation,
 
     @Column(nullable = false)
     val restaurantComment: String,

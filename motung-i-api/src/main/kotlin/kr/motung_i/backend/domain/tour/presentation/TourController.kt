@@ -6,7 +6,7 @@ import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourFilter
 import kr.motung_i.backend.domain.tour.usecase.FetchRandomTourLocationUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourFilterDistrictUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourFilterRegionUsecase
-import kr.motung_i.backend.persistence.tour.entity.Country
+import kr.motung_i.backend.persistence.tour_location.entity.Country
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping

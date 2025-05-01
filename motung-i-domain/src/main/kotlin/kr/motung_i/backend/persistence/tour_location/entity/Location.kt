@@ -1,10 +1,10 @@
-package kr.motung_i.backend.persistence.tour.entity
+package kr.motung_i.backend.persistence.tour_location.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
 
 @Embeddable
-class Location(
+data class Location(
     @Column(nullable = false)
     val lat: Double,
 

@@ -5,7 +5,7 @@ import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourFilter
 import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.global.geojson.LocalsCache
-import kr.motung_i.backend.persistence.tour.entity.Country
+import kr.motung_i.backend.persistence.tour_location.entity.Country
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,7 +19,7 @@ class FetchTourFilterRegionUsecase(
         val local = localsCache.findLocalByCountry(country)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_GEOJSON)
 
-        val regions = local.regions
+        val regions = local.geoRegions
             .map {
                 tourFormatterService.formatToTourFilterRegion(it, country)
             }
