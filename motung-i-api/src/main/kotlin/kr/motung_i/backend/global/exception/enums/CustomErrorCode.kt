@@ -28,6 +28,7 @@ enum class CustomErrorCode(
     NOT_FOUND_USER(HttpStatus.NOT_FOUND, "존재하지 않는 유저입니다."),
     SUSPENDED_USER(HttpStatus.FORBIDDEN, "정지된 유저입니다."),
     SUSPENDED_ADMIN(HttpStatus.FORBIDDEN, "관리자를 정지할 수 없습니다."),
+    ALREADY_EXISTS_NICKNAME(HttpStatus.FORBIDDEN, "이미 존재하는 닉네임 입니다."),
 
     //음악
     NOT_FOUND_MUSIC(HttpStatus.NOT_FOUND, "존재하지 않는 음악입니다."),

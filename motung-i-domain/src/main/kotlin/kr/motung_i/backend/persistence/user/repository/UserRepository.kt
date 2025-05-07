@@ -9,4 +9,6 @@ interface UserRepository {
     fun save(user: User): User
 
     fun findByUserId(userId: UUID): Optional<User>
+
+    fun existsByName(name: String): Boolean
 }

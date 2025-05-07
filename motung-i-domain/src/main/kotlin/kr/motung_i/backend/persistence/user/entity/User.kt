@@ -4,7 +4,6 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
-import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import kr.motung_i.backend.persistence.BaseEntity
 import kr.motung_i.backend.persistence.user.entity.enums.Provider
