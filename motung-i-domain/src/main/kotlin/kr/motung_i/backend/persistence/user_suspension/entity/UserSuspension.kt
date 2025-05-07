@@ -26,7 +26,7 @@ class UserSuspension(
 
     @ElementCollection
     @CollectionTable(name = "USER_SUSPENSION_REASON", joinColumns = [JoinColumn(name = "USER_SUSPENSION_ID")])
-    @Column(name = "REASONS", nullable = false)
+    @Column(name = "REASON", nullable = false)
     @Enumerated(EnumType.STRING)
     val reasons: Set<ReportReason> = setOf(),
 

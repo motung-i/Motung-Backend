@@ -2,8 +2,8 @@ package kr.motung_i.backend.domain.tour.formatter.configuration
 
 import kr.motung_i.backend.domain.tour.formatter.TourFormatter
 import kr.motung_i.backend.domain.tour.formatter.impl.KoreaTourFormatterImpl
-import kr.motung_i.backend.persistence.tour.entity.Country
-import kr.motung_i.backend.persistence.tour.entity.Country.*
+import kr.motung_i.backend.persistence.tour_location.entity.Country
+import kr.motung_i.backend.persistence.tour_location.entity.Country.*
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

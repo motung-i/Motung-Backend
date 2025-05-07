@@ -1,31 +1,31 @@
 package kr.motung_i.backend.domain.tour.formatter.impl
 
 import kr.motung_i.backend.domain.tour.formatter.TourFormatter
-import kr.motung_i.backend.global.geojson.dto.District
-import kr.motung_i.backend.global.geojson.dto.Region
-import kr.motung_i.backend.persistence.tour.entity.Country
+import kr.motung_i.backend.global.geojson.dto.GeoDistrict
+import kr.motung_i.backend.global.geojson.dto.GeoRegion
+import kr.motung_i.backend.persistence.tour_location.entity.Country
 
 class KoreaTourFormatterImpl : TourFormatter {
-    override fun formatToTourFilterRegion(region: Region, country: Country): String {
-        if (region.name.last() == '시') {
+    override fun formatToTourFilterRegion(geoRegion: GeoRegion, country: Country): String {
+        if (geoRegion.name.last() == '시') {
             return country.etc
         }
 
-        return region.alias
+        return geoRegion.alias
     }
 
-    override fun formatToTourFilterCityRegion(region: Region, country: Country): Pair<String, String> {
-        return region.name.substring(2, region.name.length) to region.alias
+    override fun formatToTourFilterCityRegion(geoRegion: GeoRegion, country: Country): Pair<String, String> {
+        return geoRegion.name.substring(2, geoRegion.name.length) to geoRegion.alias
     }
 
-    override fun formatToTourFilterDistrict(district: District): Pair<String, String> {
+    override fun formatToTourFilterDistrict(geoDistrict: GeoDistrict): Pair<String, String> {
         val type =
-            if (district.name.last() == '구' && district.name.contains('시')) {
-                district.name.substring(0, district.name.lastIndexOf('시') + 1)
+            if (geoDistrict.name.last() == '구' && geoDistrict.name.contains('시')) {
+                geoDistrict.name.substring(0, geoDistrict.name.lastIndexOf('시') + 1)
             } else {
-                district.name
+                geoDistrict.name
             }.last().toString()
 
-        return type to district.alias
+        return type to geoDistrict.alias
     }
 }

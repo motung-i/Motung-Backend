@@ -15,4 +15,11 @@ class TourRepositoryImpl(
     override fun deleteByUser(user: User) {
         tourJpaRepository.deleteByUser(user)
     }
+
+    override fun save(tour: Tour) {
+        tourJpaRepository.save(tour)
+    }
+
+    override fun existsByUser(user: User): Boolean =
+        tourJpaRepository.existsByUser(user)
 }

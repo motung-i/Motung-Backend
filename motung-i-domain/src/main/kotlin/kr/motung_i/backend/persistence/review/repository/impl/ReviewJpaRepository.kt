@@ -1,7 +1,7 @@
 package kr.motung_i.backend.persistence.review.repository.impl
 
 import kr.motung_i.backend.persistence.review.entity.Review
-import kr.motung_i.backend.persistence.tour.entity.Country
+import kr.motung_i.backend.persistence.tour_location.entity.Country
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import java.util.*

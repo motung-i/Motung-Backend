@@ -8,6 +8,7 @@ import kr.motung_i.backend.global.third_party.s3.usecase.UploadImageUsecase
 import kr.motung_i.backend.persistence.review.entity.Review
 import kr.motung_i.backend.persistence.review.repository.ReviewRepository
 import kr.motung_i.backend.persistence.tour.repository.TourRepository
+import kr.motung_i.backend.persistence.tour_location.repository.TourLocationRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile
 class CreateReviewUsecase(
     private val reviewRepository: ReviewRepository,
     private val tourRepository: TourRepository,
+    private val tourLocationRepository: TourLocationRepository,
     private val fetchCurrentUserUsecase: FetchCurrentUserUsecase,
     private val uploadImageUsecase: UploadImageUsecase,
 ) {
@@ -30,15 +32,15 @@ class CreateReviewUsecase(
             uploadImageUsecase.execute(it)
         }
 
-        tourRepository.deleteByUser(currentUser)
         reviewRepository.save(
             Review(
                 user = currentUser,
-                local = tour.goalLocal.copy(),
+                local = tour.tourLocation.local.copy(),
                 isRecommend = request.isRecommend,
                 description = request.description,
                 imageUrls = imageUrls
             )
         )
+        tourLocationRepository.deleteByUser(currentUser)
     }
 }

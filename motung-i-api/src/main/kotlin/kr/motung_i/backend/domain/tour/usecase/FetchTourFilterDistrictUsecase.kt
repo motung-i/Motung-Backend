@@ -5,7 +5,7 @@ import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourFilter
 import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.global.geojson.LocalsCache
-import kr.motung_i.backend.persistence.tour.entity.Country
+import kr.motung_i.backend.persistence.tour_location.entity.Country
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -21,7 +21,7 @@ class FetchTourFilterDistrictUsecase(
 
         val localByRegion =
             if (region == country.etc) {
-                local.regions
+                local.geoRegions
                     .filter {
                         country.etc == tourFormatterService.formatToTourFilterRegion(it, country)
                     }
@@ -29,10 +29,10 @@ class FetchTourFilterDistrictUsecase(
                         tourFormatterService.formatToTourFilterCityRegion(it, country)
                     }
             } else {
-                local.regions
+                local.geoRegions
                     .filter { it.alias == region }
                     .flatMap { savedRegion ->
-                        savedRegion.districts.map { district ->
+                        savedRegion.geoDistricts.map { district ->
                             tourFormatterService.formatToTourFilterDistrict(district, country)
                         }
                     }

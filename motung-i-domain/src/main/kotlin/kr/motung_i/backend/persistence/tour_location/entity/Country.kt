@@ -1,4 +1,4 @@
-package kr.motung_i.backend.persistence.tour.entity
+package kr.motung_i.backend.persistence.tour_location.entity
 
 enum class Country(
     val alias: String,

@@ -1,6 +1,6 @@
 package kr.motung_i.backend.domain.review.presentation.dto.request
 
-import kr.motung_i.backend.persistence.tour.entity.Country
+import kr.motung_i.backend.persistence.tour_location.entity.Country
 
 data class FetchReviewsRequest(
     val country: Country?,

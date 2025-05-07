@@ -1,6 +1,6 @@
 package kr.motung_i.backend.domain.tour.usecase.dto
 
-data class Location(
+data class GeoLocation(
     val lat: Double,
     val lon: Double,
 )
