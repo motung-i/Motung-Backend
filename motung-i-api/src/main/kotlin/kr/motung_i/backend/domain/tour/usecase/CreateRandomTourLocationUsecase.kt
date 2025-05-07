@@ -21,7 +21,7 @@ import java.util.*
 
 @Service
 @Transactional
-class FetchRandomTourLocationUsecase(
+class CreateRandomTourLocationUsecase(
     private val localsCache: LocalsCache,
     private val localFormatterService: LocalFormatterService,
     private val createTourLocationUsecase: CreateTourLocationUsecase,
