@@ -4,6 +4,7 @@ import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchRandomTour
 import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourFilterDistrictResponse
 import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourFilterRegionResponse
 import kr.motung_i.backend.domain.tour.usecase.CreateRandomTourLocationUsecase
+import kr.motung_i.backend.domain.tour.usecase.CreateTourUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourFilterDistrictUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourFilterRegionUsecase
 import kr.motung_i.backend.persistence.tour_location.entity.Country
@@ -20,6 +21,7 @@ class TourController(
     private val fetchTourFilterRegionUsecase: FetchTourFilterRegionUsecase,
     private val fetchTourFilterDistrictUsecase: FetchTourFilterDistrictUsecase,
     private val createRandomTourLocationUsecase: CreateRandomTourLocationUsecase,
+    private val createTourUsecase: CreateTourUsecase,
 ) {
     @GetMapping("/filter/region")
     fun fetchTourFilterRegion(@RequestParam country: Country): ResponseEntity<FetchTourFilterRegionResponse> =
@@ -44,5 +46,11 @@ class TourController(
     ): ResponseEntity<FetchRandomTourLocationResponse> =
         createRandomTourLocationUsecase.execute(country, region, district).run {
             ResponseEntity.ok(this)
+        }
+
+    @PostMapping
+    fun createTour(): ResponseEntity<Unit> =
+        createTourUsecase.execute().run {
+            ResponseEntity.ok().build()
         }
 }

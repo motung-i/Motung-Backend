@@ -17,7 +17,7 @@ class Tour(
     val id: UUID? = null,
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_ID", unique = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     val user: User,
 
@@ -33,7 +33,7 @@ class Tour(
     val cafeComment: String,
 
     @Column(nullable = false)
-    val tourComment: String,
+    val sightseeingSpotsComment: String,
 
     @Column(nullable = false)
     val cultureComment: String,

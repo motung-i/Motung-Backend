@@ -8,4 +8,5 @@ import java.util.UUID
 interface TourJpaRepository: JpaRepository<Tour, UUID> {
     fun findByUser(user: User): Tour?
     fun deleteByUser(user: User)
+    fun existsByUser(user: User): Boolean
 }

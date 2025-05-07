@@ -21,5 +21,8 @@ data class OpenAiRecommendation(
 
         @JsonProperty("d")
         val description: String,
-    )
+    ) {
+        override fun toString(): String =
+            "$name: $description"
+    }
 }
