@@ -24,7 +24,7 @@ data class CreateModelContentRequest(
                             "\n" +
                             "Respond only in Korean, with no introduction. End all sentences with “~니다”.\n" +
                             "\n" +
-                            "Output in JSON format using these keys: re = restaurants, ca = cafesOrDessertPlaces, na = natureOrSightseeingSpots, cu = culturalExperiences. Each item must include:\n" +
+                            "Output in JSON format using these keys: re = restaurants, na = natureOrSightseeingSpots, cu = culturalExperiences. Each item must include:\n" +
                             "- `n`: name\n" +
                             "- `d`: one-sentence description\n" +
                             "\n" +

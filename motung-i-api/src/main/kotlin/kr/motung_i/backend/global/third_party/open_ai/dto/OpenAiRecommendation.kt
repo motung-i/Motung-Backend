@@ -6,9 +6,6 @@ data class OpenAiRecommendation(
     @JsonProperty("re")
     val restaurants: List<Recommendation>,
 
-    @JsonProperty("ca")
-    val cafesOrDessertPlaces: List<Recommendation>,
-
     @JsonProperty("na")
     val natureOrSightseeingSpots: List<Recommendation>,
 

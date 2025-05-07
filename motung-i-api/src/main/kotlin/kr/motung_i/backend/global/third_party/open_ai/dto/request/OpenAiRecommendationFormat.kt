@@ -13,13 +13,12 @@ data class OpenAiRecommendationFormat(
     data class Schema(
         val type: String = "object",
         val properties: Properties = Properties(),
-        val required: List<String> = listOf("re", "ca", "na", "cu"),
+        val required: List<String> = listOf("re", "na", "cu"),
         val additionalProperties: Boolean = false,
     )
 
     data class Properties(
         val re: Recommendation = Recommendation(),
-        val ca: Recommendation = Recommendation(),
         val na: Recommendation = Recommendation(),
         val cu: Recommendation = Recommendation(),
     )

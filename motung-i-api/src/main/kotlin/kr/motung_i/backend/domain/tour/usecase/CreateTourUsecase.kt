@@ -40,9 +40,8 @@ class CreateTourUsecase(
         val modelContent = createModelContentResponse.output.first().content.first().text
         val openAiRecommendation = jacksonObjectMapper().readValue<OpenAiRecommendation>(modelContent)
 
-        val (restaurantComment, cafeComment, sightseeingSpotsComment, cultureComment) = listOf(
+        val (restaurantComment, sightseeingSpotsComment, cultureComment) = listOf(
             openAiRecommendation.restaurants,
-            openAiRecommendation.cafesOrDessertPlaces,
             openAiRecommendation.natureOrSightseeingSpots,
             openAiRecommendation.culturalExperiences
         ).map { recommendation -> recommendation.joinToString("\n") { it.toString() } }
@@ -52,7 +51,6 @@ class CreateTourUsecase(
                 user = currentUser,
                 tourLocation = tourLocation,
                 restaurantComment = restaurantComment,
-                cafeComment = cafeComment,
                 sightseeingSpotsComment = sightseeingSpotsComment,
                 cultureComment = cultureComment,
             )

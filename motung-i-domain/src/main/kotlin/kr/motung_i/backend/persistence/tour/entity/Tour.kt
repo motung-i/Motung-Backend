@@ -30,9 +30,6 @@ class Tour(
     val restaurantComment: String,
 
     @Column(nullable = false)
-    val cafeComment: String,
-
-    @Column(nullable = false)
     val sightseeingSpotsComment: String,
 
     @Column(nullable = false)
