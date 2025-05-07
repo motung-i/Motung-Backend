@@ -8,4 +8,6 @@ interface UserJpaRepository : JpaRepository<User, UUID> {
     fun findByOauthId(oauthId: String): User?
 
     fun findByEmail(email: String): User?
+
+    fun existsByName(name: String): Boolean
 }
