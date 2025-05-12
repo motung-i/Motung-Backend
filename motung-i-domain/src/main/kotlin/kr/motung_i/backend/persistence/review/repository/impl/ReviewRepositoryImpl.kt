@@ -18,7 +18,7 @@ class ReviewRepositoryImpl(
         reviewJpaRepository.save(review)
     }
 
-    override fun findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreateAt(
+    override fun findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreatedAt(
         country: Country?,
         regionAlias: String,
         districtAlias: String,
@@ -27,7 +27,7 @@ class ReviewRepositoryImpl(
         onlyByImage: Boolean,
         onlyByReported: Boolean,
     ): List<Review> =
-        reviewJpaRepository.findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreateAt(
+        reviewJpaRepository.findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreatedAt(
             country = country,
             regionAlias = regionAlias,
             districtAlias = districtAlias,

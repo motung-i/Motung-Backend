@@ -22,7 +22,7 @@ interface ReviewJpaRepository : JpaRepository<Review, UUID> {
         ORDER BY r.createdAt DESC
         """
     )
-    fun findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreateAt(
+    fun findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreatedAt(
         country: Country?,
         regionAlias: String,
         districtAlias: String,

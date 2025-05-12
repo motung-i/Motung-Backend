@@ -9,7 +9,7 @@ interface ReviewRepository {
 
     fun save(review: Review)
 
-    fun findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreateAt(
+    fun findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreatedAt(
         country: Country?,
         regionAlias: String,
         districtAlias: String,
