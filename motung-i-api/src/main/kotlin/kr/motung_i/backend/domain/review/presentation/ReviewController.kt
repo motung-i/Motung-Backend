@@ -4,8 +4,10 @@ import jakarta.validation.Valid
 import kr.motung_i.backend.domain.review.presentation.dto.request.CreateReviewRequest
 import kr.motung_i.backend.domain.review.presentation.dto.request.FetchReviewsRequest
 import kr.motung_i.backend.domain.review.presentation.dto.request.ReportReviewRequest
+import kr.motung_i.backend.domain.review.presentation.dto.response.FetchMyReviewsResponse
 import kr.motung_i.backend.domain.review.presentation.dto.response.FetchReviewsResponse
 import kr.motung_i.backend.domain.review.usecase.CreateReviewUsecase
+import kr.motung_i.backend.domain.review.usecase.FetchMyReviewsUsecase
 import kr.motung_i.backend.domain.review.usecase.FetchReviewsUsecase
 import kr.motung_i.backend.domain.review.usecase.ReportReviewUsecase
 import org.springframework.http.ResponseEntity
@@ -18,6 +20,7 @@ import java.util.UUID
 class ReviewController(
     private val createReviewUsecase: CreateReviewUsecase,
     private val fetchReviewsUsecase: FetchReviewsUsecase,
+    private val fetchMyReviewsUsecase: FetchMyReviewsUsecase,
     private val reportReviewUsecase: ReportReviewUsecase,
 ) {
     @PostMapping
@@ -34,6 +37,13 @@ class ReviewController(
         fetchReviewsUsecase.execute(request).run {
             ResponseEntity.ok(this)
         }
+
+    @GetMapping("/myself")
+    fun fetchMyReviews(): ResponseEntity<FetchMyReviewsResponse> =
+        fetchMyReviewsUsecase.execute().run {
+            ResponseEntity.ok(this)
+        }
+
 
     @PostMapping("/{reviewId}/report")
     fun reportReview(
