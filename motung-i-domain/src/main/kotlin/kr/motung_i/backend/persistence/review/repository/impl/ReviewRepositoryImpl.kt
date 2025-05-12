@@ -3,6 +3,7 @@ package kr.motung_i.backend.persistence.review.repository.impl
 import kr.motung_i.backend.persistence.review.entity.Review
 import kr.motung_i.backend.persistence.review.repository.ReviewRepository
 import kr.motung_i.backend.persistence.tour_location.entity.Country
+import kr.motung_i.backend.persistence.user.entity.User
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 import java.util.UUID
@@ -18,7 +19,7 @@ class ReviewRepositoryImpl(
         reviewJpaRepository.save(review)
     }
 
-    override fun findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreateAt(
+    override fun findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreatedAt(
         country: Country?,
         regionAlias: String,
         districtAlias: String,
@@ -27,7 +28,7 @@ class ReviewRepositoryImpl(
         onlyByImage: Boolean,
         onlyByReported: Boolean,
     ): List<Review> =
-        reviewJpaRepository.findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreateAt(
+        reviewJpaRepository.findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreatedAt(
             country = country,
             regionAlias = regionAlias,
             districtAlias = districtAlias,
@@ -36,6 +37,9 @@ class ReviewRepositoryImpl(
             onlyByImage = onlyByImage,
             onlyByReported = onlyByReported,
         )
+
+    override fun findWithUserByUserOrderByCreatedAt(user: User): List<Review> =
+        reviewJpaRepository.findWithUserByUserOrderByCreatedAt(user)
 
     override fun delete(review: Review) {
         reviewJpaRepository.delete(review)

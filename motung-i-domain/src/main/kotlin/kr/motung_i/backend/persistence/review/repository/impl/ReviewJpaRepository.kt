@@ -2,6 +2,7 @@ package kr.motung_i.backend.persistence.review.repository.impl
 
 import kr.motung_i.backend.persistence.review.entity.Review
 import kr.motung_i.backend.persistence.tour_location.entity.Country
+import kr.motung_i.backend.persistence.user.entity.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import java.util.*
@@ -22,7 +23,7 @@ interface ReviewJpaRepository : JpaRepository<Review, UUID> {
         ORDER BY r.createdAt DESC
         """
     )
-    fun findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreateAt(
+    fun findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreatedAt(
         country: Country?,
         regionAlias: String,
         districtAlias: String,
@@ -31,4 +32,14 @@ interface ReviewJpaRepository : JpaRepository<Review, UUID> {
         onlyByImage: Boolean,
         onlyByReported: Boolean,
     ): List<Review>
+
+    @Query(
+        """
+        SELECT r
+        FROM Review r JOIN FETCH r.user
+        WHERE r.user = :user
+        ORDER BY r.createdAt DESC
+        """
+    )
+    fun findWithUserByUserOrderByCreatedAt(user: User): List<Review>
 }

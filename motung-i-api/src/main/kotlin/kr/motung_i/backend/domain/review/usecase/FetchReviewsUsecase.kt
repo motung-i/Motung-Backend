@@ -13,7 +13,7 @@ class FetchReviewsUsecase(
 ) {
     fun execute(request: FetchReviewsRequest): FetchReviewsResponse =
         FetchReviewsResponse.toDto(
-            reviewRepository.findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreateAt(
+            reviewRepository.findWithUserByLocalAliasAndOnlyByImageAndOnlyByReportedOrderByCreatedAt(
                 country = request.country,
                 regionAlias = request.region ?: "",
                 districtAlias = request.district ?: "",
