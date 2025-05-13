@@ -12,13 +12,19 @@ class PendingMusicResponse(
     override val singer: String,
 
     override val description: String,
+
+    override val youtubeUrl: String,
+
+    override val thumbnailUrl: String,
 ): MusicResponse {
     companion object {
         fun from(music: Music): PendingMusicResponse = PendingMusicResponse(
-            music.id,
-            music.title,
-            music.singer,
-            music.description,
+            id = music.id,
+            title = music.title,
+            singer = music.singer,
+            description = music.description,
+            youtubeUrl = music.youtubeUrl,
+            thumbnailUrl = music.thumbnailUrl,
         )
     }
 }

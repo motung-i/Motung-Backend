@@ -8,6 +8,8 @@ import kr.motung_i.backend.persistence.music.entity.enums.MusicStatus
 interface MusicResponse {
     val title: String
     val singer: String
+    val youtubeUrl: String
+    val thumbnailUrl: String
     val description: String
 
     companion object {
