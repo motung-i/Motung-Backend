@@ -10,14 +10,20 @@ class ApprovedMusicResponse(
 
     override val description: String,
 
+    override val youtubeUrl: String,
+
+    override val thumbnailUrl: String,
+
     val rankNumber: Int?,
 ): MusicResponse {
     companion object {
         fun from(music: Music): ApprovedMusicResponse = ApprovedMusicResponse(
-            music.title,
-            music.singer,
-            music.description,
-            music.rankNumber,
+            title = music.title,
+            singer = music.singer,
+            description = music.description,
+            youtubeUrl = music.youtubeUrl,
+            thumbnailUrl = music.thumbnailUrl,
+            rankNumber = music.rankNumber,
         )
     }
 }
