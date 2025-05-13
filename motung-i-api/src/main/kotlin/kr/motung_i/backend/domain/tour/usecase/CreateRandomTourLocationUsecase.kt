@@ -1,6 +1,7 @@
 package kr.motung_i.backend.domain.tour.usecase
 
 import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchRandomTourLocationResponse
+import kr.motung_i.backend.domain.tour.presentation.dto.response.GeometryResponse
 import kr.motung_i.backend.domain.tour.usecase.dto.LocalPolygon
 import kr.motung_i.backend.domain.tour.usecase.dto.GeoLocation
 import kr.motung_i.backend.global.exception.CustomException
@@ -54,7 +55,11 @@ class CreateRandomTourLocationUsecase(
                         neighborhood = neighborhood.name
                     )
 
-                    LocalPolygon(local, it)
+                    LocalPolygon(
+                        local = local,
+                        localPolygon = neighborhood.geometry,
+                        polygon = it
+                    )
                 }
             }
         }
@@ -68,7 +73,8 @@ class CreateRandomTourLocationUsecase(
         return FetchRandomTourLocationResponse(
             lat = randomLocation.lat,
             lon = randomLocation.lon,
-            local = randomLocalPolygon.local.localAlias
+            local = randomLocalPolygon.local.localAlias,
+            geometry = GeometryResponse.fromMultiPolygon(randomLocalPolygon.localPolygon)
         )
     }
 
