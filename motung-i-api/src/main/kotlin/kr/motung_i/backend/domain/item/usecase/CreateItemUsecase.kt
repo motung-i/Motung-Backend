@@ -18,6 +18,7 @@ class CreateItemUsecase(
             Item(
                 user = fetchCurrentUserUsecase.execute(),
                 name = request.itemName,
+                coupangUrl = request.coupangUrl,
                 description = request.description,
             )
         )

@@ -7,6 +7,7 @@ import kr.motung_i.backend.persistence.item.entity.enums.ItemStatus
 
 interface ItemResponse {
     val name: String
+    val coupangUrl: String
     val description: String
 
     companion object {

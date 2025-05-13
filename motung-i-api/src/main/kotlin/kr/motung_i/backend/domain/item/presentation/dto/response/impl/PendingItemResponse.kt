@@ -7,14 +7,16 @@ import java.util.UUID
 data class PendingItemResponse(
     val id: UUID?,
     override val name: String,
+    override val coupangUrl: String,
     override val description: String,
 ) : ItemResponse {
     companion object {
         fun from(item: Item): PendingItemResponse =
             PendingItemResponse(
-                item.id,
-                item.name,
-                item.description,
+                id = item.id,
+                name = item.name,
+                coupangUrl = item.coupangUrl,
+                description = item.description,
             )
     }
 }
