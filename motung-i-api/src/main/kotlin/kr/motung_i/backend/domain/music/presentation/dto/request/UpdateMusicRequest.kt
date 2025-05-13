@@ -5,5 +5,7 @@ data class UpdateMusicRequest(
 
     val singer: String?,
 
+    val youtubeUrl: String?,
+
     val description: String?,
 )

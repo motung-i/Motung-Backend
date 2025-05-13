@@ -30,6 +30,12 @@ class Music(
     val singer: String,
 
     @Column(nullable = false)
+    val thumbnailUrl: String,
+
+    @Column(nullable = false)
+    val youtubeUrl: String,
+
+    @Column(nullable = false)
     val description: String,
 
     @Column(nullable = false)
@@ -39,12 +45,14 @@ class Music(
     @Column(unique = true)
     var rankNumber: Int? = null,
 ) : BaseEntity() {
-    fun update(title: String?, singer: String?, description: String?): Music =
+    fun update(title: String?, singer: String?, thumbnailUrl: String?, youtubeUrl: String?, description: String?): Music =
         Music(
             id = this.id,
             user = this.user,
             title = title?.takeIf { it.isNotBlank() } ?: this.title,
             singer = singer?.takeIf { it.isNotBlank() } ?: this.singer,
+            thumbnailUrl = thumbnailUrl?.takeIf { it.isNotBlank() } ?: this.thumbnailUrl,
+            youtubeUrl = youtubeUrl?.takeIf { it.isNotBlank() } ?: this.youtubeUrl,
             description = description?. takeIf { it.isNotBlank() } ?: this.description,
             musicStatus = this.musicStatus,
             rankNumber = rankNumber,
