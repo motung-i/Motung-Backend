@@ -17,9 +17,10 @@ class UpdateItemUsecase(
         val savedItem = itemRepository.findById(itemId)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_ITEM)
         itemRepository.save(
-            savedItem.update(
-                request.itemName,
-                request.description,
+            savedItem.copy(
+                name = request.itemName,
+                coupangUrl = request.coupangUrl,
+                description = request.description,
             )
         )
     }

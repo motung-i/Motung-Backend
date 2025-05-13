@@ -25,6 +25,9 @@ class Item (
     val name: String,
 
     @Column(nullable = false)
+    val coupangUrl: String,
+
+    @Column(nullable = false)
     val description: String,
 
     @Column(nullable = false)
@@ -34,12 +37,13 @@ class Item (
     @Column(unique = true)
     var rankNumber: Int? = null,
 ) : BaseEntity() {
-    fun update(name: String?, description: String?): Item =
+    fun copy(name: String?, coupangUrl: String?, description: String?): Item =
         Item(
             id = this.id,
             user = this.user,
             name = name?.takeIf { it.isNotBlank() } ?: this.name,
-            description = description?. takeIf { it.isNotBlank() } ?: this.description,
+            coupangUrl = coupangUrl?.takeIf { it.isNotBlank() } ?: this.coupangUrl,
+            description = description?.takeIf { it.isNotBlank() } ?: this.description,
             itemStatus = this.itemStatus,
             rankNumber = rankNumber,
         )
