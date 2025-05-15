@@ -1,6 +1,7 @@
 package kr.motung_i.backend.global.security.configuration
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import kr.motung_i.backend.global.exception.filter.ExceptionFilter
 import kr.motung_i.backend.global.security.exception.CustomAccessDeniedHandler
 import kr.motung_i.backend.global.security.exception.CustomAuthenticationEntryPoint
 import kr.motung_i.backend.global.security.filter.JwtAuthFilter
@@ -27,13 +28,15 @@ class SecurityConfig {
         objectMapper: ObjectMapper,
         oauth2Service: CustomOauth2Service,
         oAuth2SuccessHandler: OAuth2SuccessHandler,
-        jwtAuthFilter: JwtAuthFilter,
         suspensionUserFilter: SuspensionUserFilter,
+        jwtAuthFilter: JwtAuthFilter,
+        exceptionFilter: ExceptionFilter,
     ): SecurityFilterChain =
         http
             .oauth2Login { oauth2 -> oauth2.successHandler(oAuth2SuccessHandler).userInfoEndpoint { it.userService(oauth2Service) } }
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
-            .addFilterAfter(suspensionUserFilter, jwtAuthFilter::class.java)
+            .addFilterBefore(suspensionUserFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(jwtAuthFilter, suspensionUserFilter::class.java)
+            .addFilterBefore(exceptionFilter, jwtAuthFilter::class.java)
             .authorizeHttpRequests {
                 it
                     /* 운영 */

@@ -8,8 +8,10 @@ import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.dto.response.CustomExceptionResponse
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import org.springframework.http.MediaType
+import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
+@Component
 class ExceptionFilter(
     val objectMapper: ObjectMapper,
 ) : OncePerRequestFilter() {
