@@ -12,6 +12,9 @@ class RegisterUsecase(
 ) {
     fun execute(request: RegisterRequest) {
         val loginUser: User = SecurityContextHolder.getContext().authentication.principal as User
-        userCustomRepository.save(loginUser.copy(name = request.name))
+        loginUser.updateNickname(request.nickname)
+        loginUser.approve()
+
+        userCustomRepository.save(loginUser)
     }
 }

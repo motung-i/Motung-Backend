@@ -70,10 +70,6 @@ cloud:
       region: ${S3_REGION}
       bucket-name: ${S3_BUCKET_NAME}
 
-  naver:
-    client-id: ${NAVER_CLIENT_ID}
-    client-secret-key: ${NAVER_CLIENT_SECRET_KEY}
-
   open-ai:
     api-key: ${OPEN_AI_API_KEY}
 

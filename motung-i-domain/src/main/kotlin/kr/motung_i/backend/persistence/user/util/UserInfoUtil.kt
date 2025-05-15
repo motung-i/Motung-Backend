@@ -13,17 +13,12 @@ abstract class UserInfoUtil {
             when (provider) {
                 Provider.APPLE ->
                     User(
-                        name =
-                        attribute["name"] as? String ?: "모툴",
-                        role = Role.ROLE_USER,
                         email = attribute["email"].toString(),
                         oauthId = attribute["sub"].toString(),
                         provider = Provider.APPLE,
                     )
                 Provider.GOOGLE ->
                     User(
-                        name = attribute["name"].toString(),
-                        role = Role.ROLE_USER,
                         email = attribute["email"].toString(),
                         oauthId = attribute["sub"].toString(),
                         provider = Provider.GOOGLE,

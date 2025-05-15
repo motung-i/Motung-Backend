@@ -15,6 +15,6 @@ class UserRepositoryImpl(
 
     override fun findByUserId(userId: UUID): Optional<User> = userJpaRepository.findById(userId)
 
-    override fun existsByName(name: String): Boolean =
-        userJpaRepository.existsByName(name)
+    override fun existsByNickname(name: String): Boolean =
+        userJpaRepository.existsByNickname(name)
 }

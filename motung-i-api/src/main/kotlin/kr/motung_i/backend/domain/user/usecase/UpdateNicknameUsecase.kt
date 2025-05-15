@@ -16,12 +16,11 @@ class UpdateNicknameUsecase(
     fun execute(request: UpdateNicknameRequest) {
         val currentUser = fetchCurrentUserUsecase.execute()
 
-        if (userRepository.existsByName(request.nickname)) {
+        if (userRepository.existsByNickname(request.nickname)) {
             throw CustomException(CustomErrorCode.ALREADY_EXISTS_NICKNAME)
         }
 
-        userRepository.save(
-            currentUser.copy(name = request.nickname)
-        )
+        currentUser.updateNickname(request.nickname)
+        userRepository.save(currentUser)
     }
 }

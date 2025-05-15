@@ -4,5 +4,5 @@ import jakarta.validation.constraints.NotBlank
 
 data class RegisterRequest(
     @field:NotBlank
-    val name: String,
+    val nickname: String,
 )

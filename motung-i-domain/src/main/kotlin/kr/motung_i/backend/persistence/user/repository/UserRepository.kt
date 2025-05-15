@@ -10,5 +10,5 @@ interface UserRepository {
 
     fun findByUserId(userId: UUID): Optional<User>
 
-    fun existsByName(name: String): Boolean
+    fun existsByNickname(name: String): Boolean
 }
