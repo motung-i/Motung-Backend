@@ -9,5 +9,5 @@ interface UserJpaRepository : JpaRepository<User, UUID> {
 
     fun findByEmail(email: String): User?
 
-    fun existsByName(name: String): Boolean
+    fun existsByNickname(name: String): Boolean
 }

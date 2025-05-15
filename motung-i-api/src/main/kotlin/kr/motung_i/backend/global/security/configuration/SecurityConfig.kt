@@ -36,16 +36,18 @@ class SecurityConfig {
             .addFilterAfter(suspensionUserFilter, jwtAuthFilter::class.java)
             .authorizeHttpRequests {
                 it
-                    .requestMatchers(HttpMethod.GET, "/")
-                    .permitAll()
-                    .requestMatchers(HttpMethod.POST, "/auth/refresh")
-                    .permitAll()
-                    .requestMatchers(HttpMethod.GET, "/actuator/prometheus")
-                    .hasAuthority(Role.ROLE_ADMIN.name)
-                    .requestMatchers("/admin/**")
-                    .hasAuthority(Role.ROLE_ADMIN.name)
-                    .anyRequest()
-                    .hasAuthority(Role.ROLE_USER.name)
+                    /* 운영 */
+                    .requestMatchers(HttpMethod.GET, "/").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/actuator/prometheus").hasAuthority(Role.ROLE_ADMIN.name)
+
+                    /* 로그인 */
+                    .requestMatchers(HttpMethod.GET, "/auth/check-register").authenticated()
+                    .requestMatchers(HttpMethod.POST, "/auth/register").hasAuthority(Role.ROLE_PENDING.name)
+                    .requestMatchers(HttpMethod.POST, "/auth/refresh").permitAll()
+
+                    /* 전역 */
+                    .requestMatchers("/admin/**").hasAuthority(Role.ROLE_ADMIN.name)
+                    .anyRequest().hasAuthority(Role.ROLE_USER.name)
             }.csrf {
                 it.disable()
             }.formLogin {

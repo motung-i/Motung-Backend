@@ -1,5 +1,7 @@
 package kr.motung_i.backend.domain.auth.presentation
 
+import jakarta.validation.Valid
+import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.CheckRegisterResponse
 import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.RegisterRequest
 import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.TokenRequest
 import kr.motung_i.backend.domain.auth.usecase.CheckIsUserRegisterUsecase
@@ -45,14 +47,14 @@ class AuthController(
             }
 
     @GetMapping("check-register")
-    fun isUserRegister(): ResponseEntity<Boolean> =
+    fun isUserRegister(): ResponseEntity<CheckRegisterResponse> =
         checkIsUserRegisterUsecase.execute().run {
             ResponseEntity.ok(this)
         }
 
     @PostMapping("register")
     fun register(
-        @RequestBody request: RegisterRequest,
+        @Valid @RequestBody request: RegisterRequest,
     ): ResponseEntity<Unit> =
         registerUsecase
             .execute(

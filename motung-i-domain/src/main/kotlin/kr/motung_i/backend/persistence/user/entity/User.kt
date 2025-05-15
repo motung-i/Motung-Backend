@@ -19,13 +19,6 @@ data class User(
     val id: UUID? = null,
 
     @Column(nullable = false)
-    val name: String,
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    val role: Role,
-
-    @Column(nullable = false)
     val email: String,
 
     @Column(nullable = false, name = "OAUTH_ID")
@@ -34,4 +27,21 @@ data class User(
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     val provider: Provider,
-) : BaseEntity()
+) : BaseEntity() {
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    var role: Role = Role.ROLE_PENDING
+        protected set
+
+    @Column(unique = true)
+    var nickname: String? = null
+        protected set
+
+    fun approve() {
+        role = Role.ROLE_USER
+    }
+
+    fun updateNickname(newNickname: String) {
+        nickname = newNickname
+    }
+}
