@@ -5,6 +5,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import kr.motung_i.backend.domain.user.usecase.FetchCurrentUserUsecase
 import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
+import kr.motung_i.backend.global.third_party.open_ai.OpenAiAdapter
 import kr.motung_i.backend.global.third_party.open_ai.dto.OpenAiRecommendation
 import kr.motung_i.backend.global.third_party.open_ai.dto.request.CreateModelContentRequest
 import kr.motung_i.backend.global.third_party.open_ai.feign.OpenAiFeignClient
@@ -20,7 +21,7 @@ class CreateTourUsecase(
     private val tourRepository: TourRepository,
     private val tourLocationRepository: TourLocationRepository,
     private val currentUserUsecase: FetchCurrentUserUsecase,
-    private val openAiFeignClient: OpenAiFeignClient,
+    private val openAiAdapter: OpenAiAdapter,
 ) {
     fun execute() {
         val currentUser = currentUserUsecase.execute()
@@ -32,10 +33,8 @@ class CreateTourUsecase(
             throw CustomException(CustomErrorCode.ALREADY_EXISTS_TOUR)
         }
 
-        val createModelContentResponse = openAiFeignClient.createModelContent(
-            CreateModelContentRequest.fromLocalAlias(
-                "${tourLocation.local.country.alias} ${tourLocation.local.regionAlias} ${tourLocation.local.districtAlias} ${tourLocation.local.neighborhood}"
-            )
+        val createModelContentResponse = openAiAdapter.createModelContent(
+            "${tourLocation.local.country.alias} ${tourLocation.local.regionAlias} ${tourLocation.local.districtAlias} ${tourLocation.local.neighborhood}"
         )
         val modelContent = createModelContentResponse.output.first().content.first().text
         val openAiRecommendation = jacksonObjectMapper().readValue<OpenAiRecommendation>(modelContent)

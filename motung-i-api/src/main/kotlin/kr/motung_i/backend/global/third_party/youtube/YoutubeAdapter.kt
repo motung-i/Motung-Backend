@@ -4,9 +4,9 @@ import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.global.third_party.youtube.dto.FetchVideoResponse
 import kr.motung_i.backend.global.third_party.youtube.feign.YoutubeFeignClient
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 
-@Component
+@Service
 class YoutubeAdapter(
     private val youtubeFeignClient: YoutubeFeignClient,
 ) {
