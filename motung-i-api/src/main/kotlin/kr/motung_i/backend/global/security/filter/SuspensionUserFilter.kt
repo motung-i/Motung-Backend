@@ -7,6 +7,7 @@ import kr.motung_i.backend.domain.user.usecase.FetchCurrentUserUsecase
 import kr.motung_i.backend.global.security.exception.SuspensionUserExceptionHandler
 import kr.motung_i.backend.global.security.exception.dto.response.SuspensionUserExceptionResponse
 import kr.motung_i.backend.persistence.user_suspension.repository.UserSuspensionRepository
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import java.time.LocalDateTime
@@ -20,6 +21,11 @@ class SuspensionUserFilter(
     override fun doFilterInternal(
         request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain
     ) {
+        if (SecurityContextHolder.getContext().authentication == null) {
+            filterChain.doFilter(request, response)
+            return
+        }
+
         val currentUser = fetchCurrentUserUsecase.execute()
         val userSuspension = userSuspensionRepository.findWithReasonsByUser(currentUser)
 
@@ -33,10 +39,12 @@ class SuspensionUserFilter(
 
         if (resumeAt.isEqual(now) || resumeAt.isBefore(now)) {
             userSuspensionRepository.delete(userSuspension)
-        } else {
-            return suspensionUserExceptionHandler.handle(
-                response, SuspensionUserExceptionResponse.toDto(userSuspension)
-            )
+            filterChain.doFilter(request, response)
+            return
         }
+
+        return suspensionUserExceptionHandler.handle(
+            response, SuspensionUserExceptionResponse.toDto(userSuspension)
+        )
     }
 }
