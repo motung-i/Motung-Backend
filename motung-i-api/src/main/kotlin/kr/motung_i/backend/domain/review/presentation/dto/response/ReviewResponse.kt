@@ -6,7 +6,7 @@ import java.util.UUID
 
 data class ReviewResponse(
     val reviewId: UUID?,
-    val username: String,
+    val nickname: String?,
     val isRecommend: Boolean,
     val local: String,
     val description: String,
@@ -17,12 +17,12 @@ data class ReviewResponse(
         fun toDto(review: Review): ReviewResponse =
             ReviewResponse(
                 reviewId = review.id,
-                username = review.user.nickname!!,
+                nickname = review.user.nickname,
                 isRecommend = review.isRecommend,
                 local = review.local.localAlias,
                 description = review.description,
                 imageUrls = review.imageUrls,
-                createdDate = review.createdAt?.toLocalDate()
+                createdDate = review.createdAt?.toLocalDate(),
             )
     }
 }
