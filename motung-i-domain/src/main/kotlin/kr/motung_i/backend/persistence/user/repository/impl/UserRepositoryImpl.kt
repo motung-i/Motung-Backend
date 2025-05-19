@@ -1,6 +1,7 @@
 package kr.motung_i.backend.persistence.user.repository.impl
 
 import kr.motung_i.backend.persistence.user.entity.User
+import kr.motung_i.backend.persistence.user.entity.enums.Provider
 import kr.motung_i.backend.persistence.user.repository.UserRepository
 import org.springframework.stereotype.Repository
 import java.util.*
@@ -17,4 +18,17 @@ class UserRepositoryImpl(
 
     override fun existsByNickname(name: String): Boolean =
         userJpaRepository.existsByNickname(name)
+
+    override fun existsByOauthIdAndProvider(
+        oauthId: String,
+        provider: Provider
+    ): Boolean =
+        userJpaRepository.existsByOauthIdAndProvider(oauthId, provider)
+
+
+    override fun findByOauthIdAndProvider(
+        oauthId: String,
+        provider: Provider
+    ): User? =
+        userJpaRepository.findByOauthIdAndProvider(oauthId, provider)
 }

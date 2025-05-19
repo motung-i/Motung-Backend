@@ -49,6 +49,12 @@ data class User(
         nickname = null
     }
 
+    fun restore(user: User) {
+        email = user.email
+        oauthId = user.oauthId
+        role = Role.ROLE_PENDING
+    }
+
     fun updateNickname(newNickname: String) {
         nickname = newNickname
     }

@@ -1,5 +1,6 @@
 package kr.motung_i.backend.global.security.service
 
+import kr.motung_i.backend.domain.user.usecase.CreateUserUsecase
 import kr.motung_i.backend.persistence.user.entity.User
 import kr.motung_i.backend.persistence.user.entity.enums.Provider
 import kr.motung_i.backend.persistence.user.repository.UserRepository
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service
 @Service
 class CustomOauth2Service(
     private val userRepository: UserRepository,
+    private val createUserUsecase: CreateUserUsecase,
 ) : DefaultOAuth2UserService() {
     override fun loadUser(userRequest: OAuth2UserRequest): OAuth2User {
         val userAttribute: Map<String, Any> = super.loadUser(userRequest).attributes
@@ -21,7 +23,11 @@ class CustomOauth2Service(
                 attribute = userAttribute,
                 provider = Provider.valueOf(provider.uppercase()),
             )
-        userRepository.findByOauthId(getEntity.oauthId) ?: userRepository.save(getEntity)
+
+        if (!userRepository.existsByOauthIdAndProvider(getEntity.oauthId, getEntity.provider)) {
+            createUserUsecase.execute(getEntity)
+        }
+
         return super.loadUser(userRequest)
     }
 }
