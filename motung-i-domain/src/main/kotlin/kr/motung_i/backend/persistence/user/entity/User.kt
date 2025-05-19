@@ -8,6 +8,8 @@ import jakarta.persistence.Id
 import kr.motung_i.backend.persistence.BaseEntity
 import kr.motung_i.backend.persistence.user.entity.enums.Provider
 import kr.motung_i.backend.persistence.user.entity.enums.Role
+import kr.motung_i.backend.persistence.user.util.HashUtil.Companion.sha256
+import kr.motung_i.backend.persistence.user.util.HashUtil.Companion.toHex
 import org.hibernate.annotations.UuidGenerator
 import java.util.UUID
 
@@ -18,11 +20,10 @@ data class User(
     @Column(name = "USER_ID")
     val id: UUID? = null,
 
-    @Column(nullable = false)
-    val email: String,
+    var email: String?,
 
     @Column(nullable = false, name = "OAUTH_ID")
-    val oauthId: String,
+    var oauthId: String,
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -39,6 +40,13 @@ data class User(
 
     fun approve() {
         role = Role.ROLE_USER
+    }
+
+    fun remove() {
+        role = Role.ROLE_REMOVED
+        email = null
+        oauthId = oauthId.sha256().toHex()
+        nickname = null
     }
 
     fun updateNickname(newNickname: String) {

@@ -4,4 +4,5 @@ enum class Role {
     ROLE_PENDING,
     ROLE_USER,
     ROLE_ADMIN,
+    ROLE_REMOVED,
 }
