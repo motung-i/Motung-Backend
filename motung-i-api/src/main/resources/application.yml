@@ -27,8 +27,9 @@ spring:
 
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
+      nodes: ${REDIS_NODES}
+      password: ${REDIS_PASSWORD}
+      max-redirects: ${REDIS_MAX_REDIRECTS}
 
   datasource:
     url: ${DB_URL}
