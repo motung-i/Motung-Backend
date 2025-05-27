@@ -9,10 +9,12 @@ import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.persistence.device_token.DeviceTokenRepository
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
+import java.util.logging.Logger
 
 @Component
 class SendNotificationUsecase(
     private val deviceTokenRepository: DeviceTokenRepository,
+    private val logger: Logger,
 ) {
     fun execute(request: SendNotificationRequest) {
         val deviceTokens: MutableList<String> = mutableListOf()
@@ -40,10 +42,10 @@ class SendNotificationUsecase(
                         .builder()
                         .setTitle(request.title)
                         .setBody(request.body)
-                        .setImage(request.image)
                         .build(),
                 ).build()
 
-        FirebaseMessaging.getInstance().sendEachForMulticast(message)
+        val result = FirebaseMessaging.getInstance().sendEachForMulticast(message)
+        logger.info("FCM multicast sent: success=${result.successCount}, failure=${result.failureCount}")
     }
 }

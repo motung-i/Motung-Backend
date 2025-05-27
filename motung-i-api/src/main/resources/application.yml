@@ -62,6 +62,9 @@ cloud:
   youtube:
     api-key: ${YOUTUBE_API_KEY}
 
+firebase:
+  credentials: ${FCM_CONFIG}
+
 ---
 spring:
   config:
