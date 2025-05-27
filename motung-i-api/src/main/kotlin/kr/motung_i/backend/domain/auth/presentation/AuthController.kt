@@ -1,10 +1,13 @@
 package kr.motung_i.backend.domain.auth.presentation
 
 import jakarta.validation.Valid
+import kr.motung_i.backend.domain.auth.presentation.dto.request.GoogleLoginRequest
 import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.CheckRegisterResponse
 import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.RegisterRequest
 import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.TokenRequest
+import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.TokenResponseData
 import kr.motung_i.backend.domain.auth.usecase.CheckIsUserRegisterUsecase
+import kr.motung_i.backend.domain.auth.usecase.GoogleLoginUsecase
 import kr.motung_i.backend.domain.auth.usecase.LogoutUsecase
 import kr.motung_i.backend.domain.auth.usecase.RegisterUsecase
 import kr.motung_i.backend.domain.auth.usecase.ReissueTokenUsecase
@@ -23,6 +26,7 @@ class AuthController(
     private val logoutUsecase: LogoutUsecase,
     private val registerUsecase: RegisterUsecase,
     private val reissueTokenUsecase: ReissueTokenUsecase,
+    private val googleLoginUsecase: GoogleLoginUsecase,
 ) {
     @PostMapping("refresh")
     fun refreshToken(
@@ -62,4 +66,12 @@ class AuthController(
             ).run {
                 ResponseEntity.noContent().build()
             }
+
+    @PostMapping("login")
+    fun login(
+        @RequestBody request: GoogleLoginRequest,
+    ): ResponseEntity<TokenResponseData> =
+        googleLoginUsecase.execute(request).run {
+            ResponseEntity.ok(this)
+        }
 }
