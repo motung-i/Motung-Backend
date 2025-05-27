@@ -25,12 +25,6 @@ spring:
         format_sql: true
         default_batch_fetch_size: 100
 
-  data:
-    redis:
-      nodes: ${REDIS_NODES}
-      password: ${REDIS_PASSWORD}
-      max-redirects: ${REDIS_MAX_REDIRECTS}
-
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
@@ -47,15 +41,6 @@ spring:
             scope:
               - profile
               - email
-#          apple:
-#            client-id: ${APPLE_CLIENT_ID}
-#            client-secret: AuthKey_{keyId}.p8
-#            authorization-grant-type: authorization_code
-#            client-authentication-method: POST
-#            client-name: Apple
-#            scope:
-#              - name
-#              - email
 
 management:
   endpoints:
@@ -76,24 +61,38 @@ cloud:
 
   youtube:
     api-key: ${YOUTUBE_API_KEY}
+
 ---
 spring:
   config:
     activate:
       on-profile: dev
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
 
-ACCESS_EXPIRE_TIME: 26297460000 #10달
-REFRESH_EXPIRE_TIME: 315569520000 #10년
+ACCESS_EXPIRE_TIME: 26297460000 # 10달
+REFRESH_EXPIRE_TIME: 315569520000 # 10년
 
 ---
 spring:
   config:
     activate:
       on-profile: prod
+
+  data:
+    redis:
+      cluster:
+        nodes: ${REDIS_NODES}
+        max-redirects: 3
+
   jpa:
     hibernate:
       ddl-auto: validate
