@@ -8,13 +8,13 @@ import kr.motung_i.backend.global.security.provider.JwtTokenProvider
 import kr.motung_i.backend.persistence.auth.entity.RefreshToken
 import kr.motung_i.backend.persistence.auth.repository.RefreshTokenCustomRepository
 import kr.motung_i.backend.persistence.user.entity.User
-import kr.motung_i.backend.persistence.user.repository.UserCustomRepository
+import kr.motung_i.backend.persistence.user.repository.UserRepository
 import org.springframework.stereotype.Service
 import java.util.UUID
 
 @Service
 class ReissueTokenUsecase(
-    val userCustomRepository: UserCustomRepository,
+    val userCustomRepository: UserRepository,
     val refreshTokenCustomRepository: RefreshTokenCustomRepository,
     val jwtTokenProvider: JwtTokenProvider,
 ) {

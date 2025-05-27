@@ -11,13 +11,13 @@ dependencyManagement {
 }
 
 dependencies {
-    /* implement */
+    // implement
     implementation(project(":motung-i-domain"))
 
-    /* spring */
+    // spring
     implementation("org.springframework:spring-tx")
 
-    /* security */
+    // security
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
@@ -25,24 +25,27 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
     testImplementation("org.springframework.security:spring-security-test")
 
-    /* validation */
+    // validation
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
-    /* actuator */
+    // actuator
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-registry-prometheus")
 
-    /* jackson */
+    // jackson
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    /* s3 */
+    // s3
     implementation("software.amazon.awssdk:s3:2.30.21")
 
-    /* geo */
+    // geo
     implementation("org.geolatte:geolatte-geojson:1.9.0")
 
-    /* openfeign */
+    // openfeign
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+
+    // firebase
+    implementation("com.google.firebase:firebase-admin:9.4.3")
 }
 
 tasks.getByName("jar") {
