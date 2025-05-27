@@ -6,6 +6,5 @@ data class SendNotificationRequest(
     val onProduction: Boolean,
     val title: String,
     val body: String,
-    val image: String,
     val targetUserId: UUID?,
 )

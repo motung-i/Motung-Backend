@@ -7,14 +7,13 @@ import kr.motung_i.backend.domain.notification.presentation.dto.request.SendNoti
 import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.persistence.device_token.DeviceTokenRepository
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
-import java.time.LocalDateTime
-import java.util.logging.Logger
 
 @Component
 class SendNotificationUsecase(
     private val deviceTokenRepository: DeviceTokenRepository,
-    private val logger: Logger,
 ) {
     fun execute(request: SendNotificationRequest) {
         val deviceTokens: MutableList<String> = mutableListOf()
@@ -34,10 +33,7 @@ class SendNotificationUsecase(
             MulticastMessage
                 .builder()
                 .addAllTokens(deviceTokens)
-                .putData(
-                    "time",
-                    LocalDateTime.now().toString(),
-                ).setNotification(
+                .setNotification(
                     Notification
                         .builder()
                         .setTitle(request.title)
@@ -46,6 +42,7 @@ class SendNotificationUsecase(
                 ).build()
 
         val result = FirebaseMessaging.getInstance().sendEachForMulticast(message)
+        val logger: Logger = LoggerFactory.getLogger(SendNotificationUsecase::class.java)
         logger.info("FCM multicast sent: success=${result.successCount}, failure=${result.failureCount}")
     }
 }
