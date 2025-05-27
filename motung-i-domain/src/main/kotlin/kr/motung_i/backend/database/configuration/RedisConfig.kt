@@ -5,7 +5,6 @@ import io.lettuce.core.cluster.ClusterClientOptions
 import io.lettuce.core.cluster.ClusterTopologyRefreshOptions
 import kr.motung_i.backend.database.properties.ClusterRedisProperties
 import kr.motung_i.backend.database.properties.StandaloneRedisProperties
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
@@ -17,7 +16,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer
 import java.time.Duration
 
 @Configuration
-@EnableConfigurationProperties(StandaloneRedisProperties::class)
 class RedisConfig(
     private val standaloneRedisProperties: StandaloneRedisProperties,
     private val clusterRedisProperties: ClusterRedisProperties,
