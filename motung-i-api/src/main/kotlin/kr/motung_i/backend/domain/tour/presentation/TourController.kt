@@ -3,10 +3,12 @@ package kr.motung_i.backend.domain.tour.presentation
 import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchRandomTourLocationResponse
 import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourFilterDistrictResponse
 import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourFilterRegionResponse
+import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourLocationMyselfResponse
 import kr.motung_i.backend.domain.tour.usecase.CreateRandomTourLocationUsecase
 import kr.motung_i.backend.domain.tour.usecase.CreateTourUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourFilterDistrictUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourFilterRegionUsecase
+import kr.motung_i.backend.domain.tour.usecase.FetchTourLocationMyselfUsecase
 import kr.motung_i.backend.persistence.tour_location.entity.Country
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -22,6 +24,7 @@ class TourController(
     private val fetchTourFilterDistrictUsecase: FetchTourFilterDistrictUsecase,
     private val createRandomTourLocationUsecase: CreateRandomTourLocationUsecase,
     private val createTourUsecase: CreateTourUsecase,
+    private val fetchTourLocationMyselfUsecase: FetchTourLocationMyselfUsecase,
 ) {
     @GetMapping("/filter/region")
     fun fetchTourFilterRegion(@RequestParam country: Country): ResponseEntity<FetchTourFilterRegionResponse> =
@@ -45,6 +48,12 @@ class TourController(
         @RequestParam(defaultValue = "") district: List<String>,
     ): ResponseEntity<FetchRandomTourLocationResponse> =
         createRandomTourLocationUsecase.execute(country, region, district).run {
+            ResponseEntity.ok(this)
+        }
+
+    @GetMapping
+    fun fetchTourLocationMyself(): ResponseEntity<FetchTourLocationMyselfResponse> =
+        fetchTourLocationMyselfUsecase.execute().run {
             ResponseEntity.ok(this)
         }
 

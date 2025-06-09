@@ -48,11 +48,13 @@ enum class CustomErrorCode(
     NOT_FOUND_COUNTRY_GEOJSON(HttpStatus.NOT_FOUND, "해당 국가의 지리 정보가 존재하지 않습니다."),
     NOT_FOUND_GEOJSON(HttpStatus.INTERNAL_SERVER_ERROR, "GEOJSON 파일이 1개이상 존재해야 합니다."),
     NOT_FOUND_COUNTRY_FORMATTER(HttpStatus.NOT_FOUND, "해당 국가의 필터 정보가 존재하지 않습니다."),
+    NOT_FOUND_LOCAL(HttpStatus.NOT_FOUND, "지원하지 않는 지역입니다."),
 
     //여행
     NOT_FOUND_FILTER_LOCATION(HttpStatus.NOT_FOUND, "해당 지역에 대한 정보가 존재하지 않습니다."),
     RANDOM_TOUR_LOCATION_PROCESSING_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "랜덤 지역을 뽑는 도중 오류가 발생했습니다."),
     NOT_FOUND_TOUR_LOCATION(HttpStatus.NOT_FOUND, "존재하지 않는 랜덤 여행지 입니다."),
+    NOT_FOUND_TOUR(HttpStatus.NOT_FOUND, "여행중인 상태가 아닙니다."),
     ALREADY_EXISTS_TOUR(HttpStatus.BAD_REQUEST, "이미 존재하는 여행이 있습니다."),
 
     //리뷰
