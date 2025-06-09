@@ -22,7 +22,7 @@ data class User(
 
     var email: String?,
 
-    @Column(nullable = false, name = "OAUTH_ID")
+    @Column(nullable = false, name = "OAUTH_ID", unique = true)
     var oauthId: String,
 
     @Column(nullable = false)

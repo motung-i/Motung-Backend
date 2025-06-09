@@ -13,7 +13,7 @@ class TourLocation(
     val id: Long? = null,
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_ID", unique = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     val user: User,
 

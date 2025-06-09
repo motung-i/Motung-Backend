@@ -10,6 +10,10 @@ import org.hibernate.annotations.UuidGenerator
 import java.util.UUID
 
 @Entity
+@Table(
+    name = "ITEM",
+    uniqueConstraints = [UniqueConstraint(columnNames = ["USER_ID", "NAME"])]
+)
 class Item (
     @Id
     @UuidGenerator

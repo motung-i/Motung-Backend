@@ -7,7 +7,10 @@ import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
 
 @Entity
-@Table(uniqueConstraints = [UniqueConstraint(columnNames = ["REVIEW_ID", "PROPOSER_ID"])])
+@Table(
+    name = "REVIEW_REPORT",
+    uniqueConstraints = [UniqueConstraint(columnNames = ["REVIEW_ID", "PROPOSER_ID"])]
+)
 class ReviewReport protected constructor(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

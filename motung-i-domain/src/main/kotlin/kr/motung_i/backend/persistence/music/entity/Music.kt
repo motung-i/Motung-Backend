@@ -12,6 +12,10 @@ import java.util.UUID
 
 @Entity
 @Validated
+@Table(
+    name = "MUSIC",
+    uniqueConstraints = [UniqueConstraint(columnNames = ["USER_ID", "TITLE"])]
+)
 class Music(
     @Id
     @UuidGenerator

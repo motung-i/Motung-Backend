@@ -12,6 +12,10 @@ import org.hibernate.annotations.UuidGenerator
 import java.util.UUID
 
 @Entity
+@Table(
+    name = "REVIEW",
+    uniqueConstraints = [UniqueConstraint(columnNames = ["USER_ID", "LOCAL_ALIAS", "DESCRIPTION"])]
+)
 class Review (
     @Id
     @UuidGenerator

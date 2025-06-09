@@ -3,11 +3,17 @@ package kr.motung_i.backend.persistence.travel_info.entity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
+import jakarta.persistence.Table
+import jakarta.persistence.UniqueConstraint
 import kr.motung_i.backend.persistence.BaseEntity
 import org.hibernate.annotations.UuidGenerator
 import java.util.*
 
 @Entity
+@Table(
+    name = "TRAVEL_INFO",
+    uniqueConstraints = [UniqueConstraint(columnNames = ["TITLE", "DESCRIPTION"])]
+)
 class TravelInfo (
     @Id
     @UuidGenerator
