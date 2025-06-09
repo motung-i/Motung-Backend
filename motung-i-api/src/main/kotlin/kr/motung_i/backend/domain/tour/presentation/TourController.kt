@@ -7,12 +7,14 @@ import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourFilter
 import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourLocationMyselfResponse
 import kr.motung_i.backend.domain.tour.usecase.CreateRandomTourLocationUsecase
 import kr.motung_i.backend.domain.tour.usecase.CreateTourUsecase
+import kr.motung_i.backend.domain.tour.usecase.DeleteTourUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourCommentMyselfUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourFilterDistrictUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourFilterRegionUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourLocationMyselfUsecase
 import kr.motung_i.backend.persistence.tour_location.entity.Country
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -28,6 +30,7 @@ class TourController(
     private val createTourUsecase: CreateTourUsecase,
     private val fetchTourLocationMyselfUsecase: FetchTourLocationMyselfUsecase,
     private val fetchTourCommentMyselfUsecase: FetchTourCommentMyselfUsecase,
+    private val deleteTourUsecase: DeleteTourUsecase,
 ) {
     @GetMapping("/filter/region")
     fun fetchTourFilterRegion(@RequestParam country: Country): ResponseEntity<FetchTourFilterRegionResponse> =
@@ -71,4 +74,11 @@ class TourController(
         createTourUsecase.execute().run {
             ResponseEntity.ok().build()
         }
+
+    @DeleteMapping
+    fun deleteTour(): ResponseEntity<Unit> =
+        deleteTourUsecase.execute().run {
+            ResponseEntity.ok().build()
+        }
+
 }
