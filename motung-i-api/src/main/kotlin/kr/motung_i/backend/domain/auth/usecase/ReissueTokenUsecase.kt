@@ -17,6 +17,7 @@ class ReissueTokenUsecase(
     val userCustomRepository: UserRepository,
     val refreshTokenCustomRepository: RefreshTokenCustomRepository,
     val jwtTokenProvider: JwtTokenProvider,
+    val tokenRepository: RefreshTokenCustomRepository,
 ) {
     fun execute(request: TokenRequest): TokenResponse {
         val result: RefreshToken =
@@ -34,6 +35,13 @@ class ReissueTokenUsecase(
             }
         val accessToken = jwtTokenProvider.generateToken(userId = userId, role = user.role, isRefresh = false)
         val refreshToken = jwtTokenProvider.generateToken(userId = userId, role = user.role, isRefresh = true)
+        tokenRepository.save(
+            RefreshToken(
+                userId = user.id.toString(),
+                refreshToken = refreshToken,
+                timeToLive = System.currentTimeMillis() + 1000 * 60 * 60 * 2L,
+            ),
+        )
         return TokenResponse.from(accessToken = accessToken, refreshToken = refreshToken)
     }
 }
