@@ -9,8 +9,11 @@ import org.springframework.stereotype.Repository
 class TourRepositoryImpl(
     private val tourJpaRepository: TourJpaRepository,
 ): TourRepository {
-    override fun findWithTourLocationByUser(user: User): Tour? =
+    override fun findByUser(user: User): Tour? =
         tourJpaRepository.findByUser(user)
+
+    override fun findWithTourLocationByUser(user: User): Tour? =
+        tourJpaRepository.findWithTourLocationByUser(user)
 
     override fun deleteByUser(user: User) {
         tourJpaRepository.deleteByUser(user)
