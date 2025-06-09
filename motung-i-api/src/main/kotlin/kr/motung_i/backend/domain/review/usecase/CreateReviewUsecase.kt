@@ -25,7 +25,7 @@ class CreateReviewUsecase(
     fun execute(images: List<MultipartFile>, request: CreateReviewRequest) {
         val currentUser = fetchCurrentUserUsecase.execute()
 
-        val tour = tourRepository.findByUser(currentUser)
+        val tour = tourRepository.findWithTourLocationByUser(currentUser)
             ?: throw CustomException(CustomErrorCode.INVALID_TOUR_LOCATION)
 
         val imageUrls = images.mapNotNull {
@@ -41,6 +41,7 @@ class CreateReviewUsecase(
                 imageUrls = imageUrls
             )
         )
-        tourLocationRepository.deleteByUser(currentUser)
+        tourRepository.delete(tour)
+        tourLocationRepository.delete(tour.tourLocation)
     }
 }

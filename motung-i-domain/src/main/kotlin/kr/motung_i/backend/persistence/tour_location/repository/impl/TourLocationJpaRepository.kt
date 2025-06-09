@@ -6,5 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface TourLocationJpaRepository: JpaRepository<TourLocation, Long> {
     fun findByUser(user: User): TourLocation?
-    fun deleteByUser(user: User)
 }

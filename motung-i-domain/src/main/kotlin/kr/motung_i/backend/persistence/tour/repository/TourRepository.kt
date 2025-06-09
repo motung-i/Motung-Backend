@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query
 interface TourRepository {
     fun findByUser(user: User): Tour?
     fun findWithTourLocationByUser(user: User): Tour?
-    fun deleteByUser(user: User)
+    fun delete(tour: Tour)
     fun save(tour: Tour)
     fun existsByUser(user: User): Boolean
 }

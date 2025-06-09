@@ -16,7 +16,7 @@ class TourLocationRepositoryImpl(
     override fun findByUser(user: User): TourLocation? =
         tourLocationJpaRepository.findByUser(user)
 
-    override fun deleteByUser(user: User) {
-        tourLocationJpaRepository.deleteByUser(user)
+    override fun delete(tourLocation: TourLocation) {
+        tourLocationJpaRepository.delete(tourLocation)
     }
 }

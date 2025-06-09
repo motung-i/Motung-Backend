@@ -6,5 +6,5 @@ import kr.motung_i.backend.persistence.user.entity.User
 interface TourLocationRepository {
     fun save(tourLocation: TourLocation)
     fun findByUser(user: User): TourLocation?
-    fun deleteByUser(user: User)
+    fun delete(tourLocation: TourLocation)
 }

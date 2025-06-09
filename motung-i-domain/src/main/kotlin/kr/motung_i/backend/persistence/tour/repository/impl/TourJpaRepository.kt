@@ -15,6 +15,5 @@ interface TourJpaRepository: JpaRepository<Tour, UUID> {
         WHERE t.user = :user
     """)
     fun findWithTourLocationByUser(user: User): Tour?
-    fun deleteByUser(user: User)
     fun existsByUser(user: User): Boolean
 }
