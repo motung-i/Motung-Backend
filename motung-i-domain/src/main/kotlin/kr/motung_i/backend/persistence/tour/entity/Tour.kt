@@ -2,7 +2,6 @@ package kr.motung_i.backend.persistence.tour.entity
 
 import jakarta.persistence.*
 import kr.motung_i.backend.persistence.BaseEntity
-import kr.motung_i.backend.persistence.tour_location.entity.TourLocation
 import kr.motung_i.backend.persistence.user.entity.User
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
@@ -21,17 +20,26 @@ class Tour(
     @OnDelete(action = OnDeleteAction.CASCADE)
     val user: User,
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "TOUR_LOCATION_ID")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    val tourLocation: TourLocation,
+    @Embedded
+    val local: Local,
 
-    @Column(nullable = false)
-    val restaurantComment: String,
+    @Embedded
+    val location: Location,
 
+): BaseEntity() {
     @Column(nullable = false)
-    val sightseeingSpotsComment: String,
+    var isActive: Boolean = false
+        protected set
 
-    @Column(nullable = false)
-    val cultureComment: String,
-): BaseEntity()
+    fun copy(local: Local?, location: Location?): Tour =
+        Tour(
+            id = this.id,
+            user = this.user,
+            local = local ?: this.local,
+            location = location ?: this.location,
+        )
+
+    fun activate() {
+        isActive = true
+    }
+}

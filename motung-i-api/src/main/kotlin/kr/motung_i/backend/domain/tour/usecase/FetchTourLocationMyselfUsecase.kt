@@ -19,16 +19,16 @@ class FetchTourLocationMyselfUsecase(
 ) {
     fun execute(): FetchTourLocationMyselfResponse {
         val currentUser = fetchCurrentUserUsecase.execute()
-        val tour = tourRepository.findWithTourLocationByUser(currentUser)
-            ?: throw CustomException(CustomErrorCode.NOT_FOUND_TOUR)
+        val tour = tourRepository.findByUserAndIsActive(currentUser, true)
+            ?: throw CustomException(CustomErrorCode.NOT_ACTIVATED_TOUR)
 
-        val geometry = localsCache.findGeometryByLocal(tour.tourLocation.local)
+        val geometry = localsCache.findGeometryByLocal(tour.local)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_LOCAL)
 
         return FetchTourLocationMyselfResponse(
-            lat = tour.tourLocation.location.lat,
-            lon = tour.tourLocation.location.lon,
-            local = tour.tourLocation.local.localAlias,
+            lat = tour.location.lat,
+            lon = tour.location.lon,
+            local = tour.local.localAlias,
             geometry = GeometryResponse.fromMultiPolygon(geometry)
         )
     }

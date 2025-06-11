@@ -8,7 +8,6 @@ import kr.motung_i.backend.global.third_party.s3.usecase.UploadImageUsecase
 import kr.motung_i.backend.persistence.review.entity.Review
 import kr.motung_i.backend.persistence.review.repository.ReviewRepository
 import kr.motung_i.backend.persistence.tour.repository.TourRepository
-import kr.motung_i.backend.persistence.tour_location.repository.TourLocationRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
@@ -18,15 +17,14 @@ import org.springframework.web.multipart.MultipartFile
 class CreateReviewUsecase(
     private val reviewRepository: ReviewRepository,
     private val tourRepository: TourRepository,
-    private val tourLocationRepository: TourLocationRepository,
     private val fetchCurrentUserUsecase: FetchCurrentUserUsecase,
     private val uploadImageUsecase: UploadImageUsecase,
 ) {
     fun execute(images: List<MultipartFile>, request: CreateReviewRequest) {
         val currentUser = fetchCurrentUserUsecase.execute()
 
-        val tour = tourRepository.findWithTourLocationByUser(currentUser)
-            ?: throw CustomException(CustomErrorCode.INVALID_TOUR_LOCATION)
+        val tour = tourRepository.findByUserAndIsActive(currentUser, true)
+            ?: throw CustomException(CustomErrorCode.NOT_ACTIVATED_TOUR)
 
         val imageUrls = images.mapNotNull {
             uploadImageUsecase.execute(it)
@@ -35,13 +33,12 @@ class CreateReviewUsecase(
         reviewRepository.save(
             Review(
                 user = currentUser,
-                local = tour.tourLocation.local.copy(),
+                local = tour.local.copy(),
                 isRecommend = request.isRecommend,
                 description = request.description,
                 imageUrls = imageUrls
             )
         )
         tourRepository.delete(tour)
-        tourLocationRepository.delete(tour.tourLocation)
     }
 }

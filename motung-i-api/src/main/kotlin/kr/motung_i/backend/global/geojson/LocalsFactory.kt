@@ -8,7 +8,7 @@ import kr.motung_i.backend.global.geojson.dto.GeoDistrict
 import kr.motung_i.backend.global.geojson.dto.GeoLocal
 import kr.motung_i.backend.global.geojson.dto.GeoNeighborhood
 import kr.motung_i.backend.global.geojson.dto.GeoRegion
-import kr.motung_i.backend.persistence.tour_location.entity.Country
+import kr.motung_i.backend.persistence.tour.entity.Country
 import kr.motung_i.backend.global.geojson.formatter.LocalFormatterService
 import org.geolatte.geom.*
 import org.geolatte.geom.crs.CoordinateReferenceSystems

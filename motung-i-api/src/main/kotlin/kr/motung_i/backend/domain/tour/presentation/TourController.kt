@@ -12,7 +12,7 @@ import kr.motung_i.backend.domain.tour.usecase.FetchTourCommentMyselfUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourFilterDistrictUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourFilterRegionUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourLocationMyselfUsecase
-import kr.motung_i.backend.persistence.tour_location.entity.Country
+import kr.motung_i.backend.persistence.tour.entity.Country
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

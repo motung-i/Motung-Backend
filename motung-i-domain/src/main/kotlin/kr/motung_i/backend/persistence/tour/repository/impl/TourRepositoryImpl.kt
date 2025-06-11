@@ -12,8 +12,11 @@ class TourRepositoryImpl(
     override fun findByUser(user: User): Tour? =
         tourJpaRepository.findByUser(user)
 
-    override fun findWithTourLocationByUser(user: User): Tour? =
-        tourJpaRepository.findWithTourLocationByUser(user)
+    override fun findByUserAndIsActive(
+        user: User,
+        isActive: Boolean
+    ): Tour? =
+        tourJpaRepository.findByUserAndIsActive(user, isActive)
 
     override fun delete(tour: Tour) {
         tourJpaRepository.delete(tour)
@@ -23,6 +26,6 @@ class TourRepositoryImpl(
         tourJpaRepository.save(tour)
     }
 
-    override fun existsByUser(user: User): Boolean =
-        tourJpaRepository.existsByUser(user)
+    override fun existsByUserAndIsActivate(user: User, isActive: Boolean): Boolean =
+        tourJpaRepository.existsByUserAndIsActive(user, isActive)
 }

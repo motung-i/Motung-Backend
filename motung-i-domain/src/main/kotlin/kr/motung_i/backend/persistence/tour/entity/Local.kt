@@ -1,4 +1,4 @@
-package kr.motung_i.backend.persistence.tour_location.entity
+package kr.motung_i.backend.persistence.tour.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable

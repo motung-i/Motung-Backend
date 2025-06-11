@@ -1,6 +1,6 @@
 package kr.motung_i.backend.domain.tour.presentation.dto.response
 
-import kr.motung_i.backend.persistence.tour.entity.Tour
+import kr.motung_i.backend.persistence.tour_comment.entity.TourComment
 
 data class FetchTourCommentMyselfResponse(
     val restaurantComment: String,
@@ -8,11 +8,11 @@ data class FetchTourCommentMyselfResponse(
     val cultureComment: String,
 ) {
     companion object {
-        fun toDto(tour: Tour): FetchTourCommentMyselfResponse =
+        fun toDto(tourComment: TourComment): FetchTourCommentMyselfResponse =
             FetchTourCommentMyselfResponse(
-                restaurantComment = tour.restaurantComment,
-                sightseeingSpotsComment = tour.sightseeingSpotsComment,
-                cultureComment = tour.cultureComment,
+                restaurantComment = tourComment.restaurantComment,
+                sightseeingSpotsComment = tourComment.sightseeingSpotsComment,
+                cultureComment = tourComment.cultureComment,
             )
     }
 }

@@ -7,11 +7,9 @@ import kr.motung_i.backend.global.exception.CustomException
 import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.global.third_party.open_ai.OpenAiAdapter
 import kr.motung_i.backend.global.third_party.open_ai.dto.OpenAiRecommendation
-import kr.motung_i.backend.global.third_party.open_ai.dto.request.CreateModelContentRequest
-import kr.motung_i.backend.global.third_party.open_ai.feign.OpenAiFeignClient
-import kr.motung_i.backend.persistence.tour.entity.Tour
 import kr.motung_i.backend.persistence.tour.repository.TourRepository
-import kr.motung_i.backend.persistence.tour_location.repository.TourLocationRepository
+import kr.motung_i.backend.persistence.tour_comment.entity.TourComment
+import kr.motung_i.backend.persistence.tour_comment.repository.TourCommentRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,22 +17,22 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class CreateTourUsecase(
     private val tourRepository: TourRepository,
-    private val tourLocationRepository: TourLocationRepository,
+    private val tourCommentRepository: TourCommentRepository,
     private val currentUserUsecase: FetchCurrentUserUsecase,
     private val openAiAdapter: OpenAiAdapter,
 ) {
     fun execute() {
         val currentUser = currentUserUsecase.execute()
 
-        val tourLocation = tourLocationRepository.findByUser(currentUser)
-            ?: throw CustomException(CustomErrorCode.NOT_FOUND_TOUR_LOCATION)
+        val tour = tourRepository.findByUser(currentUser)
+            ?: throw CustomException(CustomErrorCode.NOT_FOUND_TOUR)
 
-        if (tourRepository.existsByUser(currentUser)) {
+        if (tourRepository.existsByUserAndIsActivate(currentUser, true)) {
             throw CustomException(CustomErrorCode.ALREADY_EXISTS_TOUR)
         }
 
         val createModelContentResponse = openAiAdapter.createModelContent(
-            "${tourLocation.local.country.alias} ${tourLocation.local.regionAlias} ${tourLocation.local.districtAlias} ${tourLocation.local.neighborhood}"
+            "${tour.local.country.alias} ${tour.local.regionAlias} ${tour.local.districtAlias} ${tour.local.neighborhood}"
         )
         val modelContent = createModelContentResponse.output.first().content.first().text
         val openAiRecommendation = jacksonObjectMapper().readValue<OpenAiRecommendation>(modelContent)
@@ -45,14 +43,14 @@ class CreateTourUsecase(
             openAiRecommendation.culturalExperiences
         ).map { recommendation -> recommendation.joinToString("\n") { it.toString() } }
 
-        tourRepository.save(
-            Tour(
-                user = currentUser,
-                tourLocation = tourLocation,
+        tourCommentRepository.save(
+            TourComment(
+                tour = tour,
                 restaurantComment = restaurantComment,
                 sightseeingSpotsComment = sightseeingSpotsComment,
                 cultureComment = cultureComment,
             )
         )
+        tour.activate()
     }
 }
