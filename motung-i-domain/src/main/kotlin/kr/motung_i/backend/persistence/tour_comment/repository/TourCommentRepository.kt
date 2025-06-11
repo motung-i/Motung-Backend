@@ -6,4 +6,5 @@ import kr.motung_i.backend.persistence.tour_comment.entity.TourComment
 interface TourCommentRepository {
     fun save(tourComment: TourComment)
     fun findByTour(tour: Tour): TourComment?
+    fun existsByTour(tour: Tour): Boolean
 }

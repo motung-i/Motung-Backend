@@ -15,4 +15,7 @@ class TourCommentRepositoryImpl(
 
     override fun findByTour(tour: Tour): TourComment? =
         tourCommentJpaRepository.findByTour(tour)
+
+    override fun existsByTour(tour: Tour): Boolean =
+        tourCommentJpaRepository.existsByTour(tour)
 }

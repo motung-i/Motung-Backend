@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface TourCommentJpaRepository: JpaRepository<TourComment, Long> {
     fun findByTour(tour: Tour): TourComment?
+    fun existsByTour(tour: Tour): Boolean
 }

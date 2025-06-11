@@ -6,6 +6,7 @@ import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourFilter
 import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourFilterRegionResponse
 import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourLocationMyselfResponse
 import kr.motung_i.backend.domain.tour.usecase.CreateRandomTourLocationUsecase
+import kr.motung_i.backend.domain.tour.usecase.CreateTourCommentUsecase
 import kr.motung_i.backend.domain.tour.usecase.CreateTourUsecase
 import kr.motung_i.backend.domain.tour.usecase.DeleteTourUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourCommentMyselfUsecase
@@ -31,6 +32,7 @@ class TourController(
     private val fetchTourLocationMyselfUsecase: FetchTourLocationMyselfUsecase,
     private val fetchTourCommentMyselfUsecase: FetchTourCommentMyselfUsecase,
     private val deleteTourUsecase: DeleteTourUsecase,
+    private val createTourCommentUsecase: CreateTourCommentUsecase,
 ) {
     @GetMapping("/filter/region")
     fun fetchTourFilterRegion(@RequestParam country: Country): ResponseEntity<FetchTourFilterRegionResponse> =
@@ -69,16 +71,22 @@ class TourController(
             ResponseEntity.ok(this)
         }
 
+    @PostMapping("/comment")
+    fun createTourComment(): ResponseEntity<Unit> =
+        createTourCommentUsecase.execute().run {
+            ResponseEntity.noContent().build()
+        }
+
     @PostMapping
     fun createTour(): ResponseEntity<Unit> =
         createTourUsecase.execute().run {
-            ResponseEntity.ok().build()
+            ResponseEntity.noContent().build()
         }
 
     @DeleteMapping
     fun deleteTour(): ResponseEntity<Unit> =
         deleteTourUsecase.execute().run {
-            ResponseEntity.ok().build()
+            ResponseEntity.noContent().build()
         }
 
 }
