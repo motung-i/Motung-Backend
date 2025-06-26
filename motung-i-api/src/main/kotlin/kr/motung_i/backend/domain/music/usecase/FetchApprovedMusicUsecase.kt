@@ -1,19 +1,7 @@
 package kr.motung_i.backend.domain.music.usecase
 
 import kr.motung_i.backend.domain.music.presentation.dto.response.MusicListResponse
-import kr.motung_i.backend.persistence.music.entity.enums.MusicStatus.*
-import kr.motung_i.backend.persistence.music.repository.MusicRepository
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
-@Service
-@Transactional(readOnly = true)
-class FetchApprovedMusicUsecase(
-    val musicRepository: MusicRepository,
-) {
-    fun execute(): MusicListResponse =
-        MusicListResponse.from(
-            musicRepository.findByMusicStatusOrderByRankNumber(APPROVED)
-        )
+interface FetchApprovedMusicUsecase {
+    fun execute(): MusicListResponse
 }
-
