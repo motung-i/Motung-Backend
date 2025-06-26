@@ -25,10 +25,10 @@ class ReviewController(
 ) {
     @PostMapping
     fun createReview(
-        @RequestPart("images", required = false) images: List<MultipartFile>,
+        @RequestPart("images", required = false) images: List<MultipartFile>?,
         @RequestPart("request") @Valid request: CreateReviewRequest
     ): ResponseEntity<Unit> =
-        createReviewUsecase.execute(images, request).run {
+        createReviewUsecase.execute(images ?: listOf(), request).run {
             ResponseEntity.noContent().build()
         }
 
