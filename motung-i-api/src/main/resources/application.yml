@@ -62,6 +62,10 @@ cloud:
   youtube:
     api-key: ${YOUTUBE_API_KEY}
 
+  naver:
+    client-id: ${NAVER_CLIENT_ID}
+    client-secret-key: ${NAVER_CLIENT_SECRET_KEY}
+
 firebase:
   credentials: ${FCM_CONFIG}
 
