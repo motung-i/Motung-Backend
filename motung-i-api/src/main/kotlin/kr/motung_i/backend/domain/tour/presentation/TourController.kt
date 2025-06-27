@@ -1,5 +1,6 @@
 package kr.motung_i.backend.domain.tour.presentation
 
+import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchDrivingRoutesResponse
 import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchRandomTourLocationResponse
 import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourCommentMyselfResponse
 import kr.motung_i.backend.domain.tour.presentation.dto.response.FetchTourFilterDistrictResponse
@@ -9,6 +10,7 @@ import kr.motung_i.backend.domain.tour.usecase.CreateRandomTourLocationUsecase
 import kr.motung_i.backend.domain.tour.usecase.CreateTourCommentUsecase
 import kr.motung_i.backend.domain.tour.usecase.CreateTourUsecase
 import kr.motung_i.backend.domain.tour.usecase.DeleteTourUsecase
+import kr.motung_i.backend.domain.tour.usecase.FetchDrivingRouteUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourCommentMyselfUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourFilterDistrictUsecase
 import kr.motung_i.backend.domain.tour.usecase.FetchTourFilterRegionUsecase
@@ -33,6 +35,7 @@ class TourController(
     private val fetchTourCommentMyselfUsecase: FetchTourCommentMyselfUsecase,
     private val deleteTourUsecase: DeleteTourUsecase,
     private val createTourCommentUsecase: CreateTourCommentUsecase,
+    private val fetchDrivingRouteUsecase: FetchDrivingRouteUsecase,
 ) {
     @GetMapping("/filter/region")
     fun fetchTourFilterRegion(@RequestParam country: Country): ResponseEntity<FetchTourFilterRegionResponse> =
@@ -89,4 +92,12 @@ class TourController(
             ResponseEntity.noContent().build()
         }
 
+    @GetMapping("/route")
+    fun fetchDrivingRoute(
+        @RequestParam startLat: Double,
+        @RequestParam startLon: Double,
+    ): ResponseEntity<FetchDrivingRoutesResponse> =
+        fetchDrivingRouteUsecase.execute(startLat, startLon).run {
+            ResponseEntity.ok(this)
+        }
 }
