@@ -7,6 +7,8 @@ import com.nimbusds.jose.crypto.ECDSASigner
 import com.nimbusds.jose.jwk.JWKSet
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
+import kr.motung_i.backend.global.exception.CustomException
+import kr.motung_i.backend.global.exception.enums.CustomErrorCode
 import kr.motung_i.backend.global.third_party.apple.dto.FetchDataFromAppleRequest
 import org.bouncycastle.util.io.pem.PemReader
 import org.springframework.beans.factory.annotation.Value
@@ -15,7 +17,6 @@ import org.springframework.stereotype.Service
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.client.RestTemplate
 import java.io.*
-import java.net.URL
 import java.security.KeyFactory
 import java.security.interfaces.ECPrivateKey
 import java.security.spec.PKCS8EncodedKeySpec
@@ -32,8 +33,9 @@ class AppleService {
     @Value("\${cloud.apple.client-id}")
     private lateinit var appleClientId: String
 
-    @Value("\${cloud.apple.apple-key-path}")
-    private lateinit var appleKeyPath: String
+    // 키 경로 대신 키 값을 직접 받도록 변경
+    @Value("\${cloud.apple.private-key}")
+    private lateinit var applePrivateKey: String
 
     companion object {
         private const val APPLE_AUTH_URL = "https://appleid.apple.com"
@@ -45,17 +47,17 @@ class AppleService {
         val signedJWT = SignedJWT.parse(idToken)
 
         if (!verifyIdTokenSignature(signedJWT)) {
-            throw Exception("Invalid ID Token signature")
+            throw CustomException(CustomErrorCode.VALIDATION_ERROR)
         }
 
         val claimsSet = signedJWT.jwtClaimsSet
 
         if (claimsSet.expirationTime.before(Date())) {
-            throw Exception("ID Token has expired")
+            throw CustomException(CustomErrorCode.VALIDATION_ERROR)
         }
 
         if (!claimsSet.audience.contains(appleClientId)) {
-            throw Exception("Invalid audience in ID Token")
+            throw CustomException(CustomErrorCode.VALIDATION_ERROR)
         }
 
         val userId = claimsSet.subject
@@ -143,25 +145,8 @@ class AppleService {
 
     @Throws(Exception::class)
     private fun getPrivateKey(): ByteArray {
-        var file = File(appleKeyPath)
-        val res: URL? = this::class.java.getResource(appleKeyPath)
-
-        if (res == null) {
-            file = File(appleKeyPath)
-        } else if (res.protocol == "jar") {
-            this::class.java.getResourceAsStream(appleKeyPath)?.use { input ->
-                val tempFile = File.createTempFile("tempfile", ".tmp")
-                FileOutputStream(tempFile).use { output ->
-                    input.copyTo(output)
-                }
-                tempFile.deleteOnExit()
-                file = tempFile
-            }
-        }
-
-        if (!file.exists()) throw Exception("File ${file.absolutePath} not found")
-
-        FileReader(file).use { keyReader ->
+        // 키 값을 직접 파싱
+        StringReader(applePrivateKey).use { keyReader ->
             PemReader(keyReader).use { pemReader ->
                 val pemObject = pemReader.readPemObject()
                 return pemObject.content

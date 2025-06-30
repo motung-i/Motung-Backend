@@ -70,8 +70,7 @@ cloud:
     team-id: ${APPLE_TEAM_ID}
     apple-login-key: ${APPLE_LOGIN_KEY}
     client-id: ${APPLE_CLIENT_ID}
-    apple-redirect-url: ${APPLE_REDIRECT_URL}
-    apple-key-path: ${APPLE_KEY_PATH}
+    private-key: ${APPLE_PRIVATE_KEY}
 
 firebase:
   credentials: ${FCM_CONFIG}
