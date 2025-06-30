@@ -12,6 +12,7 @@ data class NaverDirectionsResponse(
         val guide: List<Guide>,
         val path: List<List<Double>>,
         val summary: Summary,
+        val section: List<Section>,
     )
 
     data class Guide(
@@ -25,6 +26,12 @@ data class NaverDirectionsResponse(
         val start: Location,
         val taxiFare: Int,
         val tollFare: Int,
+    )
+
+    data class Section(
+        val pointIndex: Int,
+        val pointCount: Int,
+        val congestion: Int,
     )
 
     data class Location(

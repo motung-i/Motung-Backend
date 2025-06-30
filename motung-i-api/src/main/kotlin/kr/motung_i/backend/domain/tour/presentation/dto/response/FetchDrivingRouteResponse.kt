@@ -12,8 +12,16 @@ data class FetchDrivingRouteResponse(
     val taxiFare: Int,
     val tollFare: Int,
     val guide: List<String>,
+    val section: List<Section>,
     val path: List<List<Double>>,
 ) {
+
+    data class Section(
+        val pointIndex: Int,
+        val pointCount: Int,
+        val congestion: Int,
+    )
+
     companion object {
         fun fromNaverDistricts(
             naverDirection: NaverDirectionsResponse.Direction
@@ -28,6 +36,7 @@ data class FetchDrivingRouteResponse(
                 taxiFare = naverDirection.summary.taxiFare,
                 tollFare = naverDirection.summary.tollFare,
                 guide = naverDirection.guide.map { it.instructions },
+                section = naverDirection.section.map { Section(it.pointIndex, it.pointCount, it.congestion) },
                 path = naverDirection.path,
             )
         }
