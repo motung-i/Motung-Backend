@@ -1,16 +1,13 @@
 package kr.motung_i.backend.domain.auth.presentation
 
 import jakarta.validation.Valid
+import kr.motung_i.backend.domain.auth.presentation.dto.request.AppleLoginRequest
 import kr.motung_i.backend.domain.auth.presentation.dto.request.GoogleLoginRequest
 import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.CheckRegisterResponse
 import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.RegisterRequest
 import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.TokenRequest
 import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.TokenResponseData
-import kr.motung_i.backend.domain.auth.usecase.CheckIsUserRegisterUsecase
-import kr.motung_i.backend.domain.auth.usecase.GoogleLoginUsecase
-import kr.motung_i.backend.domain.auth.usecase.LogoutUsecase
-import kr.motung_i.backend.domain.auth.usecase.RegisterUsecase
-import kr.motung_i.backend.domain.auth.usecase.ReissueTokenUsecase
+import kr.motung_i.backend.domain.auth.usecase.*
 import kr.motung_i.backend.domain.item.presentation.dto.response.TokenResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -27,6 +24,7 @@ class AuthController(
     private val registerUsecase: RegisterUsecase,
     private val reissueTokenUsecase: ReissueTokenUsecase,
     private val googleLoginUsecase: GoogleLoginUsecase,
+    private val appleLoginUsecase: AppleLoginUsecase,
 ) {
     @PostMapping("refresh")
     fun refreshToken(
@@ -67,11 +65,19 @@ class AuthController(
                 ResponseEntity.noContent().build()
             }
 
-    @PostMapping("login")
-    fun login(
+    @PostMapping("google/login/callback")
+    fun googleLogin(
         @RequestBody request: GoogleLoginRequest,
     ): ResponseEntity<TokenResponseData> =
         googleLoginUsecase.execute(request).run {
+            ResponseEntity.ok(this)
+        }
+
+    @PostMapping("apple/login/callback")
+    fun appleLogin(
+        @RequestBody request: AppleLoginRequest,
+    ): ResponseEntity<TokenResponseData> =
+        appleLoginUsecase.execute(request).run {
             ResponseEntity.ok(this)
         }
 }

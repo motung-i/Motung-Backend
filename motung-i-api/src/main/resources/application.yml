@@ -66,6 +66,13 @@ cloud:
     client-id: ${NAVER_CLIENT_ID}
     client-secret-key: ${NAVER_CLIENT_SECRET_KEY}
 
+  apple:
+    team-id: ${APPLE_TEAM_ID}
+    apple-login-key: ${APPLE_LOGIN_KEY}
+    client-id: ${APPLE_CLIENT_ID}
+    apple-redirect-url: ${APPLE_REDIRECT_URL}
+    apple-key-path: ${APPLE_KEY_PATH}
+
 firebase:
   credentials: ${FCM_CONFIG}
 
