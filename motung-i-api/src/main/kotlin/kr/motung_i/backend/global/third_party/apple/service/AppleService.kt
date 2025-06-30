@@ -8,8 +8,6 @@ import com.nimbusds.jose.jwk.JWKSet
 import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
 import kr.motung_i.backend.global.third_party.apple.dto.FetchDataFromAppleRequest
-import lombok.RequiredArgsConstructor
-import lombok.extern.slf4j.Slf4j
 import org.bouncycastle.util.io.pem.PemReader
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
@@ -24,8 +22,6 @@ import java.security.spec.PKCS8EncodedKeySpec
 import java.util.*
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
 class AppleService {
     @Value("\${cloud.apple.team-id}")
     private lateinit var appleTeamId: String
