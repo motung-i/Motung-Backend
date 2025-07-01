@@ -3,6 +3,7 @@ package kr.motung_i.backend.domain.auth.usecase.impl
 import kr.motung_i.backend.domain.auth.presentation.dto.request.AppleLoginRequest
 import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.TokenResponseData
 import kr.motung_i.backend.domain.auth.usecase.AppleLoginUsecase
+import kr.motung_i.backend.domain.user.usecase.CreateUserUsecase
 import kr.motung_i.backend.global.security.provider.JwtTokenProvider
 import kr.motung_i.backend.global.third_party.apple.service.AppleService
 import kr.motung_i.backend.persistence.auth.entity.RefreshToken
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional
 class AppleLoginUsecaseImpl(
     private val jwtTokenProvider: JwtTokenProvider,
     private val userRepository: UserRepository,
+    private val createUserUsecase: CreateUserUsecase,
     private val deviceTokenRepository: DeviceTokenRepository,
     private val refreshTokenRepository: RefreshTokenCustomRepository,
     private val appleService: AppleService,
@@ -27,7 +29,7 @@ class AppleLoginUsecaseImpl(
     override fun execute(request: AppleLoginRequest): TokenResponseData {
         val result = appleService.getAppleInfoFromIdToken(request.idToken)
         val user =
-            userRepository.findByOauthId(result.id) ?: userRepository.save(
+            userRepository.findByOauthId(result.id) ?: createUserUsecase.execute(
                 User(
                     email = result.email,
                     oauthId = result.id,

@@ -3,6 +3,7 @@ package kr.motung_i.backend.domain.auth.usecase.impl
 import kr.motung_i.backend.domain.auth.presentation.dto.request.GoogleLoginRequest
 import kr.motung_i.backend.domain.auth.presentation.dto.response.impl.TokenResponseData
 import kr.motung_i.backend.domain.auth.usecase.GoogleLoginUsecase
+import kr.motung_i.backend.domain.user.usecase.CreateUserUsecase
 import kr.motung_i.backend.global.security.provider.JwtTokenProvider
 import kr.motung_i.backend.global.third_party.google.GoogleOauthInfoFeignClient
 import kr.motung_i.backend.persistence.auth.entity.RefreshToken
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional
 class GoogleLoginUsecaseImpl(
     private val jwtTokenProvider: JwtTokenProvider,
     private val userRepository: UserRepository,
+    private val createUserUsecase: CreateUserUsecase,
     private val deviceTokenRepository: DeviceTokenRepository,
     private val googleOauthInfoFeignClient: GoogleOauthInfoFeignClient,
     private val refreshTokenRepository: RefreshTokenCustomRepository,
@@ -27,7 +29,7 @@ class GoogleLoginUsecaseImpl(
     override fun execute(request: GoogleLoginRequest): TokenResponseData {
         val result = googleOauthInfoFeignClient.getInfo("Bearer ${request.accessToken}")
         val user =
-            userRepository.findByOauthId(result.id) ?: userRepository.save(
+            userRepository.findByOauthId(result.id) ?: createUserUsecase.execute(
                 User(
                     email = result.email,
                     oauthId = result.id,

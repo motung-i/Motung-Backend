@@ -14,11 +14,11 @@ import org.springframework.transaction.annotation.Transactional
 class CreateUserUsecaseImpl(
     private val userRepository: UserRepository,
 ): CreateUserUsecase {
-    override fun execute(user: User) {
+    override fun execute(user: User): User {
         val hashedOauthId = user.oauthId.sha256().toHex()
         val savedUser = userRepository.findByOauthIdAndProvider(hashedOauthId, user.provider)
 
-        if (savedUser != null && savedUser.role == Role.ROLE_REMOVED) {
+        return if (savedUser != null && savedUser.role == Role.ROLE_REMOVED) {
             savedUser.restore(user)
             userRepository.save(savedUser)
         } else {
