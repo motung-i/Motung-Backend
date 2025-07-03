@@ -42,8 +42,6 @@ class SecurityConfig {
                     // 운영
                     .requestMatchers(HttpMethod.GET, "/")
                     .permitAll()
-                    .requestMatchers(HttpMethod.GET, "/actuator/prometheus")
-                    .hasAuthority(Role.ROLE_ADMIN.name)
                     // 로그인
                     .requestMatchers(HttpMethod.GET, "/auth/check-register")
                     .authenticated()
