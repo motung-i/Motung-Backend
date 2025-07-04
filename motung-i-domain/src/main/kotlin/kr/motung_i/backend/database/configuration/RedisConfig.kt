@@ -20,8 +20,8 @@ class RedisConfig(
     private val standaloneRedisProperties: StandaloneRedisProperties,
     private val clusterRedisProperties: ClusterRedisProperties,
 ) {
-    @Bean
-    @Profile("prod")
+    //@Bean
+    //@Profile("prod")
     fun prodRedisConnectionFactory(): LettuceConnectionFactory {
         val redisNodes =
             clusterRedisProperties.nodes.map {
@@ -68,7 +68,7 @@ class RedisConfig(
     }
 
     @Bean
-    @Profile("dev")
+    //@Profile("dev")
     fun devRedisConnectionFactory(): LettuceConnectionFactory {
         val standaloneConfig =
             RedisStandaloneConfiguration().apply {
