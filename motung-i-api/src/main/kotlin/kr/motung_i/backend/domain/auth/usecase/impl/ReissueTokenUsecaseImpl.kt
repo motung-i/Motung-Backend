@@ -18,7 +18,6 @@ class ReissueTokenUsecaseImpl(
     val userCustomRepository: UserRepository,
     val refreshTokenCustomRepository: RefreshTokenCustomRepository,
     val jwtTokenProvider: JwtTokenProvider,
-    val tokenRepository: RefreshTokenCustomRepository,
 ): ReissueTokenUsecase {
     override fun execute(request: TokenRequest): TokenResponse {
         val result: RefreshToken =
@@ -36,7 +35,7 @@ class ReissueTokenUsecaseImpl(
             }
         val accessToken = jwtTokenProvider.generateToken(userId = userId, role = user.role, isRefresh = false)
         val refreshToken = jwtTokenProvider.generateToken(userId = userId, role = user.role, isRefresh = true)
-        tokenRepository.save(
+        refreshTokenCustomRepository.save(
             RefreshToken(
                 userId = user.id.toString(),
                 refreshToken = refreshToken,

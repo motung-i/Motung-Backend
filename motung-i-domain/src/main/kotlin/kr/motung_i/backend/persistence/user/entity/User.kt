@@ -42,6 +42,10 @@ data class User(
         role = Role.ROLE_USER
     }
 
+    fun setAdmin() {
+        role = Role.ROLE_ADMIN
+    }
+
     fun remove() {
         role = Role.ROLE_REMOVED
         email = null
