@@ -9,6 +9,8 @@ import kr.motung_i.backend.global.geojson.LocalsCache
 import kr.motung_i.backend.persistence.tour.entity.Country
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.text.Collator
+import java.util.Locale
 
 @Service
 @Transactional
@@ -43,8 +45,9 @@ class FetchTourFilterDistrictUsecaseImpl(
             .groupBy(
                 keySelector = { it.first },
                 valueTransform = { it.second }
-            )
-            .mapValues { it.value.toSet() }
+            ).mapValues { (_, value) ->
+                value.toSortedSet(Collator.getInstance(Locale.KOREA))
+            }
 
         return FetchTourFilterDistrictResponse.toDto(districts)
     }
