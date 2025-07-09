@@ -54,7 +54,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "prometheus"
+        include: "*"
   server:
     port: 8081
 
