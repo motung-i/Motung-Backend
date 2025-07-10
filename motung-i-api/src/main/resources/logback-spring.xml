@@ -3,7 +3,7 @@
   <springProfile name="prod">
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
       <labels>
-        app=motung-backend
+        app=motung-i-backend
         env=prod
         host=${HOSTNAME:-unknown}
       </labels>
