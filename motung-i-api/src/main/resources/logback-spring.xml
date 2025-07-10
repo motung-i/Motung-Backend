@@ -1,6 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
-  <!-- PROD PROFILE: Loki -->
   <springProfile name="prod">
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
       <http>
@@ -8,30 +7,29 @@
       </http>
       <format>
         <label>
-          <pattern>app=motung-i-backend,service=motung-i-backend,level=%level</pattern>
+          <pattern>app=${appName},host=${HOSTNAME},traceID=%X{traceId:-NONE},level=%level</pattern>
         </label>
-        <message class="ch.qos.logback.contrib.json.JsonLayout">
-          <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"/>
-          <appendLineSeparator>true</appendLineSeparator>
+        <message>
+          <pattern>${FILE_LOG_PATTERN}</pattern>
         </message>
+        <sortByTime>true</sortByTime>
       </format>
     </appender>
 
     <root level="DEBUG">
-      <appender-ref ref="LOKI"/>
+      <appender-ref ref="LOKI" />
     </root>
   </springProfile>
 
-  <!-- DEV PROFILE: 콘솔 출력 -->
   <springProfile name="dev">
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
       <encoder>
         <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
       </encoder>
     </appender>
+
     <root level="INFO">
-      <appender-ref ref="CONSOLE"/>
+      <appender-ref ref="CONSOLE" />
     </root>
   </springProfile>
-
 </configuration>
