@@ -6,13 +6,13 @@
       <http>
         <url>http://loki-stack.monitoring.svc.cluster.local:3100/loki/api/v1/push</url>
       </http>
-      <layout class="ch.qos.logback.classic.PatternLayout">
-        <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-      </layout>
       <format>
         <label>
           <pattern>app=motung-i-backend,service=motung-i-backend,level=%level</pattern>
         </label>
+        <message>
+          <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %ex</pattern>
+        </message>
       </format>
     </appender>
 
