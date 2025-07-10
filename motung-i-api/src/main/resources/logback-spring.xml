@@ -10,8 +10,9 @@
         <label>
           <pattern>app=motung-i-backend,service=motung-i-backend,level=%level</pattern>
         </label>
-        <message>
-          <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %ex</pattern>
+        <message class="ch.qos.logback.contrib.json.JsonLayout">
+          <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"/>
+          <appendLineSeparator>true</appendLineSeparator>
         </message>
       </format>
     </appender>
