@@ -10,7 +10,7 @@
           <pattern>app=motung-i-backend,service=motung-i-backend,level=%level</pattern>
         </label>
         <message>
-          <pattern>t=%d{yyyy-MM-dd HH:mm:ss.SSS} l=%level c=%logger{20} t=%thread | %msg %ex</pattern>
+          <pattern>{"timestamp":"%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}","level":"%level","logger":"%logger","thread":"%thread","message":"%replace(%msg){'\"','\\\"'}"}%n</pattern>
         </message>
       </format>
     </appender>
