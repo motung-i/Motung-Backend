@@ -8,14 +8,13 @@
         host=${HOSTNAME:-unknown}
       </labels>
       <message>
-        <pattern>%-5level [%thread] %logger{20} - %msg%n</pattern>
+        <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
       </message>
       <http>
         <url>http://loki-stack.monitoring.svc.cluster.local:3100/loki/api/v1/push</url>
       </http>
     </appender>
-
-    <root level="DEBUG">
+    <root level="INFO">
       <appender-ref ref="LOKI" />
     </root>
   </springProfile>
