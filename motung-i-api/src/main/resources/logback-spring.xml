@@ -7,15 +7,13 @@
       </http>
       <format>
         <label>
-          <pattern>app=motung-i-backend,env=prod,level=%level</pattern>
+          <pattern>service_name=motung-i-backend,host=${HOSTNAME},level=%level</pattern>
+          <readMarkers>true</readMarkers>
         </label>
-        <message>
-          <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </message>
-        <sortByTime>true</sortByTime>
+        <message class="com.github.loki4j.logback.JsonLayout" />
       </format>
     </appender>
-    <root level="INFO">
+    <root level="debug">
       <appender-ref ref="LOKI" />
     </root>
   </springProfile>
@@ -26,7 +24,6 @@
         <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
       </encoder>
     </appender>
-
     <root level="INFO">
       <appender-ref ref="CONSOLE" />
     </root>
