@@ -1,35 +1,37 @@
 <configuration>
-  <!-- ON PROD PROFILE -> Loki -->
+
+  <!-- PROD PROFILE: Loki -->
   <springProfile name="prod">
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
       <http>
         <url>http://loki-stack.monitoring.svc.cluster.local:3100/loki/api/v1/push</url>
       </http>
+      <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+        <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"/>
+        <timestampFormat>yyyy-MM-dd'T'HH:mm:ss.SSSZ</timestampFormat>
+      </layout>
       <format>
         <label>
           <pattern>app=motung-i-backend,service=motung-i-backend,level=%level</pattern>
         </label>
-        <message>
-          <pattern>{"timestamp":"%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}","level":"%level","logger":"%logger","thread":"%thread","message":"%replace(%msg){'\"','\\\"'}"}%n</pattern>
-        </message>
       </format>
     </appender>
 
     <root level="DEBUG">
-      <appender-ref ref="LOKI" />
+      <appender-ref ref="LOKI"/>
     </root>
   </springProfile>
 
-  <!-- ON LOCAL ->  -->
+  <!-- DEV PROFILE: 콘솔 출력 -->
   <springProfile name="dev">
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
       <encoder>
         <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
       </encoder>
     </appender>
-
     <root level="INFO">
-      <appender-ref ref="CONSOLE" />
+      <appender-ref ref="CONSOLE"/>
     </root>
   </springProfile>
+
 </configuration>
