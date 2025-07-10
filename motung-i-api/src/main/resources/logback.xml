@@ -1,0 +1,35 @@
+<configuration>
+  <!-- ON PROD PROFILE -> Loki -->
+  <springProfile name="prod">
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+      <http>
+        <url>http://loki-stack-0.monitoring.svc.cluster.local:3100/loki/api/v1/push</url>
+      </http>
+      <format>
+        <label>
+          <pattern>app=motung-i-backend,service=motung-i-backend,level=%level</pattern>
+        </label>
+        <message>
+          <pattern>t=%d{yyyy-MM-dd HH:mm:ss.SSS} l=%level c=%logger{20} t=%thread | %msg %ex</pattern>
+        </message>
+      </format>
+    </appender>
+
+    <root level="DEBUG">
+      <appender-ref ref="LOKI" />
+    </root>
+  </springProfile>
+
+  <!-- ON LOCAL ->  -->
+  <springProfile name="dev">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder>
+        <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+      </encoder>
+    </appender>
+
+    <root level="INFO">
+      <appender-ref ref="CONSOLE" />
+    </root>
+  </springProfile>
+</configuration>
