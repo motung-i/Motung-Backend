@@ -87,10 +87,6 @@ spring:
     activate:
       on-profile: dev
 
-  output:
-    ansi:
-      enabled: ALWAYS
-
   data:
     redis:
       host: ${REDIS_HOST}
@@ -109,10 +105,6 @@ spring:
   config:
     activate:
       on-profile: prod
-
-  output:
-    ansi:
-      enabled: NEVER
 
   data:
     redis:

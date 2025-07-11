@@ -29,7 +29,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
     // actuator
-    implementation("com.github.loki4j:loki-logback-appender:2.0.0")
+    implementation("com.github.loki4j:loki-logback-appender:1.6.0")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-registry-prometheus")
 

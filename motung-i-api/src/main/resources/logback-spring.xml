@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-  <springProfile name="prod">
-    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
-      <http>
-        <url>http://loki-stack.monitoring.svc.cluster.local:3100/loki/api/v1/push</url>
-      </http>
-      <format>
-        <label>
-          <pattern>service_name=motung-i-backend,host=${HOSTNAME},level=%level</pattern>
-          <readMarkers>true</readMarkers>
-        </label>
-        <message class="com.github.loki4j.logback.JsonLayout" />
-      </format>
-    </appender>
-    <root level="debug">
-      <appender-ref ref="LOKI" />
-    </root>
-  </springProfile>
-
-  <springProfile name="dev">
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-      <encoder>
-        <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-      </encoder>
-    </appender>
-    <root level="INFO">
-      <appender-ref ref="CONSOLE" />
-    </root>
-  </springProfile>
+    <!-- PROD PROFILE: Loki -->
+    <springProfile name="prod">
+        <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+            <http>
+                <url>http://loki-stack.monitoring.svc.cluster.local:3100/loki/api/v1/push</url>
+            </http>
+            <format>
+                <label>
+                    <pattern>compose_service=motung-i-backend,host=${HOSTNAME},level=%level</pattern>
+                    <readMarkers>true</readMarkers>
+                </label>
+                <message class="com.github.loki4j.logback.JsonLayout" />
+            </format>
+        </appender>
+        <root level="INFO">
+            <appender-ref ref="LOKI" />
+        </root>
+    </springProfile>
+    <!-- DEV PROFILE: STDOUT -->
+    <springProfile name="dev" >
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+        <root level="DEBUG">
+            <appender-ref ref="STDOUT" />
+        </root>
+    </springProfile>
 </configuration>
