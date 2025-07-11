@@ -20,17 +20,13 @@ class FetchTourFilterDistrictUsecaseImpl(
 ): FetchTourFilterDistrictUsecase {
     override fun execute(country: Country, region: String): FetchTourFilterDistrictResponse {
         val local = localsCache.findLocalByCountry(country)
-            ?: throw RuntimeException(CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_GEOJSON))
+            ?: throw CustomException(CustomErrorCode.NOT_FOUND_COUNTRY_GEOJSON)
 
         val localByRegion =
             if (region == country.etc) {
                 local.geoRegions
-                    .filter {
-                        country.etc == tourFormatterService.formatToTourFilterRegion(it, country)
-                    }
-                    .map {
-                        tourFormatterService.formatToTourFilterCityRegion(it, country)
-                    }
+                    .filter { country.etc == tourFormatterService.formatToTourFilterRegion(it, country) }
+                    .map { tourFormatterService.formatToTourFilterCityRegion(it, country) }
             } else {
                 local.geoRegions
                     .filter { it.alias == region }

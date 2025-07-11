@@ -22,4 +22,10 @@ data class OpenAiRecommendation(
         override fun toString(): String =
             "$name: $description"
     }
+
+    fun toFormattedComments(): List<String> = listOf(
+        this.restaurants,
+        this.natureOrSightseeingSpots,
+        this.culturalExperiences
+    ).map { recommendation -> recommendation.joinToString("\n") { it.toString() } }
 }

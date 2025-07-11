@@ -33,14 +33,8 @@ CreateTourCommentUsecaseImpl(
         val createModelContentResponse = openAiAdapter.createModelContent(
             "${tour.local.country.alias} ${tour.local.regionAlias} ${tour.local.districtAlias} ${tour.local.neighborhood}"
         )
-        val modelContent = createModelContentResponse.output.first().content.first().text
-        val openAiRecommendation = jacksonObjectMapper().readValue<OpenAiRecommendation>(modelContent)
-
-        val (restaurantComment, sightseeingSpotsComment, cultureComment) = listOf(
-            openAiRecommendation.restaurants,
-            openAiRecommendation.natureOrSightseeingSpots,
-            openAiRecommendation.culturalExperiences
-        ).map { recommendation -> recommendation.joinToString("\n") { it.toString() } }
+        val openAiRecommendation = createModelContentResponse.toOpenAiRecommendation()
+        val (restaurantComment, sightseeingSpotsComment, cultureComment) = openAiRecommendation.toFormattedComments()
 
         tourCommentRepository.save(
             TourComment(

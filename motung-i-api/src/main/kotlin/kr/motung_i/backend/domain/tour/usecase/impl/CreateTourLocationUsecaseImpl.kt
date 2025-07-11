@@ -21,11 +21,6 @@ class CreateTourLocationUsecaseImpl(
 ): CreateTourLocationUsecase {
     override fun execute(local: Local, geoLocation: GeoLocation) {
         val currentUser = fetchCurrentUserUsecase.execute()
-
-        if (tourRepository.existsByUserAndIsActivate(currentUser, true)) {
-            throw CustomException(CustomErrorCode.ALREADY_EXISTS_TOUR)
-        }
-
         val tour = tourRepository.findByUser(currentUser)
 
         if (tour == null) {
