@@ -12,15 +12,15 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class CreateTourUsecaseImpl(
     private val tourRepository: TourRepository,
-    private val currentUserUsecase: FetchCurrentUserUsecase,
+    private val fetchCurrentUserUsecase: FetchCurrentUserUsecase,
 ): CreateTourUsecase {
     override fun execute() {
-        val currentUser = currentUserUsecase.execute()
+        val currentUser = fetchCurrentUserUsecase.execute()
 
         val tour = tourRepository.findByUser(currentUser)
             ?: throw CustomException(CustomErrorCode.NOT_FOUND_TOUR)
 
-        if (tourRepository.existsByUserAndIsActivate(currentUser, true)) {
+        if (tour.isActive) {
             throw CustomException(CustomErrorCode.ALREADY_EXISTS_TOUR)
         }
 

@@ -13,11 +13,10 @@ import kr.motung_i.backend.global.geojson.dto.GeoDistrict
 import kr.motung_i.backend.global.geojson.dto.GeoLocal
 import kr.motung_i.backend.global.geojson.dto.GeoNeighborhood
 import kr.motung_i.backend.global.geojson.formatter.LocalFormatterService
+import kr.motung_i.backend.global.util.PolygonUtil.isPointIn
 import kr.motung_i.backend.persistence.tour.entity.Country
 import kr.motung_i.backend.persistence.tour.entity.Local
-import org.geolatte.geom.Geometries
-import org.geolatte.geom.Positions
-import org.geolatte.geom.crs.CoordinateReferenceSystems
+import org.geolatte.geom.crs.CoordinateReferenceSystems.*
 import org.geolatte.geom.jts.JTS
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -60,17 +59,16 @@ class CreateRandomTourLocationUsecaseImpl(
         regions: List<String>,
         districts: List<String>
     ): List<GeoDistrict> {
-        val geoRegions = geoLocal.geoRegions
+        val requestDistrictsByRegion = geoLocal.geoRegions
             .filter { it.alias in regions }
+            .flatMap { it.geoDistricts }
+            .distinct()
         val geoDistricts = geoLocal.geoRegions
             .flatMap { it.geoDistricts }
             .filter { it.alias in districts }
+            .distinct()
 
-        val requestDistrictsByRegion = geoRegions
-            .flatMap { it.geoDistricts }
-            .toSet()
-
-        return (requestDistrictsByRegion + geoDistricts.toSet()).toList()
+        return requestDistrictsByRegion + geoDistricts
     }
 
     private fun createLocalPolygons(
@@ -130,10 +128,8 @@ class CreateRandomTourLocationUsecaseImpl(
         repeat(100) {
             val randomLon = Random().nextDouble(minLon, maxLon)
             val randomLat = Random().nextDouble(minLat, maxLat)
-            val point = Positions.mkPosition(CoordinateReferenceSystems.WGS84, randomLon, randomLat)
-            val jtsPoint = JTS.to(Geometries.mkPoint(point, CoordinateReferenceSystems.WGS84))
 
-            if (JTS.to(randomLocalPolygon.polygon).covers(jtsPoint)) {
+            if (randomLocalPolygon.polygon.isPointIn(randomLon, randomLat, WGS84)) {
                 return GeoLocation(
                     lat = randomLat,
                     lon = randomLon,

@@ -8,5 +8,4 @@ interface TourRepository {
     fun findByUserAndIsActive(user: User, isActive: Boolean): Tour?
     fun delete(tour: Tour)
     fun save(tour: Tour)
-    fun existsByUserAndIsActivate(user: User, isActive: Boolean): Boolean
 }

@@ -25,7 +25,4 @@ class TourRepositoryImpl(
     override fun save(tour: Tour) {
         tourJpaRepository.save(tour)
     }
-
-    override fun existsByUserAndIsActivate(user: User, isActive: Boolean): Boolean =
-        tourJpaRepository.existsByUserAndIsActive(user, isActive)
 }

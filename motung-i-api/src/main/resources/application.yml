@@ -1,5 +1,5 @@
-ACCESS_JWT_KEY: ${ACCESS_JWT_KEY}
-REFRESH_JWT_KEY: ${REFRESH_JWT_KEY}
+ACCESS_JWT_KEY: ${ACCESS_JWT_KEY:}
+REFRESH_JWT_KEY: ${REFRESH_JWT_KEY:}
 
 spring:
   application:
@@ -7,8 +7,8 @@ spring:
 
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
+      host: ${REDIS_HOST:}
+      port: ${REDIS_PORT:}
 
   servlet:
     multipart:
@@ -27,9 +27,9 @@ spring:
         default_batch_fetch_size: 100
 
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: ${DB_URL:}
+    username: ${DB_USERNAME:}
+    password: ${DB_PASSWORD:}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   security:
@@ -37,8 +37,8 @@ spring:
       client:
         registration:
           google:
-            client-id: ${GOOGLE_CLIENT_ID}
-            client-secret: ${GOOGLE_CLIENT_SECRET}
+            client-id: ${GOOGLE_CLIENT_ID:}
+            client-secret: ${GOOGLE_CLIENT_SECRET:}
             scope:
               - profile
               - email
@@ -46,7 +46,7 @@ spring:
 management:
   metrics:
     tags:
-      application: ${spring.application.name}
+      application: ${spring.application.name:}
   endpoints:
     web:
       exposure:
@@ -57,29 +57,29 @@ management:
 cloud:
   aws:
     s3:
-      access-key: ${S3_ACCESS_KEY}
-      secret-key: ${S3_SECRET_KEY}
-      region: ${S3_REGION}
-      bucket-name: ${S3_BUCKET_NAME}
+      access-key: ${S3_ACCESS_KEY:}
+      secret-key: ${S3_SECRET_KEY:}
+      region: ${S3_REGION:}
+      bucket-name: ${S3_BUCKET_NAME:}
 
   open-ai:
-    api-key: ${OPEN_AI_API_KEY}
+    api-key: ${OPEN_AI_API_KEY:}
 
   youtube:
-    api-key: ${YOUTUBE_API_KEY}
+    api-key: ${YOUTUBE_API_KEY:}
 
   naver:
-    client-id: ${NAVER_CLIENT_ID}
-    client-secret-key: ${NAVER_CLIENT_SECRET_KEY}
+    client-id: ${NAVER_CLIENT_ID:}
+    client-secret-key: ${NAVER_CLIENT_SECRET_KEY:}
 
   apple:
-    team-id: ${APPLE_TEAM_ID}
-    apple-login-key: ${APPLE_LOGIN_KEY}
-    client-id: ${APPLE_CLIENT_ID}
-    private-key: ${APPLE_PRIVATE_KEY}
+    team-id: ${APPLE_TEAM_ID:}
+    apple-login-key: ${APPLE_LOGIN_KEY:}
+    client-id: ${APPLE_CLIENT_ID:}
+    private-key: ${APPLE_PRIVATE_KEY:}
 
 firebase:
-  credentials: ${FCM_CONFIG}
+  credentials: ${FCM_CONFIG:}
 
 ---
 spring:
@@ -89,8 +89,8 @@ spring:
 
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
+      host: ${REDIS_HOST:}
+      port: ${REDIS_PORT:}
 
   jpa:
     hibernate:
@@ -109,7 +109,7 @@ spring:
   data:
     redis:
       cluster:
-        nodes: ${REDIS_NODES}
+        nodes: ${REDIS_NODES:}
         max-redirects: 3
 
   jpa:
