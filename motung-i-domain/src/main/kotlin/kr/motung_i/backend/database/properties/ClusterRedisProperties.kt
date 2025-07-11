@@ -1,11 +1,11 @@
 package kr.motung_i.backend.database.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.stereotype.Component
+import org.springframework.validation.annotation.Validated
 
-@Component
+@Validated
 @ConfigurationProperties("spring.data.redis.cluster")
-class ClusterRedisProperties {
-    var nodes: List<String> = emptyList()
-    var maxRedirects: Int = 3
-}
+class ClusterRedisProperties (
+    var nodes: List<String> = emptyList(),
+    var maxRedirects: Int = 3,
+)
